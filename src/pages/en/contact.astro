@@ -1,0 +1,32 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getSiteSettings } from '@/lib/content';
+import { getAlternateLocaleUrl } from '@/lib/i18n/utils';
+
+const locale = 'en';
+const settings = getSiteSettings(locale);
+const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
+const title = 'Contact — Baruch';
+const description = 'Contact details, location and social media.';
+---
+
+<BaseLayout {title} {description} locale={locale} {alternateLocaleUrl}>
+  <section class="mx-auto max-w-2xl px-4 py-16">
+    <h1 class="text-3xl font-bold text-primary">Contact</h1>
+    <ul class="mt-8 space-y-4 text-gray-700">
+      <li><strong>Phone:</strong> <a href={`tel:${settings.contact.phone}`} class="text-primary underline">{settings.contact.phone}</a></li>
+      <li><strong>Email:</strong> <a href={`mailto:${settings.contact.email}`} class="text-primary underline">{settings.contact.email}</a></li>
+      <li><strong>Location:</strong> {settings.contact.address}</li>
+      <li>
+        <a
+          href={`https://wa.me/${settings.contact.whatsapp}`}
+          class="inline-block rounded bg-primary px-4 py-2 font-semibold text-white"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Message us on WhatsApp
+        </a>
+      </li>
+    </ul>
+  </section>
+</BaseLayout>

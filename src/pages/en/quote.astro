@@ -1,0 +1,16 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import QuoteFormPlaceholder from '@/components/forms/QuoteFormPlaceholder.astro';
+import { getSiteSettings } from '@/lib/content';
+import { getAlternateLocaleUrl } from '@/lib/i18n/utils';
+
+const locale = 'en';
+const settings = getSiteSettings(locale);
+const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
+const title = 'Quote — Baruch';
+const description = 'Request information or a quote for your experience.';
+---
+
+<BaseLayout {title} {description} locale={locale} {alternateLocaleUrl}>
+  <QuoteFormPlaceholder locale={locale} settings={settings} />
+</BaseLayout>

@@ -1,0 +1,19 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getAlternateLocaleUrl } from '@/lib/i18n/utils';
+
+const locale = 'es';
+const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
+const title = 'Aviso de privacidad — Baruch';
+const description = 'Política de privacidad y manejo de datos personales.';
+---
+
+<BaseLayout {title} {description} locale={locale} {alternateLocaleUrl}>
+  <section class="mx-auto max-w-3xl px-4 py-16 prose prose-neutral">
+    <h1 class="text-3xl font-bold text-primary">Aviso de privacidad</h1>
+    <p class="mt-4 text-gray-700">
+      En el MVP actual, el sitio no recopila datos personales mediante formularios en línea.
+      Este aviso se actualizará cuando se active el formulario de cotización.
+    </p>
+  </section>
+</BaseLayout>

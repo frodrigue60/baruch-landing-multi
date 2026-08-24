@@ -1,0 +1,28 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getPage } from '@/lib/content';
+import { getAlternateLocaleUrl } from '@/lib/i18n/utils';
+
+const locale = 'es';
+const page = getPage('about', locale);
+const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
+---
+
+<BaseLayout
+  title={page.title}
+  description={page.description}
+  locale={locale}
+  alternateLocaleUrl={alternateLocaleUrl}
+>
+  <section class="mx-auto max-w-3xl px-4 py-16">
+    <h1 class="text-3xl font-bold text-primary">{page.heading}</h1>
+    {
+      page.sections?.map((section) => (
+        <article class="mt-8">
+          <h2 class="text-xl font-semibold">{section.heading}</h2>
+          <p class="mt-2 text-gray-700">{section.body}</p>
+        </article>
+      ))
+    }
+  </section>
+</BaseLayout>

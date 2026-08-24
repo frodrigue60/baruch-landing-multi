@@ -1,0 +1,10 @@
+{
+  "slug": "retiro-wellness",
+  "locale": "es",
+  "title": "Retiro de wellness",
+  "summary": "Un fin de semana de desconexión, yoga y naturaleza.",
+  "description": "Retiro guiado con actividades de mindfulness, senderismo suave y alimentación consciente en un entorno natural.",
+  "coverImage": "/images/placeholder-retiro.svg",
+  "featured": true,
+  "order": 1
+}

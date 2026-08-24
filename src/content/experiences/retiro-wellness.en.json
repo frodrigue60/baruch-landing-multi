@@ -1,0 +1,10 @@
+{
+  "slug": "retiro-wellness",
+  "locale": "en",
+  "title": "Wellness retreat",
+  "summary": "A weekend of disconnection, yoga and nature.",
+  "description": "Guided retreat with mindfulness activities, gentle hiking and conscious nutrition in a natural setting.",
+  "coverImage": "/images/placeholder-retiro.svg",
+  "featured": true,
+  "order": 1
+}

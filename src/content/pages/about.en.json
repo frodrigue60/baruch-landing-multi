@@ -1,0 +1,14 @@
+{
+  "locale": "en",
+  "pageKey": "about",
+  "title": "About — Baruch",
+  "description": "Learn about Baruch's story, mission and values.",
+  "heading": "Who we are",
+  "sections": [
+    {
+      "id": "mission",
+      "heading": "Our mission",
+      "body": "Connect people with nature through responsible and transformative experiences."
+    }
+  ]
+}

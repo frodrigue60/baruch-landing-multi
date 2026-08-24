@@ -1,0 +1,35 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getExperience, getExperienceSlugs } from '@/lib/content';
+import { getAlternateLocaleUrl, getPagePath } from '@/lib/i18n/utils';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (() => {
+  return getExperienceSlugs('en').map((slug) => ({ params: { slug } }));
+}) satisfies GetStaticPaths;
+
+const locale = 'en';
+const { slug } = Astro.params;
+const experience = slug ? getExperience(slug, locale) : undefined;
+
+if (!experience) {
+  return Astro.redirect(getPagePath('experiences', locale));
+}
+
+const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
+---
+
+<BaseLayout
+  title={`${experience.title} — Baruch`}
+  description={experience.summary}
+  locale={locale}
+  alternateLocaleUrl={alternateLocaleUrl}
+>
+  <article class="mx-auto max-w-3xl px-4 py-16">
+    <a href={getPagePath('experiences', locale)} class="text-sm font-medium text-primary underline">
+      ← Back to experiences
+    </a>
+    <h1 class="mt-4 text-3xl font-bold text-primary">{experience.title}</h1>
+    <p class="mt-4 text-lg text-gray-700">{experience.description}</p>
+  </article>
+</BaseLayout>

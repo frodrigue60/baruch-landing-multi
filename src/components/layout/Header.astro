@@ -1,0 +1,39 @@
+---
+import type { Locale } from '@/lib/i18n/config';
+import { navItems } from '@/lib/i18n/config';
+import { getPagePath } from '@/lib/i18n/utils';
+import LanguageSwitcher from '@/components/layout/LanguageSwitcher.astro';
+
+interface Props {
+  locale: Locale;
+  siteName: string;
+}
+
+const { locale, siteName } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<header class="border-b border-primary/10 bg-white/90 backdrop-blur sticky top-0 z-50">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
+    <a href={getPagePath('home', locale)} class="text-xl font-semibold text-primary">
+      {siteName}
+    </a>
+    <nav aria-label={locale === 'es' ? 'Navegación principal' : 'Main navigation'}>
+      <ul class="hidden items-center gap-4 md:flex">
+        {
+          navItems.map((item) => (
+            <li>
+              <a
+                href={getPagePath(item.key, locale)}
+                class="text-sm font-medium text-gray-700 hover:text-primary"
+              >
+                {item.label[locale]}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <LanguageSwitcher locale={locale} currentPath={currentPath} />
+  </div>
+</header>

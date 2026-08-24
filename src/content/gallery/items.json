@@ -1,0 +1,21 @@
+[
+  {
+    "id": "gallery-1",
+    "src": "/images/placeholder-gallery-1.svg",
+    "alt": {
+      "es": "Paisaje natural de montaña al amanecer",
+      "en": "Mountain landscape at sunrise"
+    },
+    "category": "naturaleza"
+  },
+  {
+    "id": "gallery-2",
+    "src": "/images/placeholder-gallery-2.svg",
+    "alt": {
+      "es": "Sendero entre árboles en el bosque",
+      "en": "Forest trail among trees"
+    },
+    "category": "experiencias",
+    "experienceSlug": "ecotour-bosque"
+  }
+]

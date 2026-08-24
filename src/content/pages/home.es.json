@@ -1,0 +1,14 @@
+{
+  "locale": "es",
+  "pageKey": "home",
+  "title": "Baruch — Ecoturismo y wellness",
+  "description": "Descubre experiencias de ecoturismo, retiros y wellness en contacto con la naturaleza.",
+  "heading": "Vive la naturaleza con propósito",
+  "sections": [
+    {
+      "id": "intro",
+      "heading": "Bienvenido",
+      "body": "Baruch ofrece experiencias auténticas de ecoturismo y bienestar. Contenido en construcción — MVP Fase 1."
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getGalleryItemsByLocale } from '@/lib/content';
+import { getAlternateLocaleUrl } from '@/lib/i18n/utils';
+
+const locale = 'en';
+const items = getGalleryItemsByLocale(locale);
+const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
+const title = 'Gallery — Baruch';
+const description = 'Photos of our experiences and destinations.';
+---
+
+<BaseLayout {title} {description} locale={locale} {alternateLocaleUrl}>
+  <section class="mx-auto max-w-6xl px-4 py-16">
+    <h1 class="text-3xl font-bold text-primary">Gallery</h1>
+    <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        items.map((item) => (
+          <li class="overflow-hidden rounded-lg border border-gray-200 bg-white">
+            <img src={item.src} alt={item.altText} class="aspect-video w-full object-cover" loading="lazy" />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

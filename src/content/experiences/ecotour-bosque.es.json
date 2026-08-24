@@ -1,0 +1,10 @@
+{
+  "slug": "ecotour-bosque",
+  "locale": "es",
+  "title": "Ecotour en el bosque",
+  "summary": "Exploración guiada de flora, fauna y prácticas de conservación.",
+  "description": "Recorrido educativo por senderos del bosque con enfoque en ecoturismo responsable y biodiversidad local.",
+  "coverImage": "/images/placeholder-ecotour.svg",
+  "featured": true,
+  "order": 2
+}

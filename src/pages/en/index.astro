@@ -1,0 +1,70 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getFeaturedExperiences, getPage, getSiteSettings } from '@/lib/content';
+import { getAlternateLocaleUrl, getPagePath } from '@/lib/i18n/utils';
+
+const locale = 'en';
+const page = getPage('home', locale);
+const settings = getSiteSettings(locale);
+const experiences = getFeaturedExperiences(locale);
+const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
+---
+
+<BaseLayout
+  title={page.title}
+  description={page.description}
+  locale={locale}
+  alternateLocaleUrl={alternateLocaleUrl}
+>
+  <section class="bg-primary px-4 py-20 text-white">
+    <div class="mx-auto max-w-4xl text-center">
+      <h1 class="text-4xl font-bold md:text-5xl">{page.heading}</h1>
+      <p class="mt-4 text-lg text-white/90">{settings.tagline}</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <a
+          href={getPagePath('quote', locale)}
+          class="rounded bg-accent px-6 py-3 font-semibold text-primary-dark hover:opacity-90"
+        >
+          Request quote
+        </a>
+        <a
+          href={`https://wa.me/${settings.contact.whatsapp}`}
+          class="rounded border border-white px-6 py-3 font-semibold hover:bg-white/10"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16">
+    {
+      page.sections?.map((section) => (
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-primary">{section.heading}</h2>
+          <p class="mt-2 text-gray-700">{section.body}</p>
+        </div>
+      ))
+    }
+
+    <h2 class="text-2xl font-semibold text-primary">Featured experiences</h2>
+    <ul class="mt-6 grid gap-6 md:grid-cols-2">
+      {
+        experiences.map((experience) => (
+          <li class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+            <h3 class="text-xl font-semibold">{experience.title}</h3>
+            <p class="mt-2 text-gray-600">{experience.summary}</p>
+            <a
+              href={getPagePath('experiences', locale, experience.slug)}
+              class="mt-4 inline-block text-sm font-semibold text-primary underline"
+            >
+              View details
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

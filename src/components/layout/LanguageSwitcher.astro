@@ -1,0 +1,33 @@
+---
+import type { Locale } from '@/lib/i18n/config';
+import { localeLabels, locales } from '@/lib/i18n/config';
+import { switchLocalePath } from '@/lib/i18n/utils';
+
+interface Props {
+  locale: Locale;
+  currentPath: string;
+}
+
+const { locale, currentPath } = Astro.props;
+const alternateLocale = locales.find((item) => item !== locale)!;
+---
+
+<div class="flex items-center gap-2">
+  <span class="sr-only">{locale === 'es' ? 'Idioma' : 'Language'}</span>
+  {
+    locales.map((item) => (
+      <a
+        href={switchLocalePath(currentPath, item)}
+        class:list={[
+          'rounded px-2 py-1 text-xs font-semibold uppercase tracking-wide',
+          item === locale
+            ? 'bg-primary text-white'
+            : 'text-gray-600 hover:bg-gray-100',
+        ]}
+        aria-current={item === locale ? 'page' : undefined}
+      >
+        {localeLabels[item]}
+      </a>
+    ))
+  }
+</div>

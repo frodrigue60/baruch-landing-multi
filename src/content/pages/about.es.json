@@ -1,0 +1,14 @@
+{
+  "locale": "es",
+  "pageKey": "about",
+  "title": "Nosotros — Baruch",
+  "description": "Conoce la historia, misión y valores de Baruch.",
+  "heading": "Quiénes somos",
+  "sections": [
+    {
+      "id": "mission",
+      "heading": "Nuestra misión",
+      "body": "Conectar a las personas con la naturaleza a través de experiencias responsables y transformadoras."
+    }
+  ]
+}

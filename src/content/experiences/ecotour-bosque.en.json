@@ -1,0 +1,10 @@
+{
+  "slug": "ecotour-bosque",
+  "locale": "en",
+  "title": "Forest ecotour",
+  "summary": "Guided exploration of flora, fauna and conservation practices.",
+  "description": "Educational walk through forest trails focused on responsible ecotourism and local biodiversity.",
+  "coverImage": "/images/placeholder-ecotour.svg",
+  "featured": true,
+  "order": 2
+}
