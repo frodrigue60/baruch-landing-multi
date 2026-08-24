@@ -8,7 +8,7 @@ Documento de planificación técnica. Define fases, stack, estructura del reposi
 
 | Aspecto | Decisión |
 |---|---|
-| **Stack MVP** | Astro 5 + Tailwind CSS + TypeScript |
+| **Stack MVP** | Astro 7 + Tailwind CSS + TypeScript 7 + Bun |
 | **Contenido** | Archivos estáticos (JSON + Markdown) en `src/content/` |
 | **i18n** | Rutas por locale: `/es/...` y `/en/...` |
 | **Formulario** | Placeholder visual (sin backend en MVP) |
@@ -23,8 +23,9 @@ Documento de planificación técnica. Define fases, stack, estructura del reposi
 
 ```
 Astro (SSG)          → páginas, routing, build estático, SEO
+Bun                  → runtime + package manager
 Tailwind CSS         → diseño responsivo
-TypeScript           → tipos para contenido y componentes
+TypeScript 7         → tipos para contenido y componentes
 JSON / Markdown      → fuente de contenido MVP
 Astro Image          → optimización de imágenes (RNF-07)
 PhotoSwipe (o similar) → lightbox galería (RF-13)
@@ -57,7 +58,8 @@ Archivos base del repo:
 | `.gitignore` | `node_modules/`, `dist/`, `.env*`, `.astro/`, OS/IDE |
 | `README.md` | Cómo clonar, instalar, desarrollar y desplegar |
 | `.editorconfig` | Consistencia de indentación |
-| `.nvmrc` o `.node-version` | Versión de Node (ej. `20`) |
+| `.bun-version` | Versión de Bun (ej. `1.4.0`) |
+| `packageManager` | Campo en `package.json` (`bun@…`) |
 
 **Primer commit:**
 
@@ -82,7 +84,7 @@ docs/*        → solo documentación
 1. Crear rama desde `develop` (o `main` si el equipo es de una persona).
 2. PR o merge cuando la fase/subtarea cumple criterios de aceptación.
 3. Tag al cerrar cada fase: `v0.1.0-fase-1`, `v0.2.0-fase-2`, …
-4. `main` solo recibe merges probados (`npm run build` exitoso).
+4. `main` solo recibe merges probados (`bun run build` exitoso).
 
 ### Convención de commits
 
@@ -118,11 +120,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version-file: '.nvmrc'
-      - run: npm ci
-      - run: npm run build
+          bun-version-file: '.bun-version'
+      - run: bun install --frozen-lockfile
+      - run: bun run build
 ```
 
 ---

@@ -15,10 +15,11 @@ Contexto técnico para agentes de IA (Cursor, Copilot, etc.) que trabajen en est
 ## Stack (no cambiar sin acuerdo)
 
 ```
-Astro 5       SSG, routing, componentes .astro
-TypeScript    strict — tipos en lib/ y content/
-Tailwind CSS  estilos utilitarios
-JSON estático fuente de contenido MVP (no CMS aún)
+Astro 5+ / 7   SSG, routing, componentes .astro
+TypeScript 7   strict — tipos en lib/ y content/
+Bun            runtime + package manager (no npm/Node como default)
+Tailwind CSS   estilos utilitarios
+JSON estático  fuente de contenido MVP (no CMS aún)
 ```
 
 **Fuera de alcance MVP:** CMS (Sanity/Payload), envío de formularios, reservaciones, pagos.
@@ -157,16 +158,17 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 - **Conventional Commits:** `feat:`, `fix:`, `docs:`, `chore:`, `refactor:`
 - **Ramas:** `feat/nombre-corto` desde `develop` o `main`
 - **No commitear:** `.env`, secretos, `node_modules/`, `dist/`
-- **Antes de merge:** `npm run build` debe pasar
+- **Antes de merge:** `bun run build` y `bun run typecheck` deben pasar
 - **No hacer** force push a `main`
 
 ## Comandos útiles
 
 ```bash
-npm install          # instalar dependencias
-npm run dev          # dev server → localhost:4321
-npm run build        # build SSG → dist/
-npm run preview      # servir dist/ localmente
+bun install          # instalar dependencias
+bun run dev          # dev server → localhost:4321
+bun run build        # build SSG → dist/
+bun run preview      # servir dist/ localmente
+bun run typecheck    # tsc --noEmit (TypeScript 7)
 ```
 
 ## Checklist al implementar una página nueva

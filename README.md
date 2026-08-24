@@ -4,14 +4,14 @@ Landing page bilingüe (ES/EN) para ecoturismo y wellness. Contenido en archivos
 
 ## Requisitos
 
-- Node.js 22+ (ver `.nvmrc`)
-- npm
+- [Bun](https://bun.sh) 1.4+ (ver `.bun-version`)
+- TypeScript 7
 
 ## Desarrollo local
 
 ```bash
-npm install
-npm run dev
+bun install
+bun run dev
 ```
 
 Abre [http://localhost:4321](http://localhost:4321). La raíz redirige a `/es/`.
@@ -20,9 +20,10 @@ Abre [http://localhost:4321](http://localhost:4321). La raíz redirige a `/es/`.
 
 | Comando | Descripción |
 |---------|-------------|
-| `npm run dev` | Servidor de desarrollo |
-| `npm run build` | Build de producción (SSG) |
-| `npm run preview` | Preview del build |
+| `bun run dev` | Servidor de desarrollo |
+| `bun run build` | Build de producción (SSG) |
+| `bun run preview` | Preview del build |
+| `bun run typecheck` | Typecheck con `tsc --noEmit` |
 
 ## Estructura clave
 
@@ -37,6 +38,7 @@ Abre [http://localhost:4321](http://localhost:4321). La raíz redirige a `/es/`.
 2. **Experiencias**: un archivo JSON por experiencia en `src/content/experiences/`
 3. **Páginas** (home, nosotros, contacto, privacidad, cotizar): `src/content/pages/`
 4. **Galería**: imágenes en `src/content/gallery/items.json`, categorías en `categories.json`
+5. **Precios / simulador**: `src/content/pricing/config.{es,en}.json`
 
 No modificar componentes para cambiar textos; solo los archivos en `src/content/`.
 
@@ -50,7 +52,8 @@ No modificar componentes para cambiar textos; solo los archivos en `src/content/
 
 Build estático compatible con **Cloudflare Pages** o **Vercel**:
 
-- Build command: `npm run build`
+- Install command: `bun install`
+- Build command: `bun run build`
 - Output directory: `dist`
 
 ## Git
