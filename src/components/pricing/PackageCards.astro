@@ -1,0 +1,52 @@
+---
+import type { Locale } from '@/lib/i18n/config';
+import type { PricingPackage } from '@/lib/content/types';
+import { getPagePath } from '@/lib/i18n/utils';
+
+interface Props {
+  packages: PricingPackage[];
+  locale: Locale;
+  currencySymbol: string;
+}
+
+const { packages, locale, currencySymbol } = Astro.props;
+
+function formatBase(price: number): string {
+  return `${currencySymbol}${price.toLocaleString(locale === 'en' ? 'en-US' : 'es-MX')}`;
+}
+---
+
+<ul class="grid gap-6 md:grid-cols-3">
+  {
+    packages.map((pkg) => (
+      <li>
+        <article class="flex h-full flex-col rounded-(--radius-card) border border-border bg-surface-elevated p-6 shadow-(--shadow-soft)">
+          <h3 class="text-xl font-bold text-primary">{pkg.name}</h3>
+          <p class="mt-2 flex-1 text-sm text-muted">{pkg.summary}</p>
+          <p class="mt-4 text-2xl font-bold text-primary">
+            {formatBase(pkg.basePricePerDay)}
+            <span class="text-sm font-normal text-muted">
+              {locale === 'es' ? ' / persona / día' : ' / person / day'}
+            </span>
+          </p>
+          <ul class="mt-4 space-y-1.5 text-sm text-muted">
+            {
+              pkg.includes.map((item) => (
+                <li class="flex items-start gap-2">
+                  <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+                  {item}
+                </li>
+              ))
+            }
+          </ul>
+          <a
+            href={getPagePath('experiences', locale, pkg.experienceSlug)}
+            class="mt-5 text-sm font-semibold text-primary underline"
+          >
+            {locale === 'es' ? 'Ver experiencia' : 'View experience'}
+          </a>
+        </article>
+      </li>
+    ))
+  }
+</ul>

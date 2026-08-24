@@ -5,6 +5,7 @@ import type {
   GalleryItem,
   PageContent,
   PageKey,
+  PricingConfig,
   SiteSettings,
 } from './types';
 
@@ -28,6 +29,8 @@ import yogaAmanecerEs from '@/content/experiences/yoga-amanecer.es.json';
 import yogaAmanecerEn from '@/content/experiences/yoga-amanecer.en.json';
 import galleryItems from '@/content/gallery/items.json';
 import galleryCategories from '@/content/gallery/categories.json';
+import pricingEs from '@/content/pricing/config.es.json';
+import pricingEn from '@/content/pricing/config.en.json';
 
 const siteSettingsByLocale: Record<Locale, SiteSettings> = {
   es: siteEs as SiteSettings,
@@ -61,6 +64,11 @@ const allExperiences: Experience[] = [
 ];
 
 const allGalleryCategories = galleryCategories as GalleryCategory[];
+
+const pricingByLocale: Record<Locale, PricingConfig> = {
+  es: pricingEs as PricingConfig,
+  en: pricingEn as PricingConfig,
+};
 
 export function getSiteSettings(locale: Locale): SiteSettings {
   return siteSettingsByLocale[locale];
@@ -123,11 +131,16 @@ export function getExperienceSlugs(locale: Locale): string[] {
   return [...new Set(getExperiences(locale).map((experience) => experience.slug))];
 }
 
+export function getPricingConfig(locale: Locale): PricingConfig {
+  return pricingByLocale[locale];
+}
+
 export type {
   Experience,
   GalleryCategory,
   GalleryItem,
   PageContent,
   PageKey,
+  PricingConfig,
   SiteSettings,
 };

@@ -28,8 +28,9 @@ JSON estático fuente de contenido MVP (no CMS aún)
 1. **Contenido separado de presentación** — Textos e imágenes viven en `src/content/`. Los componentes solo renderizan datos vía `src/lib/content/`.
 2. **Capa de contenido abstracta (RF-27)** — Las páginas importan `getExperiences()`, `getPage()`, `getSiteSettings()`, nunca leen JSON directamente. Esto permite migrar a CMS sin reescribir páginas.
 3. **i18n por rutas** — `/es/...` y `/en/...`. No usar solo cookies/query para idioma. El switcher debe preservar la ruta equivalente (RF-05).
-4. **Formulario placeholder** — `QuoteFormPlaceholder` muestra UI pero **no envía datos**. Botón deshabilitado + aviso + CTAs a WhatsApp/email/teléfono (RF-14, RF-15).
-5. **Minimizar scope** — Cambios pequeños y focalizados. No implementar features de fases futuras.
+4. **Formulario placeholder** — En `/contacto` (no en cotizar): `QuoteFormPlaceholder` muestra UI pero **no envía datos**. Botón deshabilitado + aviso + CTAs a WhatsApp/email/teléfono (RF-14, RF-15).
+5. **Cotizar = simulador** — `/cotizar` muestra paquetes y calculadora front-side desde `src/content/pricing/`. No es cotización formal ni pago.
+6. **Minimizar scope** — Cambios pequeños y focalizados. No implementar features de fases futuras.
 
 ## Estructura de directorios
 
@@ -41,12 +42,13 @@ src/
 │   ├── ui/                  # Button, Section, PageHero, PageHeader, SectionHeading
 │   ├── experiences/         # ExperienceCard, ExperienceGrid
 │   ├── gallery/             # GalleryGrid, Lightbox (Fase 4)
-│   └── forms/               # QuoteFormPlaceholder
-├── content/
+│   ├── pricing/             # PackageCards, CostSimulator
+│   └── forms/               # QuoteFormPlaceholder (en /contacto)├── content/
 │   ├── settings/            # site.es.json, site.en.json
 │   ├── pages/               # home, about por locale
 │   ├── experiences/         # un JSON por experiencia × locale
-│   └── gallery/             # items.json
+│   ├── pricing/             # config.es.json, config.en.json (simulador)
+│   └── gallery/             # items.json, categories.json
 ├── layouts/
 │   └── BaseLayout.astro     # shell HTML, meta SEO, header/footer
 ├── lib/
@@ -88,6 +90,10 @@ src/
 Campos MVP: `slug`, `locale`, `title`, `summary`, `description`, `coverImage`, `gallery?`, `featured?`, `order?`.
 
 Campos reservados (no usar en MVP, no eliminar del tipo): `price`, `availability` — para Fase 8.
+
+### PricingConfig (`src/content/pricing/config.{locale}.json`)
+
+Simulador de costos (solo front): `packages` (basePricePerDay), `personTypes`, `reservationTypes`, `locations` con multiplicadores. Cálculo: `base × días × huéspedes × persona × reservación × ubicación`.
 
 ### PageContent (`src/content/pages/{page}.{locale}.json`)
 

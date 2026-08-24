@@ -1,0 +1,78 @@
+{
+  "locale": "en",
+  "currency": "MXN",
+  "currencySymbol": "$",
+  "disclaimer": "Indicative estimate calculated in your browser. It is not a formal quote and does not imply availability. Final prices are confirmed when you contact us.",
+  "minDays": 1,
+  "maxDays": 14,
+  "minGuests": 1,
+  "maxGuests": 20,
+  "packages": [
+    {
+      "id": "retiro-wellness",
+      "experienceSlug": "retiro-wellness",
+      "name": "Wellness retreat",
+      "summary": "Disconnection, yoga and nature. Ideal for 2–3 days.",
+      "basePricePerDay": 2200,
+      "includes": ["Eco lodging", "Yoga and mindfulness", "Conscious meals"]
+    },
+    {
+      "id": "ecotour-bosque",
+      "experienceSlug": "ecotour-bosque",
+      "name": "Forest ecotour",
+      "summary": "Guided exploration of flora, fauna and conservation.",
+      "basePricePerDay": 950,
+      "includes": ["Naturalist guide", "Educational materials", "Snacks and water"]
+    },
+    {
+      "id": "yoga-amanecer",
+      "experienceSlug": "yoga-amanecer",
+      "name": "Sunrise yoga",
+      "summary": "Morning session at a lookout with valley views.",
+      "basePricePerDay": 650,
+      "includes": ["Certified instructor", "Yoga equipment", "Local infusion"]
+    }
+  ],
+  "personTypes": [
+    {
+      "id": "regular",
+      "label": "Regular",
+      "description": "General rate",
+      "multiplier": 1
+    },
+    {
+      "id": "student",
+      "label": "Student",
+      "description": "With valid student ID (verified on booking)",
+      "multiplier": 0.8
+    }
+  ],
+  "reservationTypes": [
+    {
+      "id": "standard",
+      "label": "Standard",
+      "description": "Standard service",
+      "multiplier": 1
+    },
+    {
+      "id": "premium",
+      "label": "Premium",
+      "description": "Preferential service and extras",
+      "multiplier": 1.35
+    }
+  ],
+  "locations": [
+    {
+      "id": "common",
+      "label": "Common area",
+      "description": "Shared destination areas",
+      "multiplier": 1
+    },
+    {
+      "id": "sea-view",
+      "label": "Sea view",
+      "description": "Location with sea view",
+      "multiplier": 1.25
+    }
+  ]
+}

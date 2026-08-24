@@ -2,7 +2,7 @@
   "locale": "es",
   "pageKey": "contact",
   "title": "Contacto — Baruch",
-  "description": "Teléfono, correo, ubicación, mapa y redes sociales de Baruch.",
+  "description": "Teléfono, correo, ubicación, mapa y solicitud de información para Baruch.",
   "heading": "Contacto",
   "sections": [
     {
@@ -14,6 +14,11 @@
       "id": "map-note",
       "heading": "Cómo llegar",
       "body": "Nuestro punto de encuentro se confirma al reservar. El mapa muestra la zona general del destino (placeholder)."
+    },
+    {
+      "id": "request",
+      "heading": "Solicitar información",
+      "body": "Indica fechas aproximadas, tamaño de grupo y qué experiencia te interesa. Te responderemos con opciones y disponibilidad. El envío en línea estará disponible próximamente."
     }
   ]
 }

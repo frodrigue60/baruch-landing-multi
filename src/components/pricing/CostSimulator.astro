@@ -1,0 +1,334 @@
+---
+import type { Locale } from '@/lib/i18n/config';
+import type { PricingConfig } from '@/lib/content/types';
+import { getPagePath } from '@/lib/i18n/utils';
+
+interface Props {
+  config: PricingConfig;
+  locale: Locale;
+  whatsapp: string;
+  contactPath?: string;
+}
+
+const { config, locale, whatsapp } = Astro.props;
+const contactPath = Astro.props.contactPath ?? getPagePath('contact', locale);
+const labels = {
+  package: locale === 'es' ? 'Paquete / plan' : 'Package / plan',
+  personType: locale === 'es' ? 'Tipo de persona' : 'Person type',
+  reservation: locale === 'es' ? 'Tipo de reservación' : 'Reservation type',
+  location: locale === 'es' ? 'Ubicación' : 'Location',
+  days: locale === 'es' ? 'Días' : 'Days',
+  guests: locale === 'es' ? 'Personas' : 'Guests',
+  estimate: locale === 'es' ? 'Estimación total' : 'Total estimate',
+  perDay: locale === 'es' ? 'Por día (grupo)' : 'Per day (group)',
+  perPersonDay: locale === 'es' ? 'Por persona / día' : 'Per person / day',
+  breakdown: locale === 'es' ? 'Desglose' : 'Breakdown',
+  contact: locale === 'es' ? 'Continuar en contacto' : 'Continue on contact',
+  whatsapp: locale === 'es' ? 'Enviar estimación por WhatsApp' : 'Send estimate via WhatsApp',
+  base: locale === 'es' ? 'Tarifa base' : 'Base rate',
+};
+
+const configJson = JSON.stringify(config);
+---
+
+<div
+  id="cost-simulator"
+  class="rounded-(--radius-card) border border-border bg-surface-elevated p-6 shadow-(--shadow-soft) md:p-8"
+  data-locale={locale}
+  data-whatsapp={whatsapp}
+  data-contact={contactPath}
+>
+  <script type="application/json" id="pricing-config" set:html={configJson} />
+
+  <form id="cost-simulator-form" class="grid gap-6 lg:grid-cols-2">
+    <div class="space-y-5">
+      <div>
+        <label for="sim-package" class="block text-sm font-medium text-gray-800">{labels.package}</label>
+        <select
+          id="sim-package"
+          name="package"
+          class="mt-1.5 w-full rounded-lg border border-border bg-white px-4 py-2.5 text-gray-900"
+        >
+          {
+            config.packages.map((pkg) => (
+              <option value={pkg.id}>{pkg.name}</option>
+            ))
+          }
+        </select>
+      </div>
+
+      <div>
+        <label for="sim-person" class="block text-sm font-medium text-gray-800">{labels.personType}</label>
+        <select
+          id="sim-person"
+          name="person"
+          class="mt-1.5 w-full rounded-lg border border-border bg-white px-4 py-2.5 text-gray-900"
+        >
+          {
+            config.personTypes.map((option) => (
+              <option value={option.id}>
+                {option.label} ({Math.round(option.multiplier * 100)}%)
+              </option>
+            ))
+          }
+        </select>
+        <p id="sim-person-desc" class="mt-1 text-xs text-muted"></p>
+      </div>
+
+      <div>
+        <label for="sim-reservation" class="block text-sm font-medium text-gray-800">{labels.reservation}</label>
+        <select
+          id="sim-reservation"
+          name="reservation"
+          class="mt-1.5 w-full rounded-lg border border-border bg-white px-4 py-2.5 text-gray-900"
+        >
+          {
+            config.reservationTypes.map((option) => (
+              <option value={option.id}>
+                {option.label} ({Math.round(option.multiplier * 100)}%)
+              </option>
+            ))
+          }
+        </select>
+        <p id="sim-reservation-desc" class="mt-1 text-xs text-muted"></p>
+      </div>
+
+      <div>
+        <label for="sim-location" class="block text-sm font-medium text-gray-800">{labels.location}</label>
+        <select
+          id="sim-location"
+          name="location"
+          class="mt-1.5 w-full rounded-lg border border-border bg-white px-4 py-2.5 text-gray-900"
+        >
+          {
+            config.locations.map((option) => (
+              <option value={option.id}>
+                {option.label} ({Math.round(option.multiplier * 100)}%)
+              </option>
+            ))
+          }
+        </select>
+        <p id="sim-location-desc" class="mt-1 text-xs text-muted"></p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="sim-days" class="block text-sm font-medium text-gray-800">{labels.days}</label>
+          <input
+            id="sim-days"
+            name="days"
+            type="number"
+            min={config.minDays}
+            max={config.maxDays}
+            value="2"
+            class="mt-1.5 w-full rounded-lg border border-border bg-white px-4 py-2.5 text-gray-900"
+          />
+        </div>
+        <div>
+          <label for="sim-guests" class="block text-sm font-medium text-gray-800">{labels.guests}</label>
+          <input
+            id="sim-guests"
+            name="guests"
+            type="number"
+            min={config.minGuests}
+            max={config.maxGuests}
+            value="2"
+            class="mt-1.5 w-full rounded-lg border border-border bg-white px-4 py-2.5 text-gray-900"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col rounded-xl bg-primary/5 p-6">
+      <p class="text-sm font-medium uppercase tracking-wide text-primary">{labels.estimate}</p>
+      <p id="sim-total" class="mt-2 text-4xl font-bold text-primary" aria-live="polite">—</p>
+
+      <dl class="mt-6 space-y-2 text-sm text-muted">
+        <div class="flex justify-between gap-4">
+          <dt>{labels.perPersonDay}</dt>
+          <dd id="sim-per-person-day" class="font-medium text-gray-800">—</dd>
+        </div>
+        <div class="flex justify-between gap-4">
+          <dt>{labels.perDay}</dt>
+          <dd id="sim-per-day" class="font-medium text-gray-800">—</dd>
+        </div>
+      </dl>
+
+      <div class="mt-6 border-t border-border pt-4">
+        <p class="text-sm font-semibold text-primary">{labels.breakdown}</p>
+        <ul id="sim-breakdown" class="mt-2 space-y-1 text-xs text-muted"></ul>
+      </div>
+
+      <p class="mt-6 text-xs leading-relaxed text-muted">{config.disclaimer}</p>
+
+      <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+        <a
+          id="sim-whatsapp"
+          href={`https://wa.me/${whatsapp}`}
+          class="inline-flex items-center justify-center rounded-full bg-[#25D366] px-5 py-2.5 text-sm font-semibold text-white hover:opacity-90"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {labels.whatsapp}
+        </a>
+        <a
+          href={contactPath}
+          class="inline-flex items-center justify-center rounded-full border-2 border-primary px-5 py-2.5 text-sm font-semibold text-primary hover:bg-primary/5"
+        >
+          {labels.contact}
+        </a>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  type PricingOption = { id: string; label: string; description: string; multiplier: number };
+  type PricingPackage = {
+    id: string;
+    name: string;
+    basePricePerDay: number;
+  };
+  type PricingConfig = {
+    currencySymbol: string;
+    minDays: number;
+    maxDays: number;
+    minGuests: number;
+    maxGuests: number;
+    packages: PricingPackage[];
+    personTypes: PricingOption[];
+    reservationTypes: PricingOption[];
+    locations: PricingOption[];
+  };
+
+  function clamp(value: number, min: number, max: number) {
+    return Math.min(max, Math.max(min, value));
+  }
+
+  function formatMoney(amount: number, symbol: string, locale: string) {
+    const formatted = new Intl.NumberFormat(locale === 'en' ? 'en-US' : 'es-MX', {
+      maximumFractionDigits: 0,
+    }).format(Math.round(amount));
+    return `${symbol}${formatted}`;
+  }
+
+  function findById<T extends { id: string }>(items: T[], id: string) {
+    return items.find((item) => item.id === id);
+  }
+
+  function initSimulator() {
+    const root = document.getElementById('cost-simulator');
+    const configEl = document.getElementById('pricing-config');
+    if (!root || !configEl?.textContent) return;
+
+    const config = JSON.parse(configEl.textContent) as PricingConfig;
+    const locale = root.dataset.locale ?? 'es';
+    const whatsapp = root.dataset.whatsapp ?? '';
+
+    const packageSelect = document.getElementById('sim-package') as HTMLSelectElement | null;
+    const personSelect = document.getElementById('sim-person') as HTMLSelectElement | null;
+    const reservationSelect = document.getElementById('sim-reservation') as HTMLSelectElement | null;
+    const locationSelect = document.getElementById('sim-location') as HTMLSelectElement | null;
+    const daysInput = document.getElementById('sim-days') as HTMLInputElement | null;
+    const guestsInput = document.getElementById('sim-guests') as HTMLInputElement | null;
+
+    const totalEl = document.getElementById('sim-total');
+    const perPersonEl = document.getElementById('sim-per-person-day');
+    const perDayEl = document.getElementById('sim-per-day');
+    const breakdownEl = document.getElementById('sim-breakdown');
+    const whatsappLink = document.getElementById('sim-whatsapp') as HTMLAnchorElement | null;
+
+    const personDesc = document.getElementById('sim-person-desc');
+    const reservationDesc = document.getElementById('sim-reservation-desc');
+    const locationDesc = document.getElementById('sim-location-desc');
+
+    function updateDescriptions() {
+      const person = findById(config.personTypes, personSelect?.value ?? '');
+      const reservation = findById(config.reservationTypes, reservationSelect?.value ?? '');
+      const location = findById(config.locations, locationSelect?.value ?? '');
+      if (personDesc) personDesc.textContent = person?.description ?? '';
+      if (reservationDesc) reservationDesc.textContent = reservation?.description ?? '';
+      if (locationDesc) locationDesc.textContent = location?.description ?? '';
+    }
+
+    function recalculate() {
+      const selectedPackage = findById(config.packages, packageSelect?.value ?? '');
+      const person = findById(config.personTypes, personSelect?.value ?? '');
+      const reservation = findById(config.reservationTypes, reservationSelect?.value ?? '');
+      const location = findById(config.locations, locationSelect?.value ?? '');
+
+      if (!selectedPackage || !person || !reservation || !location) return;
+
+      const days = clamp(Number(daysInput?.value || 1), config.minDays, config.maxDays);
+      const guests = clamp(Number(guestsInput?.value || 1), config.minGuests, config.maxGuests);
+
+      if (daysInput) daysInput.value = String(days);
+      if (guestsInput) guestsInput.value = String(guests);
+
+      const pricePerPersonPerDay =
+        selectedPackage.basePricePerDay *
+        person.multiplier *
+        reservation.multiplier *
+        location.multiplier;
+      const subtotalPerDay = pricePerPersonPerDay * guests;
+      const total = subtotalPerDay * days;
+
+      if (totalEl) totalEl.textContent = formatMoney(total, config.currencySymbol, locale);
+      if (perPersonEl) {
+        perPersonEl.textContent = formatMoney(pricePerPersonPerDay, config.currencySymbol, locale);
+      }
+      if (perDayEl) {
+        perDayEl.textContent = formatMoney(subtotalPerDay, config.currencySymbol, locale);
+      }
+
+      if (breakdownEl) {
+        const lines =
+          locale === 'es'
+            ? [
+                `Tarifa base: ${formatMoney(selectedPackage.basePricePerDay, config.currencySymbol, locale)} / persona / día`,
+                `Tipo de persona (${person.label}): ×${person.multiplier}`,
+                `Reservación (${reservation.label}): ×${reservation.multiplier}`,
+                `Ubicación (${location.label}): ×${location.multiplier}`,
+                `${days} día(s) × ${guests} persona(s)`,
+              ]
+            : [
+                `Base rate: ${formatMoney(selectedPackage.basePricePerDay, config.currencySymbol, locale)} / person / day`,
+                `Person type (${person.label}): ×${person.multiplier}`,
+                `Reservation (${reservation.label}): ×${reservation.multiplier}`,
+                `Location (${location.label}): ×${location.multiplier}`,
+                `${days} day(s) × ${guests} guest(s)`,
+              ];
+        breakdownEl.innerHTML = lines.map((line) => `<li>${line}</li>`).join('');
+      }
+
+      if (whatsappLink) {
+        const message =
+          locale === 'es'
+            ? `Hola Baruch, me interesa una estimación:\n• Paquete: ${selectedPackage.name}\n• Persona: ${person.label}\n• Reservación: ${reservation.label}\n• Ubicación: ${location.label}\n• Días: ${days}\n• Personas: ${guests}\n• Estimación: ${formatMoney(total, config.currencySymbol, locale)} MXN\n(Estimación orientativa del sitio)`
+            : `Hi Baruch, I'm interested in an estimate:\n• Package: ${selectedPackage.name}\n• Person: ${person.label}\n• Reservation: ${reservation.label}\n• Location: ${location.label}\n• Days: ${days}\n• Guests: ${guests}\n• Estimate: ${formatMoney(total, config.currencySymbol, locale)} MXN\n(Indicative site estimate)`;
+        whatsappLink.href = `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
+      }
+
+      updateDescriptions();
+    }
+
+    const controls = [
+      packageSelect,
+      personSelect,
+      reservationSelect,
+      locationSelect,
+      daysInput,
+      guestsInput,
+    ];
+
+    for (const control of controls) {
+      control?.addEventListener('change', recalculate);
+      control?.addEventListener('input', recalculate);
+    }
+
+    recalculate();
+  }
+
+  initSimulator();
+  document.addEventListener('astro:page-load', initSimulator);
+</script>

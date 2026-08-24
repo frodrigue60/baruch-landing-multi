@@ -4,6 +4,7 @@ import PageHeader from '@/components/ui/PageHeader.astro';
 import Section from '@/components/ui/Section.astro';
 import Button from '@/components/ui/Button.astro';
 import ContactMap from '@/components/contact/ContactMap.astro';
+import QuoteFormPlaceholder from '@/components/forms/QuoteFormPlaceholder.astro';
 import { getPage, getSiteSettings } from '@/lib/content';
 import { getAlternateLocaleUrl } from '@/lib/i18n/utils';
 import { t } from '@/lib/i18n/labels';
@@ -96,5 +97,9 @@ const mapSection = page.sections?.find((s) => s.id === 'map-note');
         }
       </div>
     </div>
+  </Section>
+
+  <Section narrow class="border-t border-border bg-primary/5">
+    <QuoteFormPlaceholder locale={locale} settings={settings} page={page} />
   </Section>
 </BaseLayout>

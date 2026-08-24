@@ -76,4 +76,38 @@ export interface GalleryCategory {
   label: Record<Locale, string>;
 }
 
+/** Opción de tarifa con multiplicador (tipo persona, reservación, ubicación). */
+export interface PricingOption {
+  id: string;
+  label: string;
+  description: string;
+  multiplier: number;
+}
+
+/** Paquete/plan cotizable vinculado a una experiencia. */
+export interface PricingPackage {
+  id: string;
+  experienceSlug: string;
+  name: string;
+  summary: string;
+  basePricePerDay: number;
+  includes: string[];
+}
+
+/** Configuración del simulador de costos (solo front; no es cotización formal). */
+export interface PricingConfig {
+  locale: Locale;
+  currency: string;
+  currencySymbol: string;
+  disclaimer: string;
+  minDays: number;
+  maxDays: number;
+  minGuests: number;
+  maxGuests: number;
+  packages: PricingPackage[];
+  personTypes: PricingOption[];
+  reservationTypes: PricingOption[];
+  locations: PricingOption[];
+}
+
 export type PageKey = 'home' | 'about' | 'contact' | 'privacy' | 'quote';

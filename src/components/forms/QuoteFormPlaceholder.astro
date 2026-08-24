@@ -2,8 +2,6 @@
 import type { Locale } from '@/lib/i18n/config';
 import type { PageContent, SiteSettings } from '@/lib/content';
 import Button from '@/components/ui/Button.astro';
-import Section from '@/components/ui/Section.astro';
-import PageHeader from '@/components/ui/PageHeader.astro';
 
 interface Props {
   locale: Locale;
@@ -13,13 +11,21 @@ interface Props {
 
 const { locale, settings, page } = Astro.props;
 const whatsappUrl = `https://wa.me/${settings.contact.whatsapp}`;
-const intro = page.sections?.[0];
+const requestSection = page.sections?.find((s) => s.id === 'request') ?? page.sections?.[0];
 ---
 
-<PageHeader title={page.heading} description={intro?.body} />
-<Section narrow>
+<section id="solicitud" class="scroll-mt-24">
+  <h2 class="text-2xl font-bold text-primary">
+    {requestSection?.heading ?? (locale === 'es' ? 'Solicitar información' : 'Request information')}
+  </h2>
+  {
+    requestSection?.body && (
+      <p class="mt-2 text-muted">{requestSection.body}</p>
+    )
+  }
+
   <div
-    class="rounded-(--radius-card) border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900"
+    class="mt-6 rounded-(--radius-card) border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900"
     role="status"
   >
     {
@@ -99,7 +105,7 @@ const intro = page.sections?.[0];
   </form>
 
   <article class="mt-10 rounded-(--radius-card) border border-border bg-surface-elevated p-6 shadow-(--shadow-soft)">
-    <h2 class="font-semibold text-primary">{locale === 'es' ? 'Contacto directo' : 'Direct contact'}</h2>
+    <h3 class="font-semibold text-primary">{locale === 'es' ? 'Contacto directo' : 'Direct contact'}</h3>
     <ul class="mt-4 space-y-2 text-sm text-muted">
       <li>
         <Button href={whatsappUrl} variant="ghost" size="sm" external class="!px-0">
@@ -118,4 +124,4 @@ const intro = page.sections?.[0];
       </li>
     </ul>
   </article>
-</Section>
+</section>

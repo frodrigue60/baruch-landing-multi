@@ -1,13 +1,20 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import QuoteFormPlaceholder from '@/components/forms/QuoteFormPlaceholder.astro';
-import { getPage, getSiteSettings } from '@/lib/content';
+import PageHeader from '@/components/ui/PageHeader.astro';
+import Section from '@/components/ui/Section.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import PackageCards from '@/components/pricing/PackageCards.astro';
+import CostSimulator from '@/components/pricing/CostSimulator.astro';
+import { getPage, getPricingConfig, getSiteSettings } from '@/lib/content';
 import { getAlternateLocaleUrl } from '@/lib/i18n/utils';
 
 const locale = 'es';
 const page = getPage('quote', locale);
 const settings = getSiteSettings(locale);
+const pricing = getPricingConfig(locale);
 const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
+const packagesSection = page.sections?.find((s) => s.id === 'intro');
+const simulatorSection = page.sections?.find((s) => s.id === 'simulator');
 ---
 
 <BaseLayout
@@ -16,5 +23,30 @@ const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
   locale={locale}
   alternateLocaleUrl={alternateLocaleUrl}
 >
-  <QuoteFormPlaceholder locale={locale} settings={settings} page={page} />
+  <PageHeader title={page.heading} description={packagesSection?.body} />
+
+  <Section>
+    <SectionHeading
+      title={packagesSection?.heading ?? 'Planes y paquetes'}
+      class="mb-8"
+    />
+    <PackageCards
+      packages={pricing.packages}
+      locale={locale}
+      currencySymbol={pricing.currencySymbol}
+    />
+  </Section>
+
+  <Section class="bg-primary/5">
+    <SectionHeading
+      title={simulatorSection?.heading ?? 'Simulador de costos'}
+      subtitle={simulatorSection?.body}
+      class="mb-8"
+    />
+    <CostSimulator
+      config={pricing}
+      locale={locale}
+      whatsapp={settings.contact.whatsapp}
+    />
+  </Section>
 </BaseLayout>

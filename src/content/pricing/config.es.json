@@ -1,0 +1,78 @@
+{
+  "locale": "es",
+  "currency": "MXN",
+  "currencySymbol": "$",
+  "disclaimer": "Estimación orientativa calculada en tu navegador. No es una cotización formal ni implica disponibilidad. Los precios finales se confirman al contactarnos.",
+  "minDays": 1,
+  "maxDays": 14,
+  "minGuests": 1,
+  "maxGuests": 20,
+  "packages": [
+    {
+      "id": "retiro-wellness",
+      "experienceSlug": "retiro-wellness",
+      "name": "Retiro de wellness",
+      "summary": "Desconexión, yoga y naturaleza. Ideal para 2–3 días.",
+      "basePricePerDay": 2200,
+      "includes": ["Hospedaje ecológico", "Yoga y mindfulness", "Comidas conscientes"]
+    },
+    {
+      "id": "ecotour-bosque",
+      "experienceSlug": "ecotour-bosque",
+      "name": "Ecotour en el bosque",
+      "summary": "Exploración guiada de flora, fauna y conservación.",
+      "basePricePerDay": 950,
+      "includes": ["Guía naturalista", "Material educativo", "Snacks y agua"]
+    },
+    {
+      "id": "yoga-amanecer",
+      "experienceSlug": "yoga-amanecer",
+      "name": "Yoga al amanecer",
+      "summary": "Sesión matutina en mirador con vista al valle.",
+      "basePricePerDay": 650,
+      "includes": ["Instructor certificado", "Equipo de yoga", "Infusión local"]
+    }
+  ],
+  "personTypes": [
+    {
+      "id": "regular",
+      "label": "Común",
+      "description": "Tarifa general",
+      "multiplier": 1
+    },
+    {
+      "id": "student",
+      "label": "Estudiante",
+      "description": "Con credencial vigente (se valida al reservar)",
+      "multiplier": 0.8
+    }
+  ],
+  "reservationTypes": [
+    {
+      "id": "standard",
+      "label": "Común",
+      "description": "Servicio estándar",
+      "multiplier": 1
+    },
+    {
+      "id": "premium",
+      "label": "Premium",
+      "description": "Atención preferente y extras",
+      "multiplier": 1.35
+    }
+  ],
+  "locations": [
+    {
+      "id": "common",
+      "label": "Área común",
+      "description": "Zonas compartidas del destino",
+      "multiplier": 1
+    },
+    {
+      "id": "sea-view",
+      "label": "Vista al mar",
+      "description": "Ubicación con vista al mar",
+      "multiplier": 1.25
+    }
+  ]
+}

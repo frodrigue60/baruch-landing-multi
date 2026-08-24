@@ -2,13 +2,18 @@
   "locale": "es",
   "pageKey": "quote",
   "title": "Cotizar — Baruch",
-  "description": "Solicita información o cotización personalizada para tu experiencia en Baruch.",
-  "heading": "Solicitar cotización",
+  "description": "Consulta paquetes y simula un costo estimado según tipo de persona, días, reservación y ubicación.",
+  "heading": "Cotiza tu experiencia",
   "sections": [
     {
       "id": "intro",
-      "heading": "Cuéntanos tu plan",
-      "body": "Indica fechas aproximadas, tamaño de grupo y qué experiencia te interesa. Te responderemos con opciones y disponibilidad (placeholder — envío en línea próximamente)."
+      "heading": "Planes y paquetes",
+      "body": "Elige un plan, ajusta las opciones y obtén una estimación inmediata. Es solo orientativa: la cotización formal se confirma por WhatsApp o en Contacto."
+    },
+    {
+      "id": "simulator",
+      "heading": "Simulador de costos",
+      "body": "Calcula en tu navegador según tipo de persona (estudiante o común), días, tipo de reservación y ubicación."
     }
   ]
 }
