@@ -3,8 +3,21 @@
   "locale": "es",
   "title": "Retiro de wellness",
   "summary": "Un fin de semana de desconexión, yoga y naturaleza.",
-  "description": "Retiro guiado con actividades de mindfulness, senderismo suave y alimentación consciente en un entorno natural.",
+  "description": "Retiro guiado de dos noches con actividades de mindfulness, yoga matutino, senderismo suave y alimentación consciente. Incluye hospedaje ecológico, materiales de práctica y acompañamiento de facilitadores certificados.",
   "coverImage": "/images/placeholder-retiro.svg",
+  "gallery": [
+    "/images/placeholder-retiro.svg",
+    "/images/placeholder-gallery-6.svg",
+    "/images/placeholder-gallery-4.svg"
+  ],
+  "highlights": [
+    "Yoga y meditación guiada",
+    "Senderismo de bajo impacto",
+    "Comidas locales y conscientes",
+    "Grupos reducidos (máx. 12 personas)"
+  ],
+  "duration": "2 noches / 3 días",
+  "groupSize": "4–12 personas",
   "featured": true,
   "order": 1
 }

@@ -11,6 +11,8 @@ export interface SiteContact {
   email: string;
   address: string;
   whatsapp: string;
+  /** URL de embed para mapa (iframe). Opcional. */
+  mapEmbedUrl?: string;
 }
 
 export interface SiteSettings {
@@ -29,11 +31,12 @@ export interface Experience {
   description: string;
   coverImage: string;
   gallery?: string[];
+  highlights?: string[];
+  duration?: string;
+  groupSize?: string;
   featured?: boolean;
   order?: number;
-  /** Reservado para fase transaccional */
   price?: number | null;
-  /** Reservado para fase transaccional */
   availability?: string | null;
 }
 
@@ -43,6 +46,13 @@ export interface PageSection {
   body: string;
 }
 
+export interface PageCta {
+  heading: string;
+  body: string;
+  primaryLabel: string;
+  secondaryLabel: string;
+}
+
 export interface PageContent {
   locale: Locale;
   pageKey: string;
@@ -50,14 +60,20 @@ export interface PageContent {
   description: string;
   heading: string;
   sections?: PageSection[];
+  cta?: PageCta;
 }
 
 export interface GalleryItem {
   id: string;
   src: string;
   alt: Record<Locale, string>;
-  category?: string;
+  category: string;
   experienceSlug?: string;
 }
 
-export type PageKey = 'home' | 'about';
+export interface GalleryCategory {
+  id: string;
+  label: Record<Locale, string>;
+}
+
+export type PageKey = 'home' | 'about' | 'contact' | 'privacy' | 'quote';

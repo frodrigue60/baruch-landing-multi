@@ -3,22 +3,28 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHeader from '@/components/ui/PageHeader.astro';
 import Section from '@/components/ui/Section.astro';
 import Button from '@/components/ui/Button.astro';
-import { getSiteSettings } from '@/lib/content';
+import ContactMap from '@/components/contact/ContactMap.astro';
+import { getPage, getSiteSettings } from '@/lib/content';
 import { getAlternateLocaleUrl } from '@/lib/i18n/utils';
 import { t } from '@/lib/i18n/labels';
 
 const locale = 'en';
+const page = getPage('contact', locale);
 const settings = getSiteSettings(locale);
 const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
-const title = 'Contact — Baruch';
-const description = 'Contact details, location and social media.';
 const whatsappUrl = `https://wa.me/${settings.contact.whatsapp}`;
+const mapSection = page.sections?.find((s) => s.id === 'map-note');
 ---
 
-<BaseLayout {title} {description} locale={locale} {alternateLocaleUrl}>
-  <PageHeader title="Contact" description={description} />
+<BaseLayout
+  title={page.title}
+  description={page.description}
+  locale={locale}
+  alternateLocaleUrl={alternateLocaleUrl}
+>
+  <PageHeader title={page.heading} description={page.sections?.[0]?.body} />
   <Section narrow>
-    <div class="grid gap-6 md:grid-cols-2">
+    <div class="grid gap-8 lg:grid-cols-2">
       <article class="rounded-(--radius-card) border border-border bg-surface-elevated p-8 shadow-(--shadow-soft)">
         <h2 class="text-lg font-semibold text-primary">Information</h2>
         <ul class="mt-4 space-y-3 text-muted">
@@ -38,13 +44,57 @@ const whatsappUrl = `https://wa.me/${settings.contact.whatsapp}`;
             <span class="font-medium text-gray-900">Location:</span> {settings.contact.address}
           </li>
         </ul>
+        <div class="mt-6">
+          <Button href={whatsappUrl} variant="secondary" external>
+            {t('whatsapp', locale)}
+          </Button>
+        </div>
+        {
+          settings.social.length > 0 && (
+            <div class="mt-8 border-t border-border pt-6">
+              <h3 class="font-semibold text-primary">Social media</h3>
+              <ul class="mt-3 space-y-2">
+                {
+                  settings.social.map((link) => (
+                    <li>
+                      <a
+                        href={link.url}
+                        class="text-primary underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {link.label ?? link.platform}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          )
+        }
       </article>
-      <article class="flex flex-col justify-center rounded-(--radius-card) border border-border bg-primary/5 p-8">
-        <p class="text-muted">Prefer to reach out directly?</p>
-        <Button href={whatsappUrl} variant="secondary" external class="mt-4 self-start">
-          {t('whatsapp', locale)}
-        </Button>
-      </article>
+
+      <div>
+        {
+          mapSection && (
+            <>
+              <h2 class="text-lg font-semibold text-primary">{mapSection.heading}</h2>
+              <p class="mt-2 text-sm text-muted">{mapSection.body}</p>
+            </>
+          )
+        }
+        {
+          settings.contact.mapEmbedUrl && (
+            <div class="mt-4">
+              <ContactMap
+                embedUrl={settings.contact.mapEmbedUrl}
+                title={settings.siteName}
+                locale={locale}
+              />
+            </div>
+          )
+        }
+      </div>
     </div>
   </Section>
 </BaseLayout>

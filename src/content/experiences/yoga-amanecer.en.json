@@ -1,0 +1,23 @@
+{
+  "slug": "yoga-amanecer",
+  "locale": "en",
+  "title": "Sunrise yoga",
+  "summary": "Morning yoga session at a natural lookout with valley views.",
+  "description": "A morning experience combining breathwork, gentle postures and moments of silence in an open setting. Ends with a local infusion and free time to walk the surroundings.",
+  "coverImage": "/images/placeholder-yoga.svg",
+  "gallery": [
+    "/images/placeholder-yoga.svg",
+    "/images/placeholder-gallery-3.svg",
+    "/images/placeholder-gallery-1.svg"
+  ],
+  "highlights": [
+    "Certified instructor",
+    "Beginner and intermediate levels",
+    "Yoga equipment available",
+    "Panoramic valley view"
+  ],
+  "duration": "3 hours",
+  "groupSize": "2–10 people",
+  "featured": false,
+  "order": 3
+}

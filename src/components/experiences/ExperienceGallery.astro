@@ -1,0 +1,34 @@
+---
+import type { Locale } from '@/lib/i18n/config';
+import { t } from '@/lib/i18n/labels';
+
+interface Props {
+  images: string[];
+  title: string;
+  locale: Locale;
+}
+
+const { images, title, locale } = Astro.props;
+---
+
+{
+  images.length > 0 && (
+    <div class="mt-10">
+      <h2 class="text-xl font-bold text-primary">{t('gallery', locale)}</h2>
+      <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          images.map((src, index) => (
+            <li class="overflow-hidden rounded-(--radius-card) border border-border">
+              <img
+                src={src}
+                alt={`${title} — ${index + 1}`}
+                class="aspect-[4/3] w-full object-cover"
+                loading="lazy"
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  )
+}

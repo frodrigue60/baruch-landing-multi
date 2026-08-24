@@ -7,8 +7,24 @@
   "sections": [
     {
       "id": "intro",
-      "heading": "Bienvenido",
-      "body": "Baruch ofrece experiencias auténticas de ecoturismo y bienestar. Contenido en construcción — MVP Fase 1."
+      "heading": "Experiencias que transforman",
+      "body": "En Baruch diseñamos retiros, tours y actividades de bienestar en entornos naturales. Cada experiencia equilibra aventura responsable, descanso y conexión con el entorno."
+    },
+    {
+      "id": "approach",
+      "heading": "Turismo con conciencia",
+      "body": "Trabajamos con guías locales, prácticas de bajo impacto y grupos reducidos. Nuestro enfoque prioriza el respeto al ecosistema y el bienestar integral de quienes nos visitan."
+    },
+    {
+      "id": "for-whom",
+      "heading": "¿Para quién es Baruch?",
+      "body": "Para viajeros individuales, parejas, grupos de amigos, universidades y empresas que buscan reconectar con la naturaleza sin renunciar al confort ni a la seguridad."
     }
-  ]
+  ],
+  "cta": {
+    "heading": "¿Listo para planear tu experiencia?",
+    "body": "Cuéntanos qué buscas y te ayudamos a armar una propuesta a tu medida. Sin compromiso.",
+    "primaryLabel": "Solicitar cotización",
+    "secondaryLabel": "Ver todas las experiencias"
+  }
 }

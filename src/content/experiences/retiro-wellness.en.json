@@ -3,8 +3,21 @@
   "locale": "en",
   "title": "Wellness retreat",
   "summary": "A weekend of disconnection, yoga and nature.",
-  "description": "Guided retreat with mindfulness activities, gentle hiking and conscious nutrition in a natural setting.",
+  "description": "Two-night guided retreat with mindfulness activities, morning yoga, gentle hiking and conscious nutrition. Includes eco lodging, practice materials and certified facilitators.",
   "coverImage": "/images/placeholder-retiro.svg",
+  "gallery": [
+    "/images/placeholder-retiro.svg",
+    "/images/placeholder-gallery-6.svg",
+    "/images/placeholder-gallery-4.svg"
+  ],
+  "highlights": [
+    "Guided yoga and meditation",
+    "Low-impact hiking",
+    "Local conscious meals",
+    "Small groups (max. 12 people)"
+  ],
+  "duration": "2 nights / 3 days",
+  "groupSize": "4–12 people",
   "featured": true,
   "order": 1
 }

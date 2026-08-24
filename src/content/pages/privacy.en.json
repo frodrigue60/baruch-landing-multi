@@ -1,0 +1,29 @@
+{
+  "locale": "en",
+  "pageKey": "privacy",
+  "title": "Privacy notice — Baruch",
+  "description": "Baruch privacy policy and personal data handling.",
+  "heading": "Privacy notice",
+  "sections": [
+    {
+      "id": "scope",
+      "heading": "Scope",
+      "body": "This notice describes how Baruch will handle personal data when the quote form is active. In the current MVP, this site does not collect or store data through online forms."
+    },
+    {
+      "id": "data",
+      "heading": "Data to be collected (future)",
+      "body": "Name, email, phone, experience of interest and message. This data will only be used to follow up on information or quote requests."
+    },
+    {
+      "id": "rights",
+      "heading": "Your rights",
+      "body": "You may request access, correction or deletion of your data by contacting us by email. We will respond within a reasonable timeframe in accordance with applicable law."
+    },
+    {
+      "id": "contact-privacy",
+      "heading": "Privacy contact",
+      "body": "For questions about this notice, write to hello@baruch.example (placeholder)."
+    }
+  ]
+}

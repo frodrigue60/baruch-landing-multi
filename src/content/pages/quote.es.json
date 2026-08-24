@@ -1,0 +1,14 @@
+{
+  "locale": "es",
+  "pageKey": "quote",
+  "title": "Cotizar — Baruch",
+  "description": "Solicita información o cotización personalizada para tu experiencia en Baruch.",
+  "heading": "Solicitar cotización",
+  "sections": [
+    {
+      "id": "intro",
+      "heading": "Cuéntanos tu plan",
+      "body": "Indica fechas aproximadas, tamaño de grupo y qué experiencia te interesa. Te responderemos con opciones y disponibilidad (placeholder — envío en línea próximamente)."
+    }
+  ]
+}

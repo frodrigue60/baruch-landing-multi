@@ -1,0 +1,29 @@
+{
+  "locale": "es",
+  "pageKey": "privacy",
+  "title": "Aviso de privacidad — Baruch",
+  "description": "Política de privacidad y manejo de datos personales de Baruch.",
+  "heading": "Aviso de privacidad",
+  "sections": [
+    {
+      "id": "scope",
+      "heading": "Alcance",
+      "body": "Este aviso describe cómo Baruch tratará los datos personales cuando el formulario de cotización esté activo. En el MVP actual, el sitio no recopila ni almacena datos mediante formularios en línea."
+    },
+    {
+      "id": "data",
+      "heading": "Datos que se recabarán (futuro)",
+      "body": "Nombre, correo electrónico, teléfono, experiencia de interés y mensaje. Estos datos se utilizarán únicamente para dar seguimiento a solicitudes de información o cotización."
+    },
+    {
+      "id": "rights",
+      "heading": "Derechos del titular",
+      "body": "Podrás solicitar acceso, rectificación o eliminación de tus datos contactándonos por correo. Responderemos en un plazo razonable conforme a la legislación aplicable."
+    },
+    {
+      "id": "contact-privacy",
+      "heading": "Contacto por privacidad",
+      "body": "Para dudas sobre este aviso, escribe a hola@baruch.example (placeholder)."
+    }
+  ]
+}

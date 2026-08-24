@@ -2,22 +2,31 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHeader from '@/components/ui/PageHeader.astro';
 import Section from '@/components/ui/Section.astro';
+import { getPage } from '@/lib/content';
 import { getAlternateLocaleUrl } from '@/lib/i18n/utils';
 
 const locale = 'en';
+const page = getPage('privacy', locale);
 const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
-const title = 'Privacy notice — Baruch';
-const description = 'Privacy policy and personal data handling.';
 ---
 
-<BaseLayout {title} {description} locale={locale} {alternateLocaleUrl}>
-  <PageHeader title="Privacy notice" />
+<BaseLayout
+  title={page.title}
+  description={page.description}
+  locale={locale}
+  alternateLocaleUrl={alternateLocaleUrl}
+>
+  <PageHeader title={page.heading} />
   <Section narrow>
-    <article class="prose prose-neutral max-w-none rounded-(--radius-card) border border-border bg-surface-elevated p-8 text-muted shadow-(--shadow-soft)">
-      <p>
-        In the current MVP, this site does not collect personal data through online forms.
-        This notice will be updated when the quote form is activated.
-      </p>
-    </article>
+    <div class="space-y-8">
+      {
+        page.sections?.map((section) => (
+          <article class="rounded-(--radius-card) border border-border bg-surface-elevated p-8 shadow-(--shadow-soft)">
+            <h2 class="text-xl font-bold text-primary">{section.heading}</h2>
+            <p class="mt-4 text-muted leading-relaxed">{section.body}</p>
+          </article>
+        ))
+      }
+    </div>
   </Section>
 </BaseLayout>

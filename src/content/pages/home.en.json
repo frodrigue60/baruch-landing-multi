@@ -7,8 +7,24 @@
   "sections": [
     {
       "id": "intro",
-      "heading": "Welcome",
-      "body": "Baruch offers authentic ecotourism and wellness experiences. Content under construction — MVP Phase 1."
+      "heading": "Experiences that transform",
+      "body": "At Baruch we design retreats, tours and wellness activities in natural settings. Each experience balances responsible adventure, rest and connection with the environment."
+    },
+    {
+      "id": "approach",
+      "heading": "Conscious tourism",
+      "body": "We work with local guides, low-impact practices and small groups. Our approach prioritizes respect for the ecosystem and the holistic wellbeing of our guests."
+    },
+    {
+      "id": "for-whom",
+      "heading": "Who is Baruch for?",
+      "body": "For individual travelers, couples, friend groups, universities and companies looking to reconnect with nature without giving up comfort or safety."
     }
-  ]
+  ],
+  "cta": {
+    "heading": "Ready to plan your experience?",
+    "body": "Tell us what you're looking for and we'll help you build a tailored proposal. No commitment required.",
+    "primaryLabel": "Request a quote",
+    "secondaryLabel": "View all experiences"
+  }
 }

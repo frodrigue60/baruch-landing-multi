@@ -2,13 +2,28 @@
   "locale": "en",
   "pageKey": "about",
   "title": "About — Baruch",
-  "description": "Learn about Baruch's story, mission and values.",
+  "description": "Learn about Baruch's story, mission and values. Responsible ecotourism and wellness.",
   "heading": "Who we are",
   "sections": [
     {
+      "id": "history",
+      "heading": "Our story",
+      "body": "Baruch was born from a desire to share little-explored natural destinations with a human, sustainable approach. What started as weekend trips among friends is now a project dedicated to creating memorable experiences in harmony with the environment."
+    },
+    {
       "id": "mission",
-      "heading": "Our mission",
-      "body": "Connect people with nature through responsible and transformative experiences."
+      "heading": "Mission",
+      "body": "Connect people with nature through responsible, safe and transformative experiences that foster physical, mental and emotional wellbeing."
+    },
+    {
+      "id": "values",
+      "heading": "Values",
+      "body": "Respect for the environment · Local community · Honesty · Safety · Holistic wellness. These principles guide every decision, from trail routes to the hospitality you receive."
+    },
+    {
+      "id": "wellness",
+      "heading": "Wellness focus",
+      "body": "We integrate mindfulness practices, conscious nutrition and moderate physical activity. It's not just about seeing landscapes: it's about being present and returning renewed."
     }
   ]
 }

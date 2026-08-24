@@ -1,0 +1,14 @@
+{
+  "locale": "en",
+  "pageKey": "quote",
+  "title": "Quote — Baruch",
+  "description": "Request personalized information or a quote for your Baruch experience.",
+  "heading": "Request a quote",
+  "sections": [
+    {
+      "id": "intro",
+      "heading": "Tell us your plan",
+      "body": "Share approximate dates, group size and which experience interests you. We'll reply with options and availability (placeholder — online submission coming soon)."
+    }
+  ]
+}

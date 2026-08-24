@@ -205,7 +205,7 @@ npm run preview      # servir dist/ localmente
 | 0 — Repo | ✅ | Git, docs, configs |
 | 1 — Fundaciones | ✅ | Astro, i18n, content layer, páginas placeholder |
 | 2 — Layout | ✅ | Header, footer, diseño, mobile nav, UI kit |
-| 3 — Contenido | 🔄 | Páginas con data real |
+| 3 — Contenido | ✅ | Páginas con JSON estructurado, 3 experiencias, galería por categoría |
 | 4 — Interacciones | ⏳ | Galería lightbox, form placeholder |
 | 5 — Deploy | ⏳ | SEO, CI, producción |
 | 6+ | ⏳ | CMS, formulario, transaccional |

@@ -1,0 +1,5 @@
+[
+  { "id": "naturaleza", "label": { "es": "Naturaleza", "en": "Nature" } },
+  { "id": "experiencias", "label": { "es": "Experiencias", "en": "Experiences" } },
+  { "id": "instalaciones", "label": { "es": "Instalaciones", "en": "Facilities" } }
+]

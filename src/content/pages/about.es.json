@@ -2,13 +2,28 @@
   "locale": "es",
   "pageKey": "about",
   "title": "Nosotros — Baruch",
-  "description": "Conoce la historia, misión y valores de Baruch.",
+  "description": "Conoce la historia, misión y valores de Baruch. Ecoturismo y wellness con enfoque responsable.",
   "heading": "Quiénes somos",
   "sections": [
     {
+      "id": "history",
+      "heading": "Nuestra historia",
+      "body": "Baruch nació del deseo de compartir destinos naturales poco explorados con un enfoque humano y sustentable. Lo que comenzó como salidas de fin de semana entre amigos hoy es un proyecto dedicado a crear experiencias memorables en armonía con el entorno."
+    },
+    {
       "id": "mission",
-      "heading": "Nuestra misión",
-      "body": "Conectar a las personas con la naturaleza a través de experiencias responsables y transformadoras."
+      "heading": "Misión",
+      "body": "Conectar a las personas con la naturaleza a través de experiencias responsables, seguras y transformadoras que fomenten el bienestar físico, mental y emocional."
+    },
+    {
+      "id": "values",
+      "heading": "Valores",
+      "body": "Respeto al entorno · Comunidad local · Honestidad · Seguridad · Bienestar integral. Estos principios guían cada decisión, desde la ruta del sendero hasta la hospitalidad que recibes."
+    },
+    {
+      "id": "wellness",
+      "heading": "Enfoque wellness",
+      "body": "Integramos prácticas de mindfulness, alimentación consciente y actividad física moderada. No se trata solo de ver paisajes: se trata de habitar el momento y volver renovado."
     }
   ]
 }

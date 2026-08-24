@@ -2,32 +2,20 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHeader from '@/components/ui/PageHeader.astro';
 import Section from '@/components/ui/Section.astro';
-import { getGalleryItemsByLocale } from '@/lib/content';
+import GalleryByCategory from '@/components/gallery/GalleryByCategory.astro';
+import { getGalleryGroupedByCategory } from '@/lib/content';
 import { getAlternateLocaleUrl } from '@/lib/i18n/utils';
 
 const locale = 'es';
-const items = getGalleryItemsByLocale(locale);
+const groups = getGalleryGroupedByCategory(locale);
 const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
 const title = 'Galería — Baruch';
-const description = 'Imágenes de nuestras experiencias y destinos.';
+const description = 'Fotos de naturaleza, experiencias e instalaciones en Baruch.';
 ---
 
 <BaseLayout {title} {description} locale={locale} {alternateLocaleUrl}>
   <PageHeader title="Galería" description={description} />
   <Section>
-    <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {
-        items.map((item) => (
-          <li class="group overflow-hidden rounded-(--radius-card) border border-border bg-surface-elevated shadow-(--shadow-soft)">
-            <img
-              src={item.src}
-              alt={item.altText}
-              class="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-105"
-              loading="lazy"
-            />
-          </li>
-        ))
-      }
-    </ul>
+    <GalleryByCategory groups={groups} locale={locale} />
   </Section>
 </BaseLayout>

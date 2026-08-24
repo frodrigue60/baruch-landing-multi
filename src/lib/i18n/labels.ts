@@ -33,6 +33,22 @@ export const uiLabels = {
     es: 'Experiencias destacadas',
     en: 'Featured experiences',
   },
+  gallery: {
+    es: 'Galería',
+    en: 'Gallery',
+  },
+  highlights: {
+    es: 'Qué incluye',
+    en: "What's included",
+  },
+  duration: {
+    es: 'Duración',
+    en: 'Duration',
+  },
+  groupSize: {
+    es: 'Tamaño de grupo',
+    en: 'Group size',
+  },
   backToExperiences: {
     es: 'Volver a experiencias',
     en: 'Back to experiences',

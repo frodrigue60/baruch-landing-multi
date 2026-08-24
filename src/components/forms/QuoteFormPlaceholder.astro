@@ -1,26 +1,22 @@
 ---
 import type { Locale } from '@/lib/i18n/config';
-import type { SiteSettings } from '@/lib/content';
+import type { PageContent, SiteSettings } from '@/lib/content';
 import Button from '@/components/ui/Button.astro';
 import Section from '@/components/ui/Section.astro';
 import PageHeader from '@/components/ui/PageHeader.astro';
-import { t } from '@/lib/i18n/labels';
 
 interface Props {
   locale: Locale;
   settings: SiteSettings;
+  page: PageContent;
 }
 
-const { locale, settings } = Astro.props;
+const { locale, settings, page } = Astro.props;
 const whatsappUrl = `https://wa.me/${settings.contact.whatsapp}`;
-const title = locale === 'es' ? 'Solicitar cotización' : 'Request a quote';
-const description =
-  locale === 'es'
-    ? 'Formulario de cotización (próximamente). Contáctanos por WhatsApp, correo o teléfono.'
-    : 'Quote form (coming soon). Contact us via WhatsApp, email or phone.';
+const intro = page.sections?.[0];
 ---
 
-<PageHeader title={title} description={description} />
+<PageHeader title={page.heading} description={intro?.body} />
 <Section narrow>
   <div
     class="rounded-(--radius-card) border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900"
@@ -64,6 +60,18 @@ const description =
         id="phone"
         name="phone"
         type="tel"
+        disabled
+        class="mt-1.5 w-full rounded-lg border border-border bg-gray-50 px-4 py-2.5 text-gray-500"
+      />
+    </div>
+    <div>
+      <label for="experience" class="block text-sm font-medium text-gray-800">
+        {locale === 'es' ? 'Experiencia de interés' : 'Experience of interest'}
+      </label>
+      <input
+        id="experience"
+        name="experience"
+        type="text"
         disabled
         class="mt-1.5 w-full rounded-lg border border-border bg-gray-50 px-4 py-2.5 text-gray-500"
       />

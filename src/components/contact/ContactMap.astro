@@ -1,0 +1,22 @@
+---
+import type { Locale } from '@/lib/i18n/config';
+
+interface Props {
+  embedUrl: string;
+  title: string;
+  locale: Locale;
+}
+
+const { embedUrl, title, locale } = Astro.props;
+const iframeTitle = locale === 'es' ? `Mapa de ubicación — ${title}` : `Location map — ${title}`;
+---
+
+<div class="overflow-hidden rounded-(--radius-card) border border-border bg-surface-elevated shadow-(--shadow-soft)">
+  <iframe
+    src={embedUrl}
+    title={iframeTitle}
+    class="aspect-[16/10] w-full border-0 md:aspect-[21/9]"
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+  />
+</div>

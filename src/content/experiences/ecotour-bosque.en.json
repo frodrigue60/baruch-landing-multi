@@ -3,8 +3,21 @@
   "locale": "en",
   "title": "Forest ecotour",
   "summary": "Guided exploration of flora, fauna and conservation practices.",
-  "description": "Educational walk through forest trails focused on responsible ecotourism and local biodiversity.",
+  "description": "Half-day educational walk through forest trails focused on responsible ecotourism, species identification and conversation about local biodiversity. Ideal for families and school groups.",
   "coverImage": "/images/placeholder-ecotour.svg",
+  "gallery": [
+    "/images/placeholder-ecotour.svg",
+    "/images/placeholder-gallery-2.svg",
+    "/images/placeholder-gallery-5.svg"
+  ],
+  "highlights": [
+    "Local naturalist guide",
+    "Educational materials included",
+    "Pace adapted to the group",
+    "Complimentary snacks and water"
+  ],
+  "duration": "Half day (4–5 h)",
+  "groupSize": "2–15 people",
   "featured": true,
   "order": 2
 }

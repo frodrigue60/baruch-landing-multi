@@ -3,8 +3,21 @@
   "locale": "es",
   "title": "Ecotour en el bosque",
   "summary": "Exploración guiada de flora, fauna y prácticas de conservación.",
-  "description": "Recorrido educativo por senderos del bosque con enfoque en ecoturismo responsable y biodiversidad local.",
+  "description": "Recorrido educativo de medio día por senderos del bosque con enfoque en ecoturismo responsable, identificación de especies y conversación sobre biodiversidad local. Ideal para familias y grupos escolares.",
   "coverImage": "/images/placeholder-ecotour.svg",
+  "gallery": [
+    "/images/placeholder-ecotour.svg",
+    "/images/placeholder-gallery-2.svg",
+    "/images/placeholder-gallery-5.svg"
+  ],
+  "highlights": [
+    "Guía naturalista local",
+    "Material educativo incluido",
+    "Ritmo adaptado al grupo",
+    "Snacks y agua de cortesía"
+  ],
+  "duration": "Medio día (4–5 h)",
+  "groupSize": "2–15 personas",
   "featured": true,
   "order": 2
 }

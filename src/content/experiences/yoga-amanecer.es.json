@@ -1,0 +1,23 @@
+{
+  "slug": "yoga-amanecer",
+  "locale": "es",
+  "title": "Yoga al amanecer",
+  "summary": "Sesión matutina de yoga en mirador natural con vista al valle.",
+  "description": "Experiencia de una mañana que combina respiración, posturas suaves y momentos de silencio en un entorno abierto. Al finalizar, infusión local y tiempo libre para caminar por los alrededores.",
+  "coverImage": "/images/placeholder-yoga.svg",
+  "gallery": [
+    "/images/placeholder-yoga.svg",
+    "/images/placeholder-gallery-3.svg",
+    "/images/placeholder-gallery-1.svg"
+  ],
+  "highlights": [
+    "Instructor certificado",
+    "Nivel principiante e intermedio",
+    "Equipo de yoga disponible",
+    "Vista panorámica del valle"
+  ],
+  "duration": "3 horas",
+  "groupSize": "2–10 personas",
+  "featured": false,
+  "order": 3
+}

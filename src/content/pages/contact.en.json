@@ -1,0 +1,19 @@
+{
+  "locale": "en",
+  "pageKey": "contact",
+  "title": "Contact — Baruch",
+  "description": "Baruch phone, email, location, map and social media.",
+  "heading": "Contact",
+  "sections": [
+    {
+      "id": "intro",
+      "heading": "We're here to help",
+      "body": "Reach out for questions, guidance on experiences or to coordinate a visit. We respond during business hours (placeholder)."
+    },
+    {
+      "id": "map-note",
+      "heading": "Getting here",
+      "body": "Our meeting point is confirmed upon booking. The map shows the general destination area (placeholder)."
+    }
+  ]
+}

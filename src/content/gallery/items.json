@@ -3,8 +3,8 @@
     "id": "gallery-1",
     "src": "/images/placeholder-gallery-1.svg",
     "alt": {
-      "es": "Paisaje natural de montaña al amanecer",
-      "en": "Mountain landscape at sunrise"
+      "es": "Paisaje de montaña al amanecer con niebla en el valle",
+      "en": "Mountain landscape at sunrise with mist in the valley"
     },
     "category": "naturaleza"
   },
@@ -17,5 +17,43 @@
     },
     "category": "experiencias",
     "experienceSlug": "ecotour-bosque"
+  },
+  {
+    "id": "gallery-3",
+    "src": "/images/placeholder-gallery-3.svg",
+    "alt": {
+      "es": "Grupo en sesión de yoga al aire libre",
+      "en": "Group in an outdoor yoga session"
+    },
+    "category": "experiencias",
+    "experienceSlug": "yoga-amanecer"
+  },
+  {
+    "id": "gallery-4",
+    "src": "/images/placeholder-gallery-4.svg",
+    "alt": {
+      "es": "Cabaña ecológica rodeada de vegetación",
+      "en": "Eco cabin surrounded by vegetation"
+    },
+    "category": "instalaciones"
+  },
+  {
+    "id": "gallery-5",
+    "src": "/images/placeholder-gallery-5.svg",
+    "alt": {
+      "es": "Río y formaciones rocosas en el cañón",
+      "en": "River and rock formations in the canyon"
+    },
+    "category": "naturaleza"
+  },
+  {
+    "id": "gallery-6",
+    "src": "/images/placeholder-retiro.svg",
+    "alt": {
+      "es": "Espacio de meditación en retiro de wellness",
+      "en": "Meditation space at a wellness retreat"
+    },
+    "category": "experiencias",
+    "experienceSlug": "retiro-wellness"
   }
 ]
