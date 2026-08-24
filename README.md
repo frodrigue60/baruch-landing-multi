@@ -33,9 +33,10 @@ Abre [http://localhost:4321](http://localhost:4321). La raíz redirige a `/es/`.
 
 ## Editar contenido
 
-1. **Ajustes globales** (contacto, WhatsApp, redes): `src/content/settings/site.{es,en}.json`
+1. **Ajustes globales** (contacto, WhatsApp, redes, mapa): `src/content/settings/site.{es,en}.json`
 2. **Experiencias**: un archivo JSON por experiencia en `src/content/experiences/`
-3. **Páginas** (home, nosotros): `src/content/pages/`
+3. **Páginas** (home, nosotros, contacto, privacidad, cotizar): `src/content/pages/`
+4. **Galería**: imágenes en `src/content/gallery/items.json`, categorías en `categories.json`
 
 No modificar componentes para cambiar textos; solo los archivos en `src/content/`.
 
