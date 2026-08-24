@@ -1,0 +1,35 @@
+---
+import type { Locale } from '@/lib/i18n/config';
+
+interface Props {
+  heading: string;
+  subtitle?: string;
+  locale: Locale;
+  class?: string;
+}
+
+const { heading, subtitle, class: className = '' } = Astro.props;
+---
+
+<section
+  class:list={[
+    'relative overflow-hidden bg-primary px-4 py-20 text-white md:py-28',
+    className,
+  ]}
+>
+  <div
+    class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(196,163,90,0.25),transparent_55%)]"
+    aria-hidden="true"
+  />
+  <div
+    class="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-primary-light/30 blur-3xl"
+    aria-hidden="true"
+  />
+  <div class="relative mx-auto max-w-4xl text-center">
+    <h1 class="text-4xl font-bold md:text-5xl lg:text-6xl">{heading}</h1>
+    {subtitle && <p class="mx-auto mt-5 max-w-2xl text-lg text-white/90 md:text-xl">{subtitle}</p>}
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+      <slot name="actions" />
+    </div>
+  </div>
+</section>

@@ -1,32 +1,50 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/ui/PageHeader.astro';
+import Section from '@/components/ui/Section.astro';
+import Button from '@/components/ui/Button.astro';
 import { getSiteSettings } from '@/lib/content';
 import { getAlternateLocaleUrl } from '@/lib/i18n/utils';
+import { t } from '@/lib/i18n/labels';
 
 const locale = 'en';
 const settings = getSiteSettings(locale);
 const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
 const title = 'Contact — Baruch';
 const description = 'Contact details, location and social media.';
+const whatsappUrl = `https://wa.me/${settings.contact.whatsapp}`;
 ---
 
 <BaseLayout {title} {description} locale={locale} {alternateLocaleUrl}>
-  <section class="mx-auto max-w-2xl px-4 py-16">
-    <h1 class="text-3xl font-bold text-primary">Contact</h1>
-    <ul class="mt-8 space-y-4 text-gray-700">
-      <li><strong>Phone:</strong> <a href={`tel:${settings.contact.phone}`} class="text-primary underline">{settings.contact.phone}</a></li>
-      <li><strong>Email:</strong> <a href={`mailto:${settings.contact.email}`} class="text-primary underline">{settings.contact.email}</a></li>
-      <li><strong>Location:</strong> {settings.contact.address}</li>
-      <li>
-        <a
-          href={`https://wa.me/${settings.contact.whatsapp}`}
-          class="inline-block rounded bg-primary px-4 py-2 font-semibold text-white"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Message us on WhatsApp
-        </a>
-      </li>
-    </ul>
-  </section>
+  <PageHeader title="Contact" description={description} />
+  <Section narrow>
+    <div class="grid gap-6 md:grid-cols-2">
+      <article class="rounded-(--radius-card) border border-border bg-surface-elevated p-8 shadow-(--shadow-soft)">
+        <h2 class="text-lg font-semibold text-primary">Information</h2>
+        <ul class="mt-4 space-y-3 text-muted">
+          <li>
+            <span class="font-medium text-gray-900">Phone:</span>{' '}
+            <a href={`tel:${settings.contact.phone}`} class="text-primary underline">
+              {settings.contact.phone}
+            </a>
+          </li>
+          <li>
+            <span class="font-medium text-gray-900">Email:</span>{' '}
+            <a href={`mailto:${settings.contact.email}`} class="text-primary underline">
+              {settings.contact.email}
+            </a>
+          </li>
+          <li>
+            <span class="font-medium text-gray-900">Location:</span> {settings.contact.address}
+          </li>
+        </ul>
+      </article>
+      <article class="flex flex-col justify-center rounded-(--radius-card) border border-border bg-primary/5 p-8">
+        <p class="text-muted">Prefer to reach out directly?</p>
+        <Button href={whatsappUrl} variant="secondary" external class="mt-4 self-start">
+          {t('whatsapp', locale)}
+        </Button>
+      </article>
+    </div>
+  </Section>
 </BaseLayout>

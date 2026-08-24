@@ -1,7 +1,10 @@
 ---
 import type { Locale } from '@/lib/i18n/config';
 import type { SiteSettings } from '@/lib/content';
+import { navItems } from '@/lib/i18n/config';
 import { getPagePath } from '@/lib/i18n/utils';
+import { t } from '@/lib/i18n/labels';
+import Button from '@/components/ui/Button.astro';
 
 interface Props {
   locale: Locale;
@@ -13,36 +16,67 @@ const whatsappUrl = `https://wa.me/${settings.contact.whatsapp}`;
 const labels = {
   contact: locale === 'es' ? 'Contacto' : 'Contact',
   privacy: locale === 'es' ? 'Privacidad' : 'Privacy',
+  navigate: locale === 'es' ? 'Navegación' : 'Navigation',
   rights: locale === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.',
 };
+const footerNav = navItems.filter((item) => item.key !== 'home');
 ---
 
-<footer class="border-t border-primary/10 bg-primary-dark text-white">
-  <div class="mx-auto grid max-w-6xl gap-6 px-4 py-10 md:grid-cols-3">
-    <div>
-      <p class="text-lg font-semibold">{settings.siteName}</p>
-      <p class="mt-2 text-sm text-white/80">{settings.tagline}</p>
+<footer class="mt-auto border-t border-primary/20 bg-primary-dark text-white">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-12 md:grid-cols-2 lg:grid-cols-4">
+    <div class="lg:col-span-2">
+      <p class="font-display text-2xl font-bold">{settings.siteName}</p>
+      <p class="mt-3 max-w-md text-sm leading-relaxed text-white/80">{settings.tagline}</p>
+      <div class="mt-6">
+        <Button href={whatsappUrl} variant="primary" size="sm" external>
+          {t('whatsapp', locale)}
+        </Button>
+      </div>
     </div>
+
     <div>
-      <p class="font-medium">{labels.contact}</p>
-      <ul class="mt-2 space-y-1 text-sm text-white/80">
-        <li><a href={`tel:${settings.contact.phone}`} class="hover:text-white">{settings.contact.phone}</a></li>
-        <li><a href={`mailto:${settings.contact.email}`} class="hover:text-white">{settings.contact.email}</a></li>
-        <li><a href={whatsappUrl} class="hover:text-white" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+      <p class="text-sm font-semibold uppercase tracking-wider text-accent">{labels.navigate}</p>
+      <ul class="mt-4 space-y-2 text-sm">
+        {
+          footerNav.map((item) => (
+            <li>
+              <a href={getPagePath(item.key, locale)} class="text-white/80 transition-colors hover:text-white">
+                {item.label[locale]}
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <a href={getPagePath('privacy', locale)} class="text-white/80 transition-colors hover:text-white">
+            {labels.privacy}
+          </a>
+        </li>
       </ul>
     </div>
+
     <div>
-      <ul class="space-y-2 text-sm">
+      <p class="text-sm font-semibold uppercase tracking-wider text-accent">{labels.contact}</p>
+      <ul class="mt-4 space-y-2 text-sm text-white/80">
         <li>
-          <a href={getPagePath('contact', locale)} class="hover:text-accent">{labels.contact}</a>
+          <a href={`tel:${settings.contact.phone}`} class="hover:text-white">
+            {settings.contact.phone}
+          </a>
         </li>
         <li>
-          <a href={getPagePath('privacy', locale)} class="hover:text-accent">{labels.privacy}</a>
+          <a href={`mailto:${settings.contact.email}`} class="hover:text-white">
+            {settings.contact.email}
+          </a>
         </li>
+        <li class="text-white/70">{settings.contact.address}</li>
         {
           settings.social.map((link) => (
             <li>
-              <a href={link.url} class="hover:text-accent" target="_blank" rel="noopener noreferrer">
+              <a
+                href={link.url}
+                class="hover:text-white"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {link.label ?? link.platform}
               </a>
             </li>
@@ -51,7 +85,8 @@ const labels = {
       </ul>
     </div>
   </div>
-  <div class="border-t border-white/10 py-4 text-center text-xs text-white/60">
+
+  <div class="border-t border-white/10 py-5 text-center text-xs text-white/50">
     © {new Date().getFullYear()} {settings.siteName}. {labels.rights}
   </div>
 </footer>

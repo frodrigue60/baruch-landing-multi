@@ -1,6 +1,10 @@
 ---
 import type { Locale } from '@/lib/i18n/config';
 import type { SiteSettings } from '@/lib/content';
+import Button from '@/components/ui/Button.astro';
+import Section from '@/components/ui/Section.astro';
+import PageHeader from '@/components/ui/PageHeader.astro';
+import { t } from '@/lib/i18n/labels';
 
 interface Props {
   locale: Locale;
@@ -9,23 +13,29 @@ interface Props {
 
 const { locale, settings } = Astro.props;
 const whatsappUrl = `https://wa.me/${settings.contact.whatsapp}`;
+const title = locale === 'es' ? 'Solicitar cotización' : 'Request a quote';
+const description =
+  locale === 'es'
+    ? 'Formulario de cotización (próximamente). Contáctanos por WhatsApp, correo o teléfono.'
+    : 'Quote form (coming soon). Contact us via WhatsApp, email or phone.';
 ---
 
-<section class="mx-auto max-w-2xl px-4 py-12">
-  <h1 class="text-3xl font-bold text-primary">
-    {locale === 'es' ? 'Solicitar cotización' : 'Request a quote'}
-  </h1>
-  <p class="mt-2 text-gray-600">
+<PageHeader title={title} description={description} />
+<Section narrow>
+  <div
+    class="rounded-(--radius-card) border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900"
+    role="status"
+  >
     {
       locale === 'es'
-        ? 'El envío en línea estará disponible próximamente. Mientras tanto, contáctanos directamente.'
-        : 'Online submission will be available soon. In the meantime, contact us directly.'
+        ? 'El envío en línea estará disponible próximamente. Mientras tanto, usa los canales de contacto directo.'
+        : 'Online submission will be available soon. In the meantime, use the direct contact channels below.'
     }
-  </p>
+  </div>
 
-  <form class="mt-8 space-y-4" aria-disabled="true" novalidate>
+  <form class="mt-8 space-y-5" aria-disabled="true" novalidate>
     <div>
-      <label for="name" class="block text-sm font-medium text-gray-700">
+      <label for="name" class="block text-sm font-medium text-gray-800">
         {locale === 'es' ? 'Nombre' : 'Name'}
       </label>
       <input
@@ -33,21 +43,21 @@ const whatsappUrl = `https://wa.me/${settings.contact.whatsapp}`;
         name="name"
         type="text"
         disabled
-        class="mt-1 w-full rounded border border-gray-300 bg-gray-50 px-3 py-2 text-gray-500"
+        class="mt-1.5 w-full rounded-lg border border-border bg-gray-50 px-4 py-2.5 text-gray-500"
       />
     </div>
     <div>
-      <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+      <label for="email" class="block text-sm font-medium text-gray-800">Email</label>
       <input
         id="email"
         name="email"
         type="email"
         disabled
-        class="mt-1 w-full rounded border border-gray-300 bg-gray-50 px-3 py-2 text-gray-500"
+        class="mt-1.5 w-full rounded-lg border border-border bg-gray-50 px-4 py-2.5 text-gray-500"
       />
     </div>
     <div>
-      <label for="phone" class="block text-sm font-medium text-gray-700">
+      <label for="phone" class="block text-sm font-medium text-gray-800">
         {locale === 'es' ? 'Teléfono' : 'Phone'}
       </label>
       <input
@@ -55,11 +65,11 @@ const whatsappUrl = `https://wa.me/${settings.contact.whatsapp}`;
         name="phone"
         type="tel"
         disabled
-        class="mt-1 w-full rounded border border-gray-300 bg-gray-50 px-3 py-2 text-gray-500"
+        class="mt-1.5 w-full rounded-lg border border-border bg-gray-50 px-4 py-2.5 text-gray-500"
       />
     </div>
     <div>
-      <label for="message" class="block text-sm font-medium text-gray-700">
+      <label for="message" class="block text-sm font-medium text-gray-800">
         {locale === 'es' ? 'Mensaje' : 'Message'}
       </label>
       <textarea
@@ -67,28 +77,26 @@ const whatsappUrl = `https://wa.me/${settings.contact.whatsapp}`;
         name="message"
         rows="4"
         disabled
-        class="mt-1 w-full rounded border border-gray-300 bg-gray-50 px-3 py-2 text-gray-500"
+        class="mt-1.5 w-full rounded-lg border border-border bg-gray-50 px-4 py-2.5 text-gray-500"
       ></textarea>
     </div>
     <button
       type="button"
       disabled
       aria-disabled="true"
-      class="cursor-not-allowed rounded bg-gray-400 px-6 py-2 font-semibold text-white"
+      class="cursor-not-allowed rounded-full bg-gray-400 px-6 py-3 font-semibold text-white"
     >
       {locale === 'es' ? 'Envío no disponible' : 'Submission unavailable'}
     </button>
   </form>
 
-  <div class="mt-8 rounded-lg border border-accent/30 bg-white p-4">
-    <p class="font-medium text-primary">
-      {locale === 'es' ? 'Contacto directo' : 'Direct contact'}
-    </p>
-    <ul class="mt-2 space-y-1 text-sm text-gray-700">
+  <article class="mt-10 rounded-(--radius-card) border border-border bg-surface-elevated p-6 shadow-(--shadow-soft)">
+    <h2 class="font-semibold text-primary">{locale === 'es' ? 'Contacto directo' : 'Direct contact'}</h2>
+    <ul class="mt-4 space-y-2 text-sm text-muted">
       <li>
-        <a href={whatsappUrl} class="text-primary underline" target="_blank" rel="noopener noreferrer">
+        <Button href={whatsappUrl} variant="ghost" size="sm" external class="!px-0">
           WhatsApp
-        </a>
+        </Button>
       </li>
       <li>
         <a href={`mailto:${settings.contact.email}`} class="text-primary underline">
@@ -101,5 +109,5 @@ const whatsappUrl = `https://wa.me/${settings.contact.whatsapp}`;
         </a>
       </li>
     </ul>
-  </div>
-</section>
+  </article>
+</Section>

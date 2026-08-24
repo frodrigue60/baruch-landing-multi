@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/ui/PageHeader.astro';
 import QuoteFormPlaceholder from '@/components/forms/QuoteFormPlaceholder.astro';
 import { getSiteSettings } from '@/lib/content';
 import { getAlternateLocaleUrl } from '@/lib/i18n/utils';
@@ -12,5 +13,6 @@ const description = 'Request information or a quote for your experience.';
 ---
 
 <BaseLayout {title} {description} locale={locale} {alternateLocaleUrl}>
+  <PageHeader title="Request a quote" description={description} />
   <QuoteFormPlaceholder locale={locale} settings={settings} />
 </BaseLayout>

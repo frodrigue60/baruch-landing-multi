@@ -1,11 +1,11 @@
 {
   "locale": "en",
   "siteName": "Baruch",
-  "tagline": "Ecotourism and wellness in harmony with nature",
+  "tagline": "Ecotourism and wellness in harmony with nature. Retreats, tours and experiences that reconnect body and environment.",
   "contact": {
     "phone": "+52 000 000 0000",
     "email": "hello@baruch.example",
-    "address": "Baruch Destination, Mexico (placeholder)",
+    "address": "Mountains and forest, Mexico (placeholder)",
     "whatsapp": "5200000000000"
   },
   "social": [
@@ -13,6 +13,11 @@
       "platform": "instagram",
       "url": "https://instagram.com/baruch",
       "label": "Instagram"
+    },
+    {
+      "platform": "facebook",
+      "url": "https://facebook.com/baruch",
+      "label": "Facebook"
     }
   ]
 }

@@ -1,0 +1,33 @@
+---
+import type { Locale } from '@/lib/i18n/config';
+import { t } from '@/lib/i18n/labels';
+import NavLinks from '@/components/layout/NavLinks.astro';
+
+interface Props {
+  locale: Locale;
+  currentPath: string;
+}
+
+const { locale, currentPath } = Astro.props;
+const menuLabel = locale === 'es' ? 'Menú principal' : 'Main menu';
+---
+
+<details class="mobile-nav relative md:hidden">
+  <summary
+    class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-border bg-surface-elevated text-primary"
+    aria-label={t('menuOpen', locale)}
+  >
+    <svg class="mobile-nav-icon-open h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" />
+    </svg>
+    <svg class="mobile-nav-icon-close h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" />
+    </svg>
+  </summary>
+  <nav
+    class="absolute right-0 top-full z-50 mt-2 min-w-[14rem] rounded-xl border border-border bg-surface-elevated p-2 shadow-(--shadow-soft)"
+    aria-label={menuLabel}
+  >
+    <NavLinks locale={locale} currentPath={currentPath} />
+  </nav>
+</details>

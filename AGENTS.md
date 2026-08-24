@@ -38,7 +38,7 @@ src/
 ├── assets/images/           # imágenes del sitio
 ├── components/
 │   ├── layout/              # Header, Footer, Nav, LanguageSwitcher
-│   ├── ui/                  # Button, Section, PageHero
+│   ├── ui/                  # Button, Section, PageHero, PageHeader, SectionHeading
 │   ├── experiences/         # ExperienceCard, ExperienceGrid
 │   ├── gallery/             # GalleryGrid, Lightbox (Fase 4)
 │   └── forms/               # QuoteFormPlaceholder
@@ -54,7 +54,8 @@ src/
 │   │   ├── index.ts         # API pública de contenido
 │   │   └── types.ts         # Experience, SiteSettings, PageContent
 │   └── i18n/
-│       ├── config.ts        # locales, defaultLocale, labels
+│       ├── config.ts        # locales, defaultLocale, labels, routeSegments
+│       ├── labels.ts        # uiLabels, t() — strings de UI compartidos
 │       └── utils.ts         # localizedPath, getLocaleFromUrl, switchLocale
 ├── pages/
 │   ├── index.astro          # redirect → /es/
@@ -203,8 +204,8 @@ npm run preview      # servir dist/ localmente
 |------|--------|------------|
 | 0 — Repo | ✅ | Git, docs, configs |
 | 1 — Fundaciones | ✅ | Astro, i18n, content layer, páginas placeholder |
-| 2 — Layout | ⏳ | Header, footer, diseño |
-| 3 — Contenido | ⏳ | Páginas con data real |
+| 2 — Layout | ✅ | Header, footer, diseño, mobile nav, UI kit |
+| 3 — Contenido | 🔄 | Páginas con data real |
 | 4 — Interacciones | ⏳ | Galería lightbox, form placeholder |
 | 5 — Deploy | ⏳ | SEO, CI, producción |
 | 6+ | ⏳ | CMS, formulario, transaccional |

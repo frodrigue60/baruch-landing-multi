@@ -1,0 +1,17 @@
+---
+interface Props {
+  id?: string;
+  class?: string;
+  contained?: boolean;
+  narrow?: boolean;
+}
+
+const { id, class: className = '', contained = true, narrow = false } = Astro.props;
+
+const width = narrow ? 'max-w-3xl' : 'max-w-6xl';
+const padding = contained ? `mx-auto ${width} px-4 py-16 md:py-20` : 'py-16 md:py-20';
+---
+
+<section id={id} class:list={[padding, className]}>
+  <slot />
+</section>

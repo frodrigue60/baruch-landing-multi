@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/ui/PageHeader.astro';
+import Section from '@/components/ui/Section.astro';
 import { getAlternateLocaleUrl } from '@/lib/i18n/utils';
 
 const locale = 'es';
@@ -9,11 +11,13 @@ const description = 'Política de privacidad y manejo de datos personales.';
 ---
 
 <BaseLayout {title} {description} locale={locale} {alternateLocaleUrl}>
-  <section class="mx-auto max-w-3xl px-4 py-16 prose prose-neutral">
-    <h1 class="text-3xl font-bold text-primary">Aviso de privacidad</h1>
-    <p class="mt-4 text-gray-700">
-      En el MVP actual, el sitio no recopila datos personales mediante formularios en línea.
-      Este aviso se actualizará cuando se active el formulario de cotización.
-    </p>
-  </section>
+  <PageHeader title="Aviso de privacidad" />
+  <Section narrow>
+    <article class="prose prose-neutral max-w-none rounded-(--radius-card) border border-border bg-surface-elevated p-8 text-muted shadow-(--shadow-soft)">
+      <p>
+        En el MVP actual, el sitio no recopila datos personales mediante formularios en línea.
+        Este aviso se actualizará cuando se active el formulario de cotización.
+      </p>
+    </article>
+  </Section>
 </BaseLayout>

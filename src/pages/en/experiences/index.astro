@@ -1,7 +1,10 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/ui/PageHeader.astro';
+import Section from '@/components/ui/Section.astro';
+import ExperienceGrid from '@/components/experiences/ExperienceGrid.astro';
 import { getExperiences } from '@/lib/content';
-import { getAlternateLocaleUrl, getPagePath } from '@/lib/i18n/utils';
+import { getAlternateLocaleUrl } from '@/lib/i18n/utils';
 
 const locale = 'en';
 const experiences = getExperiences(locale);
@@ -11,23 +14,8 @@ const description = 'Explore our ecotourism and wellness experiences.';
 ---
 
 <BaseLayout {title} {description} locale={locale} {alternateLocaleUrl}>
-  <section class="mx-auto max-w-6xl px-4 py-16">
-    <h1 class="text-3xl font-bold text-primary">Experiences</h1>
-    <ul class="mt-8 grid gap-6 md:grid-cols-2">
-      {
-        experiences.map((experience) => (
-          <li class="rounded-lg border border-gray-200 bg-white p-6">
-            <h2 class="text-xl font-semibold">{experience.title}</h2>
-            <p class="mt-2 text-gray-600">{experience.summary}</p>
-            <a
-              href={getPagePath('experiences', locale, experience.slug)}
-              class="mt-4 inline-block font-semibold text-primary underline"
-            >
-              View details
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </section>
+  <PageHeader title="Experiences" description={description} />
+  <Section>
+    <ExperienceGrid experiences={experiences} locale={locale} />
+  </Section>
 </BaseLayout>

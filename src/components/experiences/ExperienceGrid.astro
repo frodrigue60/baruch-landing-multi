@@ -1,0 +1,22 @@
+---
+import type { Locale } from '@/lib/i18n/config';
+import type { Experience } from '@/lib/content';
+import ExperienceCard from '@/components/experiences/ExperienceCard.astro';
+
+interface Props {
+  experiences: Experience[];
+  locale: Locale;
+}
+
+const { experiences, locale } = Astro.props;
+---
+
+<ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  {
+    experiences.map((experience) => (
+      <li>
+        <ExperienceCard experience={experience} locale={locale} />
+      </li>
+    ))
+  }
+</ul>
