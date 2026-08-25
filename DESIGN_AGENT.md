@@ -82,32 +82,52 @@ Contraste **WCAG AA** mínimo en texto sobre fondos.
 
 ---
 
-## 4. Inventario de páginas (prioridad)
+## 4. Páginas que debe incluir el maquetado (obligatorio)
 
-Trabaja en este orden. Cada página tiene versión `/es/...` y `/en/...`.
+El diseño/maquetado debe cubrir **todas** estas rutas. Cada una existe en **español e inglés** (paridad visual).
 
-| Prioridad | Ruta ES | Qué mejorar |
-|-----------|---------|-------------|
-| P0 | `/es/` Home | Hero full-bleed, marca fuerte, CTAs, featured experiences, cierre CTA |
-| P0 | Layout global | Header, Footer, WhatsApp float, tipografía, spacing rhythm |
-| P1 | `/es/experiencias` + `[slug]` | Listado y detalle con atmósfera; galería de experiencia |
-| P1 | `/es/cotizar` | Package cards + simulador legible (no “app settings”) |
-| P1 | `/es/nosotros` | Storytelling visual, secciones claras |
-| P2 | `/es/galeria` | Grid por categoría; ritmo visual (lightbox ya es fase posterior) |
-| P2 | `/es/contacto` | Datos + mapa + formulario placeholder claro |
-| P3 | `/es/privacidad` | Tipografía legible, sin exceso decorativo |
+| # | Español | Inglés | Rol |
+|---|---------|--------|-----|
+| 1 | `/es/` | `/en/` | Home — hero, marca, experiencias destacadas, CTA |
+| 2 | `/es/nosotros` | `/en/about` | Quiénes somos — historia, misión, valores |
+| 3 | `/es/experiencias` | `/en/experiences` | Listado de experiencias/paquetes |
+| 4 | `/es/experiencias/[slug]` | `/en/experiences/[slug]` | Detalle de experiencia (+ galería propia) |
+| 5 | `/es/galeria` | `/en/gallery` | Galería por categoría |
+| 6 | `/es/cotizar` | `/en/quote` | Paquetes + simulador de costos (front) |
+| 7 | `/es/contacto` | `/en/contact` | Datos, mapa, redes + formulario placeholder |
+| 8 | `/es/privacidad` | `/en/privacy` | Aviso de privacidad |
 
-Componentes clave a estilizar primero (impacto global):
+**Shell global (aplica a todas):** Header, Footer, LanguageSwitcher, menú mobile, WhatsApp flotante, `BaseLayout`.
 
-- `src/layouts/BaseLayout.astro`
-- `src/components/layout/*`
-- `src/components/ui/Button.astro`, `PageHero.astro`, `PageHeader.astro`, `Section.astro`, `CtaBanner.astro`
-- `src/components/experiences/*`
-- `src/components/pricing/*`
+**Prioridad de trabajo:**
+
+1. Shell global + tokens + tipografía  
+2. Home  
+3. Experiencias (listado + detalle)  
+4. Cotizar  
+5. Nosotros  
+6. Galería  
+7. Contacto  
+8. Privacidad  
+
+Componentes de alto impacto: `src/layouts/BaseLayout.astro`, `src/components/layout/*`, `src/components/ui/*`, `src/components/experiences/*`, `src/components/pricing/*`, `src/components/forms/*`, `src/components/gallery/*`, `src/components/contact/*`.
 
 ---
 
-## 5. Qué puedes cambiar
+## 5. Entorno: agente en la nube (no local)
+
+El LLM de diseño **corre en cloud**, no en la máquina del desarrollador:
+
+- **No asumas** acceso a `bun run dev`, navegador local ni hot-reload.
+- Entrega **código completo y listo para merge** (archivos `.astro` / `.css` editados en el repo).
+- Si puedes ejecutar build en el entorno cloud, hazlo; si no, deja el código coherente y documenta qué verificar localmente: `bun run build` y `bun run typecheck`.
+- No pidas capturas del `localhost` del usuario como dependencia del trabajo.
+- Prefiere cambios por archivos reales del repo, no snippets sueltos sin aplicar.
+- Mantén paridad ES/EN en cada cambio de página.
+
+---
+
+## 6. Qué puedes cambiar
 
 - Clases Tailwind en `.astro`
 - Tokens y `@layer` en `global.css`
@@ -116,7 +136,7 @@ Componentes clave a estilizar primero (impacto global):
 - Estructura visual **dentro** de una sección (orden de bloques) si no rompe datos
 - Placeholders SVG/imágenes en `public/images/` por assets más fuertes (mantener `alt` vía content)
 
-## 6. Qué no puedes cambiar (sin acuerdo explícito)
+## 7. Qué no puedes cambiar (sin acuerdo explícito)
 
 - Schemas / shape de JSON en `src/content/` (salvo copy visual menor en strings ya existentes)
 - Rutas i18n y mapa ES↔EN
@@ -128,20 +148,22 @@ Componentes clave a estilizar primero (impacto global):
 
 ---
 
-## 7. Criterios de aceptación por entrega
+## 8. Criterios de aceptación por entrega
 
+- [ ] Las 8 páginas × 2 idiomas están maquetadas/estilizadas de forma coherente
+- [ ] Shell global (header/footer/nav/WhatsApp) consistente en todas
 - [ ] Home: primer viewport = marca + mensaje + CTAs + visual dominante
-- [ ] Responsive: 375 / 768 / 1280 sin roturas
+- [ ] Responsive pensado para 375 / 768 / 1280
 - [ ] CTAs WhatsApp / Cotizar / Contacto visualmente claros (RNF-02)
 - [ ] Focus visible accesible; contraste AA en texto principal
 - [ ] ES y EN visualmente equivalentes
-- [ ] `bun run build` OK
 - [ ] Sin cards innecesarias en hero; sin badges flotantes sobre media
 - [ ] Formulario en contacto sigue siendo placeholder (disabled + aviso)
+- [ ] Si el entorno cloud lo permite: `bun run build` (y typecheck) OK; si no, código listo para que el equipo lo verifique en local
 
 ---
 
-## 8. Flujo de trabajo sugerido
+## 9. Flujo de trabajo sugerido
 
 1. **Foundation:** tipografía + tokens + Header/Footer/Button/Section.
 2. **Home:** hero + secciones + CTA banner.
@@ -154,24 +176,37 @@ Commits preferidos: Conventional Commits (`style:`, `feat:`, `refactor:`).
 
 ---
 
-## 9. Prompt listo para pegar al LLM de diseño
+## 10. Prompt listo para pegar al LLM de diseño (cloud)
 
 Copia y pega:
 
 ```
-Eres un diseñador frontend senior. Estiliza el sitio Baruch Landing (Astro + Tailwind + Bun) siguiendo estrictamente DESIGN_AGENT.md y AGENTS.md en la raíz del repo.
+Eres un diseñador frontend senior trabajando en un agente CLOUD (no tienes el entorno local del desarrollador: no dependas de localhost ni de bun run dev del usuario). Estiliza el sitio Baruch Landing (Astro + Tailwind + Bun) siguiendo estrictamente DESIGN_AGENT.md y AGENTS.md en la raíz del repo.
 
-Contexto: landing bilingüe ES/EN de ecoturismo y wellness. Contenido en src/content/; no hardcodear copy. Cotizar = simulador front; Contacto = form placeholder.
+Contexto: landing bilingüe ES/EN de ecoturismo y wellness. Contenido en src/content/; no hardcodear copy. Cotizar = simulador front; Contacto = form placeholder (sin envío real).
 
-Prioridad: 1) tokens + tipografía + layout global, 2) Home hero full-bleed con marca fuerte, 3) experiencias, 4) cotizar, 5) resto.
+MAQUETADO OBLIGATORIO — incluye y estiliza TODAS estas páginas (versión ES y EN, paridad visual):
+
+1. Home — /es/ y /en/
+2. Nosotros / About — /es/nosotros y /en/about
+3. Experiencias (listado) — /es/experiencias y /en/experiences
+4. Detalle de experiencia — /es/experiencias/[slug] y /en/experiences/[slug]
+5. Galería — /es/galeria y /en/gallery
+6. Cotizar — /es/cotizar y /en/quote (paquetes + simulador)
+7. Contacto — /es/contacto y /en/contact (datos, mapa, form placeholder)
+8. Privacidad — /es/privacidad y /en/privacy
+
+También el shell global: Header, Footer, LanguageSwitcher, menú mobile, WhatsApp flotante, BaseLayout.
+
+Orden sugerido: tokens/tipografía/layout → Home → experiencias → cotizar → nosotros → galería → contacto → privacidad.
 
 Respeta las reglas duras de composición (hero budget, sin clutter, cards frugales, anti-clichés purple/cream-terracotta/broadsheet). Mobile-first. WCAG AA.
 
-No cambies schemas de contenido ni lógica del simulador. Al terminar: bun run build y bun run typecheck deben pasar. Trabaja en cambios pequeños y verifica en /es/ y /en/.
+Entrega código aplicado en el repo (archivos completos), no solo snippets. No cambies schemas de contenido ni lógica del simulador. Si puedes build/typecheck en cloud, hazlo; si no, deja todo listo para verificación local con bun run build y bun run typecheck.
 ```
 
 ---
 
-## 10. Estado visual actual (honestidad)
+## 11. Estado visual actual (honestidad)
 
 El MVP ya tiene shell funcional (nav, tokens verdes/oro, hero básico, cards de experiencias, simulador). La deuda es **calidad editorial y atmósfera**: tipografía genérica, hero poco fotográfico, exceso posible de “card chrome”, poca jerarquía de ritmo vertical. Tu trabajo es elevar eso sin reescribir el producto.
