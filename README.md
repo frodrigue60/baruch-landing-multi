@@ -14,7 +14,7 @@ bun install
 bun run dev
 ```
 
-Abre [http://localhost:4321](http://localhost:4321). La raíz redirige a `/es/`.
+Abre [http://localhost:4321](http://localhost:4321). El sitio carga en español en `/`; el inglés está en `/en/`.
 
 ## Scripts
 
@@ -30,7 +30,8 @@ Abre [http://localhost:4321](http://localhost:4321). La raíz redirige a `/es/`.
 - `src/content/` — textos, experiencias y ajustes (JSON)
 - `src/lib/content/` — capa de acceso al contenido (desacoplada de la UI)
 - `src/lib/i18n/` — locales y utilidades de rutas
-- `src/pages/es/` y `src/pages/en/` — rutas por idioma
+- `src/pages/` — rutas en español (idioma default, sin prefijo)
+- `src/pages/en/` — rutas en inglés
 
 ## Editar contenido
 

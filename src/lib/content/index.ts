@@ -4,8 +4,10 @@ import type {
   GalleryCategory,
   GalleryItem,
   PageContent,
+  PageCta,
   PageKey,
   PricingConfig,
+  SiteMedia,
   SiteSettings,
 } from './types';
 
@@ -31,6 +33,29 @@ import galleryItems from '@/content/gallery/items.json';
 import galleryCategories from '@/content/gallery/categories.json';
 import pricingEs from '@/content/pricing/config.es.json';
 import pricingEn from '@/content/pricing/config.en.json';
+import siteMediaJson from '@/content/media/site.json';
+
+const siteMedia = siteMediaJson as SiteMedia;
+
+function withExperienceMedia(experience: Experience): Experience {
+  const media = siteMedia.experiences[experience.slug];
+  if (!media) return experience;
+  return {
+    ...experience,
+    coverImage: media.cover,
+    gallery: media.gallery,
+  };
+}
+
+function withPricingMedia(config: PricingConfig): PricingConfig {
+  return {
+    ...config,
+    packages: config.packages.map((pkg) => ({
+      ...pkg,
+      image: siteMedia.pricing[pkg.id] ?? siteMedia.experiences[pkg.experienceSlug]?.cover,
+    })),
+  };
+}
 
 const siteSettingsByLocale: Record<Locale, SiteSettings> = {
   es: siteEs as SiteSettings,
@@ -66,9 +91,13 @@ const allExperiences: Experience[] = [
 const allGalleryCategories = galleryCategories as GalleryCategory[];
 
 const pricingByLocale: Record<Locale, PricingConfig> = {
-  es: pricingEs as PricingConfig,
-  en: pricingEn as PricingConfig,
+  es: withPricingMedia(pricingEs as PricingConfig),
+  en: withPricingMedia(pricingEn as PricingConfig),
 };
+
+export function getSiteMedia(): SiteMedia {
+  return siteMedia;
+}
 
 export function getSiteSettings(locale: Locale): SiteSettings {
   return siteSettingsByLocale[locale];
@@ -81,13 +110,15 @@ export function getPage(pageKey: PageKey, locale: Locale): PageContent {
 export function getExperiences(locale: Locale): Experience[] {
   return allExperiences
     .filter((experience) => experience.locale === locale)
+    .map(withExperienceMedia)
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 }
 
 export function getExperience(slug: string, locale: Locale): Experience | undefined {
-  return allExperiences.find(
-    (experience) => experience.slug === slug && experience.locale === locale,
+  const experience = allExperiences.find(
+    (item) => item.slug === slug && item.locale === locale,
   );
+  return experience ? withExperienceMedia(experience) : undefined;
 }
 
 export function getFeaturedExperiences(locale: Locale): Experience[] {
@@ -95,7 +126,10 @@ export function getFeaturedExperiences(locale: Locale): Experience[] {
 }
 
 export function getGalleryItems(): GalleryItem[] {
-  return galleryItems as GalleryItem[];
+  return (galleryItems as GalleryItem[]).map((item) => ({
+    ...item,
+    src: siteMedia.gallery[item.id] ?? item.src,
+  }));
 }
 
 export function getGalleryItemsByLocale(locale: Locale): Array<
@@ -140,7 +174,9 @@ export type {
   GalleryCategory,
   GalleryItem,
   PageContent,
+  PageCta,
   PageKey,
   PricingConfig,
+  SiteMedia,
   SiteSettings,
 };

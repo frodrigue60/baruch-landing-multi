@@ -1,9 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHeader from '@/components/ui/PageHeader.astro';
-import Section from '@/components/ui/Section.astro';
-import SectionHeading from '@/components/ui/SectionHeading.astro';
-import PackageCards from '@/components/pricing/PackageCards.astro';
 import CostSimulator from '@/components/pricing/CostSimulator.astro';
 import { getPage, getPricingConfig, getSiteSettings } from '@/lib/content';
 import { getAlternateLocaleUrl } from '@/lib/i18n/utils';
@@ -23,30 +20,17 @@ const simulatorSection = page.sections?.find((s) => s.id === 'simulator');
   locale={locale}
   alternateLocaleUrl={alternateLocaleUrl}
 >
-  <PageHeader title={page.heading} description={packagesSection?.body} />
+  <PageHeader
+    title={page.heading}
+    description={simulatorSection?.body ?? packagesSection?.body}
+    centered
+  />
 
-  <Section>
-    <SectionHeading
-      title={packagesSection?.heading ?? 'Plans and packages'}
-      class="mb-8"
-    />
-    <PackageCards
-      packages={pricing.packages}
-      locale={locale}
-      currencySymbol={pricing.currencySymbol}
-    />
-  </Section>
-
-  <Section class="bg-primary/5">
-    <SectionHeading
-      title={simulatorSection?.heading ?? 'Cost simulator'}
-      subtitle={simulatorSection?.body}
-      class="mb-8"
-    />
+  <section class="container-editorial pb-[var(--spacing-section)]">
     <CostSimulator
       config={pricing}
       locale={locale}
       whatsapp={settings.contact.whatsapp}
     />
-  </Section>
+  </section>
 </BaseLayout>

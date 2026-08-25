@@ -1,19 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;1,400&display=swap');
 @import 'tailwindcss';
 
 @theme {
-  --color-primary: #2d5a3d;
-  --color-primary-dark: #1e3d29;
-  --color-primary-light: #3d7352;
+  /* Brand / terrestrial luxury */
+  --color-primary: #072715;
+  --color-primary-dark: #072715;
+  --color-deep-forest: #1e3d29;
+  --color-moss-green: #2d5a3d;
+  --color-primary-light: #2d5a3d;
+  --color-earth-gold: #c4a35a;
   --color-accent: #c4a35a;
-  --color-accent-dark: #a88642;
-  --color-surface: #f8f6f1;
+  --color-accent-dark: #785d1b;
+  --color-sand-surface: #f8f6f1;
+  --color-surface: #fbf9f4;
   --color-surface-elevated: #ffffff;
-  --color-muted: #5c6659;
-  --color-border: #d9e2d5;
-  --font-sans: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
-  --font-display: Georgia, 'Times New Roman', serif;
-  --radius-card: 1rem;
-  --shadow-soft: 0 4px 24px rgb(30 61 41 / 8%);
+  --color-background: #fbf9f4;
+  --color-on-background: #1b1c19;
+  --color-on-surface: #1b1c19;
+  --color-on-surface-variant: #424842;
+  --color-bark-slate: #3d3d3d;
+  --color-muted: #424842;
+  --color-border: rgb(61 61 61 / 10%);
+  --color-secondary-fixed: #ffdf9c;
+  --color-secondary-fixed-dim: #e5c276;
+
+  --font-sans: 'Hanken Grotesk', system-ui, sans-serif;
+  --font-display: 'EB Garamond', Georgia, serif;
+  --font-body: 'Hanken Grotesk', system-ui, sans-serif;
+
+  --text-label-caps: 0.75rem;
+  --text-label-caps--line-height: 1.2;
+  --text-label-caps--letter-spacing: 0.1em;
+  --text-label-caps--font-weight: 600;
+
+  --text-display-hero: 5rem;
+  --text-display-hero--line-height: 1.1;
+  --text-display-hero--letter-spacing: -0.02em;
+  --text-display-hero--font-weight: 500;
+
+  --text-headline-lg: 3rem;
+  --text-headline-lg--line-height: 1.2;
+  --text-headline-lg--font-weight: 400;
+
+  --text-headline-lg-mobile: 2rem;
+  --text-headline-lg-mobile--line-height: 1.2;
+  --text-headline-lg-mobile--font-weight: 400;
+
+  --text-headline-md: 1.5rem;
+  --text-headline-md--line-height: 1.4;
+  --text-headline-md--font-weight: 500;
+
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.6;
+
+  --radius-card: 0;
+  --radius-none: 0;
+  --shadow-soft: none;
+
+  --spacing-section: 6rem;
+  --spacing-gutter: 2rem;
+  --spacing-stack-sm: 0.5rem;
+  --spacing-stack-md: 1.5rem;
+  --spacing-stack-lg: 3rem;
+  --spacing-margin-mobile: 1.25rem;
+  --container-max: 80rem;
 }
 
 @layer base {
@@ -22,10 +72,16 @@
   }
 
   body {
-    font-family: var(--font-sans);
-    background-color: var(--color-surface);
-    color: #1a1f1c;
-    line-height: 1.6;
+    font-family: var(--font-body);
+    background-color: var(--color-background);
+    color: var(--color-on-background);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-earth-gold);
+    color: #fff;
   }
 
   h1,
@@ -34,15 +90,82 @@
     font-family: var(--font-display);
     line-height: 1.2;
     text-wrap: balance;
+    color: var(--color-deep-forest);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-accent);
+    outline: 1px solid var(--color-earth-gold);
     outline-offset: 2px;
+  }
+
+  img,
+  button,
+  input,
+  textarea,
+  select,
+  a {
+    border-radius: 0;
   }
 }
 
 @layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-label-caps {
+    font-family: var(--font-body);
+    font-size: var(--text-label-caps);
+    line-height: var(--text-label-caps--line-height);
+    letter-spacing: var(--text-label-caps--letter-spacing);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .text-display-hero {
+    font-size: clamp(2.5rem, 8vw, var(--text-display-hero));
+    line-height: var(--text-display-hero--line-height);
+    letter-spacing: var(--text-display-hero--letter-spacing);
+    font-weight: 500;
+  }
+
+  .text-headline-lg {
+    font-size: clamp(var(--text-headline-lg-mobile), 5vw, var(--text-headline-lg));
+    line-height: 1.2;
+    font-weight: 400;
+  }
+
+  .text-headline-md {
+    font-size: var(--text-headline-md);
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  .text-body-lg {
+    font-size: var(--text-body-lg);
+    line-height: 1.6;
+  }
+
+  .container-editorial {
+    margin-inline: auto;
+    max-width: var(--container-max);
+    padding-inline: var(--spacing-margin-mobile);
+  }
+
+  @media (min-width: 768px) {
+    .container-editorial {
+      padding-inline: var(--spacing-gutter);
+    }
+  }
+
+  .section-pad {
+    padding-block: var(--spacing-section);
+  }
+
+  .hairline {
+    border-color: rgb(61 61 61 / 10%);
+  }
+
   .sr-only-focusable:not(:focus):not(:focus-within) {
     position: absolute;
     width: 1px;

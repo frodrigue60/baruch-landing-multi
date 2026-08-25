@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHeader from '@/components/ui/PageHeader.astro';
-import Section from '@/components/ui/Section.astro';
 import { getPage } from '@/lib/content';
 import { getAlternateLocaleUrl } from '@/lib/i18n/utils';
 
@@ -17,16 +16,16 @@ const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
   alternateLocaleUrl={alternateLocaleUrl}
 >
   <PageHeader title={page.heading} />
-  <Section narrow>
-    <div class="space-y-8">
+  <section class="container-editorial max-w-3xl pb-[var(--spacing-section)]">
+    <div class="space-y-10">
       {
         page.sections?.map((section) => (
-          <article class="rounded-(--radius-card) border border-border bg-surface-elevated p-8 shadow-(--shadow-soft)">
-            <h2 class="text-xl font-bold text-primary">{section.heading}</h2>
-            <p class="mt-4 text-muted leading-relaxed">{section.body}</p>
+          <article class="border-b border-bark-slate/10 pb-10 last:border-0">
+            <h2 class="font-display text-headline-md text-deep-forest">{section.heading}</h2>
+            <p class="mt-4 leading-relaxed text-on-surface-variant">{section.body}</p>
           </article>
         ))
       }
     </div>
-  </Section>
+  </section>
 </BaseLayout>

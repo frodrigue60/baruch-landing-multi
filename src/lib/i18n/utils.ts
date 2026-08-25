@@ -9,25 +9,37 @@ import {
 export { defaultLocale, localeLabels, locales, routeSegments };
 export type { Locale };
 
+/**
+ * Build a localized path. Default locale (`es`) has no prefix.
+ * English uses `/en/...`. Always trailing slash.
+ */
 export function localizedPath(locale: Locale, segment = ''): string {
-  const path = segment ? `/${segment}` : '';
-  return `/${locale}${path}`;
+  const cleaned = segment.replace(/^\/+|\/+$/g, '');
+  const path = cleaned ? `/${cleaned}` : '';
+
+  if (locale === defaultLocale) {
+    return cleaned ? `${path}/` : '/';
+  }
+
+  return cleaned ? `/${locale}${path}/` : `/${locale}/`;
 }
 
 export function getLocaleFromUrl(pathname: string): Locale {
   const segment = pathname.split('/').filter(Boolean)[0];
-  return segment === 'en' ? 'en' : 'es';
+  return segment === 'en' ? 'en' : defaultLocale;
 }
 
+/** Strip `/en` or legacy `/es` prefix; default-locale paths stay as-is. */
 function stripLocalePrefix(pathname: string): string {
-  return pathname.replace(/^\/(es|en)(?=\/|$)/, '') || '/';
+  const stripped = pathname.replace(/^\/(en|es)(?=\/|$)/, '') || '/';
+  return stripped.startsWith('/') ? stripped : `/${stripped}`;
 }
 
 function translatePath(pathWithoutLocale: string, from: Locale, to: Locale): string {
   if (from === to) return pathWithoutLocale;
 
   const normalized =
-    pathWithoutLocale === '/' ? '' : pathWithoutLocale.replace(/^\//, '');
+    pathWithoutLocale === '/' ? '' : pathWithoutLocale.replace(/^\//, '').replace(/\/$/, '');
 
   for (const segments of Object.values(routeSegments)) {
     const fromSeg = segments[from];

@@ -4,14 +4,23 @@ interface Props {
   class?: string;
   contained?: boolean;
   narrow?: boolean;
+  sand?: boolean;
 }
 
-const { id, class: className = '', contained = true, narrow = false } = Astro.props;
+const {
+  id,
+  class: className = '',
+  contained = true,
+  narrow = false,
+  sand = false,
+} = Astro.props;
 
-const width = narrow ? 'max-w-3xl' : 'max-w-6xl';
-const padding = contained ? `mx-auto ${width} px-4 py-16 md:py-20` : 'py-16 md:py-20';
+const width = narrow ? 'max-w-3xl' : 'max-w-[var(--container-max)]';
+const padding = contained
+  ? `mx-auto ${width} px-[var(--spacing-margin-mobile)] py-[var(--spacing-section)] md:px-[var(--spacing-gutter)]`
+  : 'py-[var(--spacing-section)]';
 ---
 
-<section id={id} class:list={[padding, className]}>
+<section id={id} class:list={[padding, sand && 'bg-sand-surface', className]}>
   <slot />
 </section>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Baruch - Lujo Terrestre</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#1b1c19",
+                        "tertiary-fixed-dim": "#a1d2ad",
+                        "on-secondary-container": "#785d1b",
+                        "tertiary-container": "#103f24",
+                        "background": "#fbf9f4",
+                        "tertiary-fixed": "#bceec8",
+                        "secondary-container": "#fdd88a",
+                        "on-surface-variant": "#424842",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#e5c276",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#01210f",
+                        "inverse-primary": "#accfb3",
+                        "surface": "#fbf9f4",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-tertiary-container": "#7bab88",
+                        "primary-fixed-dim": "#accfb3",
+                        "deep-forest": "#1e3d29",
+                        "on-error": "#ffffff",
+                        "outline": "#727972",
+                        "sand-surface": "#f8f6f1",
+                        "primary-container": "#1e3d29",
+                        "on-primary-container": "#86a88e",
+                        "secondary": "#755b18",
+                        "earth-gold": "#c4a35a",
+                        "on-primary-fixed-variant": "#2e4d38",
+                        "surface-dim": "#dbdad5",
+                        "secondary-fixed": "#ffdf9c",
+                        "moss-green": "#2d5a3d",
+                        "on-surface": "#1b1c19",
+                        "surface-bright": "#fbf9f4",
+                        "on-tertiary-fixed": "#00210f",
+                        "surface-container-low": "#f5f3ee",
+                        "primary": "#072715",
+                        "on-secondary-fixed-variant": "#5b4300",
+                        "bark-slate": "#3d3d3d",
+                        "inverse-surface": "#30312e",
+                        "outline-variant": "#c2c8c0",
+                        "surface-tint": "#46664f",
+                        "on-tertiary-fixed-variant": "#224f33",
+                        "surface-container-high": "#eae8e3",
+                        "primary-fixed": "#c7ebcf",
+                        "tertiary": "#002813",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#f0eee9",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e4e2dd",
+                        "on-secondary-fixed": "#251a00",
+                        "surface-container-highest": "#e4e2dd",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "section-padding": "6rem",
+                        "gutter": "2rem",
+                        "stack-md": "1.5rem",
+                        "margin-mobile": "1.25rem",
+                        "stack-sm": "0.5rem",
+                        "stack-lg": "3rem"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Hanken Grotesk", "sans-serif"],
+                        "display-hero": ["EB Garamond", "serif"],
+                        "headline-md": ["EB Garamond", "serif"],
+                        "headline-lg-mobile": ["EB Garamond", "serif"],
+                        "body-lg": ["Hanken Grotesk", "sans-serif"],
+                        "headline-lg": ["EB Garamond", "serif"],
+                        "body-base": ["Hanken Grotesk", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "display-hero": ["80px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.2", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.2", "fontWeight": "400" }],
+                        "body-base": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-base">
+<!-- TopAppBar (Web) -->
+<header class="hidden md:flex justify-between items-center px-gutter py-4 w-full sticky top-0 z-50 bg-surface border-b border-bark-slate/10 rounded-none w-full top-0 left-0 transition-all duration-300">
+<div class="flex items-center gap-4 cursor-pointer transition-opacity active:opacity-70">
+<span class="material-symbols-outlined text-primary">menu</span>
+</div>
+<div class="font-display-hero text-headline-md text-primary uppercase tracking-widest cursor-pointer transition-opacity active:opacity-70">
+            BARUCH
+        </div>
+<div class="flex items-center gap-6">
+<nav class="flex gap-6">
+<a class="text-on-surface-variant font-label-caps hover:text-earth-gold transition-colors duration-300" href="#">Experiences</a>
+<a class="text-on-surface-variant font-label-caps hover:text-earth-gold transition-colors duration-300" href="#">Retreats</a>
+<a class="text-on-surface-variant font-label-caps hover:text-earth-gold transition-colors duration-300" href="#">Wellness</a>
+<a class="text-on-surface-variant font-label-caps hover:text-earth-gold transition-colors duration-300" href="#">About Us</a>
+</nav>
+<div class="font-label-caps text-label-caps uppercase tracking-widest text-primary cursor-pointer transition-opacity active:opacity-70 hover:text-earth-gold transition-colors duration-300">
+                ES | EN
+            </div>
+</div>
+</header>
+<!-- TopAppBar (Mobile) -->
+<header class="md:hidden flex justify-between items-center px-margin-mobile py-4 w-full sticky top-0 z-50 bg-surface border-b border-bark-slate/10 rounded-none w-full top-0 left-0">
+<div class="flex items-center cursor-pointer transition-opacity active:opacity-70">
+<span class="material-symbols-outlined text-primary">menu</span>
+</div>
+<div class="font-display-hero text-headline-md text-primary uppercase tracking-widest cursor-pointer transition-opacity active:opacity-70">
+            BARUCH
+        </div>
+<div class="font-label-caps text-label-caps uppercase tracking-widest text-primary cursor-pointer transition-opacity active:opacity-70">
+            ES | EN
+        </div>
+</header>
+<!-- NavigationDrawer (Hidden by default, structure for later interaction) -->
+<aside class="hidden fixed inset-y-0 left-0 z-40 w-80 bg-sand-surface flex flex-col h-full p-6 border-r border-bark-slate/10 rounded-none">
+<div class="font-display-hero text-headline-md text-deep-forest mb-12">BARUCH</div>
+<nav class="flex flex-col gap-8 font-body-lg text-body-lg text-deep-forest">
+<a class="flex items-center gap-4 text-earth-gold font-bold hover:bg-surface-container-high transition-colors ease-in-out duration-300 p-2" href="#"><span class="material-symbols-outlined">nature_people</span> Experiences</a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high transition-colors ease-in-out duration-300 p-2" href="#"><span class="material-symbols-outlined">spa</span> Retreats</a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high transition-colors ease-in-out duration-300 p-2" href="#"><span class="material-symbols-outlined">self_improvement</span> Wellness</a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high transition-colors ease-in-out duration-300 p-2" href="#"><span class="material-symbols-outlined">info</span> About Us</a>
+</nav>
+</aside>
+<!-- Main Content -->
+<main>
+<!-- Hero Section -->
+<section class="relative w-full h-[795px] flex items-center justify-center overflow-hidden bg-deep-forest">
+<div class="absolute inset-0 w-full h-full">
+<div class="absolute inset-0 bg-black/30 z-10"></div>
+<img class="w-full h-full object-cover z-0" data-alt="A breathtaking, cinematic photograph of a dense, ancient forest at dawn. Morning mist weaves through towering pine trees. Soft, golden sunlight pierces the canopy, illuminating rich green moss and dark, textured earth. The composition is expansive and grounded, evoking a profound sense of stillness and terrestrial luxury. The lighting is natural, serene, and atmospheric." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7-k-7gqhl7RgNirQ3nLqbBCqOLj2nD8Phu66FLVFkUIvoI-P3e-RuuOil5Gx7J4YaYFakAs4_op3_638xT1YXDcQ5DkxY1A6aigi--7AJvjnpJ-cOppqY3rhk19cPOYi0-v5_LW2Xe5i3ux78cleEBh4v7d3LD_Wwk_a3Xa91bPLO7UKVyal2jvb9__Dl-ZWKHtjabB21YPAA_8QCmtEDcWh--4MLircfbhALCZtmPnew2pMD4PIyOA"/>
+</div>
+<div class="relative z-20 text-center px-gutter md:px-section-padding max-w-4xl mx-auto flex flex-col items-center">
+<h1 class="font-display-hero text-headline-lg-mobile md:text-display-hero text-sand-surface mb-stack-md leading-tight">
+                    Reconecta con la tierra
+                </h1>
+<p class="font-body-lg text-body-lg text-sand-surface/90 max-w-2xl mx-auto mb-stack-lg">
+                    Descubre un refugio de lujo terrestre. Experiencias inmersivas diseñadas para restaurar tu bienestar profundo a través del silencio, la naturaleza y la hospitalidad genuina.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+<button class="bg-earth-gold text-deep-forest font-label-caps text-label-caps uppercase py-4 px-8 rounded-none hover:bg-secondary-fixed-dim transition-colors duration-300">
+                        Explorar Experiencias
+                    </button>
+<button class="bg-transparent border border-sand-surface text-sand-surface font-label-caps text-label-caps uppercase py-4 px-8 rounded-none hover:bg-sand-surface/10 transition-colors duration-300">
+                        El Concepto Baruch
+                    </button>
+</div>
+</div>
+</section>
+<!-- Concept Introduction -->
+<section class="py-section-padding px-gutter md:px-section-padding bg-surface">
+<div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 gap-stack-lg items-center">
+<div class="flex flex-col gap-stack-md">
+<span class="font-label-caps text-label-caps text-earth-gold uppercase tracking-widest">Nuestra Filosofía</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-deep-forest">
+                        Lujo es el tiempo, el espacio y el silencio.
+                    </h2>
+<p class="font-body-base text-body-base text-on-surface-variant max-w-xl">
+                        En Baruch, redefinimos el lujo alejándonos de lo superfluo. Nos enfocamos en la riqueza de la experiencia terrenal: la textura de la madera cruda, el sonido del viento en los árboles y la tranquilidad de estar verdaderamente presente. Un santuario para quienes buscan desconectar del ruido digital y reconectar consigo mismos.
+                    </p>
+</div>
+<div class="relative h-[530px] w-full">
+<img class="w-full h-full object-cover rounded-none" data-alt="A close-up, highly textured editorial photograph of natural elements. Rough, dark grey slate stone contrasted with smooth, warm wooden architectural details. A single, delicate fern frond rests on the surface, bathed in a solitary beam of soft natural light. The aesthetic is wabi-sabi, grounded, minimalist, and deeply organic. High contrast, sharp focus on textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcgzbnXLnZ9eKQisllbQY_SgqVuN_HygpRc-CPcbF97W1dWb30KwWo6z3kXIp_lAguWJrAt22JtpuDz-fCCr7MBA-TffyJA-whTKkl7TzDaANn_eJmu6vMaG1nXlxu8mli_xxJMqOZoelRyscwNdfqum3l1yoTUknEt2mtY-V7nHyDFez76SmUFjMIiF4JUONeN52gtg220purlhGM9izO68sTQNejPXYb1t_3NsQoiicw4T2U4vDehw"/>
+</div>
+</div>
+</section>
+<!-- Featured Experiences -->
+<section class="py-section-padding px-gutter md:px-section-padding bg-sand-surface">
+<div class="max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-stack-lg">
+<div class="max-w-2xl">
+<span class="font-label-caps text-label-caps text-earth-gold uppercase tracking-widest mb-stack-sm block">Colección Selecta</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-deep-forest">
+                            Experiencias Destacadas
+                        </h2>
+</div>
+<a class="hidden md:inline-flex items-center gap-2 font-label-caps text-label-caps text-deep-forest uppercase tracking-widest hover:text-earth-gold transition-colors" href="#">
+                        Ver todas <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Experience Card 1 -->
+<div class="group cursor-pointer">
+<div class="relative h-96 w-full mb-6 overflow-hidden">
+<img class="w-full h-full object-cover rounded-none transition-transform duration-700 group-hover:scale-105" data-alt="A wide architectural shot of an eco-luxury cabin nestled seamlessly into a rocky hillside. The structure features expansive floor-to-ceiling glass windows reflecting the surrounding dense forest. The exterior is clad in dark, charred wood. The mood is secluded, serene, and sophisticated, embodying premium ecotourism design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHcW6PB1FgaoSGfcs_QI11PaSLT9H59jmDUfLpqH_lm_wxoG19vBf-cCBNKy2vc3c9c_t_o1hN94XCViXkvESlTfIxmhM70CT2TUx_gCcXiUqoC0uzmrPGwQqdFR5HuB6QE9XvDx7ZDuSMpzTb7-taqbDz6EDqD_vMuWBqid5PKanqNIrpFkDSRGs2F2FSXMt2FkhpRro1xv-5Ne_l-9YTQB1hxcNjy9Mf3JkLfJBb7HnJNryT647ruQ"/>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="font-headline-md text-headline-md text-deep-forest">Retiro de Inmersión Bosque</h3>
+<p class="font-body-base text-body-base text-on-surface-variant line-clamp-2">Tres días de desconexión total en nuestras cabañas aisladas, diseñadas para fundirse con el entorno natural.</p>
+<span class="font-label-caps text-label-caps text-earth-gold uppercase mt-2">Desde $850 USD</span>
+</div>
+</div>
+<!-- Experience Card 2 -->
+<div class="group cursor-pointer">
+<div class="relative h-96 w-full mb-6 overflow-hidden">
+<img class="w-full h-full object-cover rounded-none transition-transform duration-700 group-hover:scale-105" data-alt="A serene, minimalist wellness room interior. A large wooden soaking tub sits on smooth stone flooring. Soft, diffused daylight filters through linen curtains, casting gentle shadows. Minimalist aesthetic with natural materials like stone, raw wood, and neutral linens. The atmosphere is deeply relaxing and luxurious." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYhTVqw1hSRDOo6sDV02HolLCrrIMYwyAQvDlItrm-F5PLG-jXVlL7KFqB0gj7c5QE7W8XcW9tmUc_SQJUkW9A17FLgst09tj3Zbi6o_c405lAX7RQUKkSvQXAJYxNwR9VNaK3qsrsfAJjfBHMSwS8HUPJ10FogcslR7V1BekOeKk53ZZDA9HV3thFbeI0tZmKVMrm7hGNe1UCPqqUiaIBtwTqoY3Rft2SH8EkO3nWTVQ4U17Q2J4YyA"/>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="font-headline-md text-headline-md text-deep-forest">Ritual Terapéutico Terrestre</h3>
+<p class="font-body-base text-body-base text-on-surface-variant line-clamp-2">Tratamientos holísticos utilizando elementos nativos de la sierra: arcillas minerales, aceites botánicos y agua termal.</p>
+<span class="font-label-caps text-label-caps text-earth-gold uppercase mt-2">Desde $220 USD</span>
+</div>
+</div>
+<!-- Experience Card 3 -->
+<div class="group cursor-pointer md:hidden lg:block">
+<div class="relative h-96 w-full mb-6 overflow-hidden">
+<img class="w-full h-full object-cover rounded-none transition-transform duration-700 group-hover:scale-105" data-alt="A beautifully set rustic dining table outdoors, surrounded by tall pine trees. The table is dressed with raw linen, handcrafted ceramic plates, and simple wildflowers. Soft ambient lighting from subtle lanterns creates a warm, inviting evening atmosphere. High-end culinary ecotourism vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeVp5-Jxvy0dl5Tzyo_WZo7lNjPBtb2NHlOjsxw7uwFQUZyfqOHZ9suygJeyifcyIEKGgPajgaJ6hWlSBRYC7ePO2kAcaHLOO6HJy9csE26bkiI_ybv9x338Zcw6kF6sykY9dfrf9vzG571FyHGE4tFd42EFnwLxogLfuz0jt4QXKaNoJl0CPs_rgrm5XDI2WftVdB0GdmrUU1Tj7RWdq9wkD135BsC0Fq4cktWEOiALlRFHK1WyL5fA"/>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="font-headline-md text-headline-md text-deep-forest">Gastronomía Silvestre</h3>
+<p class="font-body-base text-body-base text-on-surface-variant line-clamp-2">Una experiencia culinaria que celebra los ingredientes locales recolectados en el entorno, preparada a fuego abierto.</p>
+<span class="font-label-caps text-label-caps text-earth-gold uppercase mt-2">Desde $150 USD</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-primary flex flex-col md:flex-row justify-between items-start px-gutter py-section-padding w-full rounded-none border-t border-bark-slate/20">
+<div class="flex flex-col gap-8 w-full md:w-auto mb-12 md:mb-0">
+<div class="font-display-hero text-headline-md text-surface-container-lowest">
+                BARUCH
+            </div>
+<p class="font-label-caps text-label-caps text-surface uppercase tracking-widest mt-auto">
+                © 2024 BARUCH TERRESTRIAL LUXURY. ALL RIGHTS RESERVED.
+            </p>
+</div>
+<nav class="flex flex-col md:flex-row gap-8 md:gap-16 w-full md:w-auto">
+<ul class="flex flex-col gap-4">
+<li><a class="font-label-caps text-label-caps uppercase tracking-widest text-surface-variant hover:text-tertiary-fixed-dim cursor-pointer underline-offset-4 hover:underline transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="font-label-caps text-label-caps uppercase tracking-widest text-surface-variant hover:text-tertiary-fixed-dim cursor-pointer underline-offset-4 hover:underline transition-colors" href="#">Terms of Service</a></li>
+</ul>
+<ul class="flex flex-col gap-4">
+<li><a class="font-label-caps text-label-caps uppercase tracking-widest text-surface-variant hover:text-tertiary-fixed-dim cursor-pointer underline-offset-4 hover:underline transition-colors" href="#">Sustainability Charter</a></li>
+<li><a class="font-label-caps text-label-caps uppercase tracking-widest text-surface-variant hover:text-tertiary-fixed-dim cursor-pointer underline-offset-4 hover:underline transition-colors" href="#">Contact Us</a></li>
+</ul>
+</nav>
+</footer>
+<!-- BottomNavBar (Mobile only) -->
+<nav class="md:hidden fixed bottom-margin-mobile right-margin-mobile z-50 flex flex-col items-center gap-4 bg-transparent rounded-none">
+<button class="bg-deep-forest text-on-primary p-4 flex items-center justify-center hover:bg-moss-green transition-all shadow-lg">
+<span class="material-symbols-outlined">chat</span>
+</button>
+<button class="bg-earth-gold text-on-primary p-4 flex items-center justify-center hover:bg-moss-green transition-all shadow-lg">
+<span class="material-symbols-outlined">language</span>
+</button>
+</nav>
+</body></html>

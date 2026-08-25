@@ -4,19 +4,42 @@ import Header from '@/components/layout/Header.astro';
 import Footer from '@/components/layout/Footer.astro';
 import WhatsAppFloat from '@/components/layout/WhatsAppFloat.astro';
 import type { Locale } from '@/lib/i18n/config';
-import { getSiteSettings } from '@/lib/content';
+import { getSiteMedia, getSiteSettings } from '@/lib/content';
 import { t } from '@/lib/i18n/labels';
 
-interface Props {
+export interface Props {
   title: string;
   description: string;
   locale: Locale;
   alternateLocaleUrl: string;
+  /** Absolute or site-relative image for Open Graph / Twitter. */
+  image?: string;
+  ogType?: 'website' | 'article';
 }
 
-const { title, description, locale, alternateLocaleUrl } = Astro.props;
+const {
+  title,
+  description,
+  locale,
+  alternateLocaleUrl,
+  image,
+  ogType = 'website',
+} = Astro.props;
+
 const settings = getSiteSettings(locale);
+const media = getSiteMedia();
 const canonicalUrl = Astro.url.href;
+const alternateUrl = new URL(alternateLocaleUrl, Astro.site ?? Astro.url.origin).href;
+
+function toAbsoluteUrl(pathOrUrl: string): string {
+  if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl;
+  const base = Astro.site ?? Astro.url;
+  return new URL(pathOrUrl, base).href;
+}
+
+const ogImage = toAbsoluteUrl(image ?? media.home.hero);
+const ogLocale = locale === 'es' ? 'es_MX' : 'en_US';
+const ogLocaleAlternate = locale === 'es' ? 'en_US' : 'es_MX';
 ---
 
 <!doctype html>
@@ -27,19 +50,38 @@ const canonicalUrl = Astro.url.href;
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={settings.siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content={ogLocaleAlternate} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={title} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalUrl} />
     <link
       rel="alternate"
       hreflang={locale === 'es' ? 'en' : 'es'}
-      href={new URL(alternateLocaleUrl, Astro.url.origin).href}
+      href={alternateUrl}
     />
     <link rel="alternate" hreflang={locale} href={canonicalUrl} />
+    <link rel="alternate" hreflang="x-default" href={new URL('/', Astro.site ?? Astro.url.origin).href} />
   </head>
   <body class="flex min-h-screen flex-col pb-20 md:pb-0">
     <a
       href="#main-content"
-      class="sr-only-focusable fixed left-4 top-4 z-[100] rounded bg-accent px-4 py-2 font-semibold text-primary-dark"
+      class="sr-only-focusable fixed left-4 top-4 z-[100] bg-earth-gold px-4 py-2 font-label-caps text-deep-forest"
     >
       {t('skipToContent', locale)}
     </a>

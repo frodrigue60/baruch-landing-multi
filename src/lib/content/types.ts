@@ -92,6 +92,18 @@ export interface PricingPackage {
   summary: string;
   basePricePerDay: number;
   includes: string[];
+  /** Imagen editorial (mockup / CMS). */
+  image?: string;
+}
+
+/** Assets visuales del MVP (URLs de mockups). */
+export interface SiteMedia {
+  home: { hero: string; philosophy: string };
+  about: { hero: string; bentoA: string; bentoB: string };
+  contact: { atmosphere: string };
+  experiences: Record<string, { cover: string; gallery: string[] }>;
+  pricing: Record<string, string>;
+  gallery: Record<string, string>;
 }
 
 /** Configuración del simulador de costos (solo front; no es cotización formal). */

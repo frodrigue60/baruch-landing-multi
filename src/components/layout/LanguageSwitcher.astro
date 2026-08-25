@@ -1,6 +1,6 @@
 ---
 import type { Locale } from '@/lib/i18n/config';
-import { localeLabels, locales } from '@/lib/i18n/config';
+import { locales } from '@/lib/i18n/config';
 import { switchLocalePath } from '@/lib/i18n/utils';
 
 interface Props {
@@ -9,25 +9,24 @@ interface Props {
 }
 
 const { locale, currentPath } = Astro.props;
-const alternateLocale = locales.find((item) => item !== locale)!;
 ---
 
-<div class="flex items-center gap-2">
-  <span class="sr-only">{locale === 'es' ? 'Idioma' : 'Language'}</span>
+<div class="font-label-caps text-primary">
   {
-    locales.map((item) => (
-      <a
-        href={switchLocalePath(currentPath, item)}
-        class:list={[
-          'rounded px-2 py-1 text-xs font-semibold uppercase tracking-wide',
-          item === locale
-            ? 'bg-primary text-white'
-            : 'text-gray-600 hover:bg-gray-100',
-        ]}
-        aria-current={item === locale ? 'page' : undefined}
-      >
-        {localeLabels[item]}
-      </a>
+    locales.map((item, index) => (
+      <>
+        {index > 0 && <span class="text-bark-slate/40"> | </span>}
+        <a
+          href={switchLocalePath(currentPath, item)}
+          class:list={[
+            'uppercase tracking-widest transition-colors hover:text-earth-gold',
+            item === locale ? 'text-primary' : 'text-on-surface-variant',
+          ]}
+          aria-current={item === locale ? 'page' : undefined}
+        >
+          {item.toUpperCase()}
+        </a>
+      </>
     ))
   }
 </div>

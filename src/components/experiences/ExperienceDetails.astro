@@ -13,20 +13,20 @@ const { experience, locale } = Astro.props;
 
 {
   (experience.duration || experience.groupSize) && (
-    <dl class="mt-6 flex flex-wrap gap-6 rounded-lg border border-border bg-primary/5 px-5 py-4 text-sm">
+    <dl class="mt-8 flex flex-wrap gap-8 border border-bark-slate/10 bg-sand-surface px-6 py-5 text-sm">
       {
         experience.duration && (
           <div>
-            <dt class="font-semibold text-primary">{t('duration', locale)}</dt>
-            <dd class="mt-1 text-muted">{experience.duration}</dd>
+            <dt class="font-label-caps text-earth-gold">{t('duration', locale)}</dt>
+            <dd class="mt-1 text-on-surface-variant">{experience.duration}</dd>
           </div>
         )
       }
       {
         experience.groupSize && (
           <div>
-            <dt class="font-semibold text-primary">{t('groupSize', locale)}</dt>
-            <dd class="mt-1 text-muted">{experience.groupSize}</dd>
+            <dt class="font-label-caps text-earth-gold">{t('groupSize', locale)}</dt>
+            <dd class="mt-1 text-on-surface-variant">{experience.groupSize}</dd>
           </div>
         )
       }
@@ -36,13 +36,13 @@ const { experience, locale } = Astro.props;
 
 {
   experience.highlights && experience.highlights.length > 0 && (
-    <div class="mt-8">
-      <h2 class="text-lg font-bold text-primary">{t('highlights', locale)}</h2>
-      <ul class="mt-3 space-y-2">
+    <div class="mt-10">
+      <h2 class="font-display text-headline-md text-deep-forest">{t('highlights', locale)}</h2>
+      <ul class="mt-4 space-y-2">
         {
           experience.highlights.map((item) => (
-            <li class="flex items-start gap-2 text-muted">
-              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+            <li class="flex items-start gap-3 text-on-surface-variant">
+              <span class="mt-2 h-1 w-1 shrink-0 bg-earth-gold" aria-hidden="true" />
               {item}
             </li>
           ))

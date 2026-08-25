@@ -1,3 +1,124 @@
 ---
-return Astro.redirect('/es/');
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/ui/PageHero.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import CtaBanner from '@/components/ui/CtaBanner.astro';
+import Button from '@/components/ui/Button.astro';
+import ExperienceGrid from '@/components/experiences/ExperienceGrid.astro';
+import { getFeaturedExperiences, getPage, getSiteMedia, getSiteSettings } from '@/lib/content';
+import { getAlternateLocaleUrl, getPagePath } from '@/lib/i18n/utils';
+import { t } from '@/lib/i18n/labels';
+
+const locale = 'es';
+const page = getPage('home', locale);
+const settings = getSiteSettings(locale);
+const media = getSiteMedia();
+const experiences = getFeaturedExperiences(locale);
+const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
+const philosophy = page.sections?.[0];
+const secondarySections = page.sections?.slice(1) ?? [];
 ---
+
+<BaseLayout
+  title={page.title}
+  description={page.description}
+  locale={locale}
+  alternateLocaleUrl={alternateLocaleUrl}
+  image={media.home.hero}
+>
+  <PageHero
+    heading={page.heading}
+    subtitle={settings.tagline}
+    locale={locale}
+    brand={settings.siteName}
+    imageSrc={media.home.hero}
+    imageAlt=""
+  >
+    <Fragment slot="actions">
+      <Button href={getPagePath('quote', locale)} variant="gold" size="lg">
+        {t('quote', locale)}
+      </Button>
+      <Button
+        href={getPagePath('experiences', locale)}
+        variant="outline"
+        size="lg"
+        class="border-sand-surface text-sand-surface hover:bg-sand-surface/10"
+      >
+        {t('featuredExperiences', locale)}
+      </Button>
+    </Fragment>
+  </PageHero>
+
+  {
+    philosophy && (
+      <section class="section-pad bg-surface">
+        <div class="container-editorial grid items-center gap-[var(--spacing-stack-lg)] md:grid-cols-2">
+          <div class="flex flex-col gap-[var(--spacing-stack-md)]">
+            <span class="font-label-caps text-earth-gold">
+              {locale === 'es' ? 'Nuestra filosofía' : 'Our philosophy'}
+            </span>
+            <h2 class="font-display text-headline-lg text-deep-forest">{philosophy.heading}</h2>
+            <p class="max-w-xl text-on-surface-variant">{philosophy.body}</p>
+            <div>
+              <Button href={getPagePath('about', locale)} variant="ghost" class="!px-0">
+                {locale === 'es' ? 'Conócenos' : 'About us'} →
+              </Button>
+            </div>
+          </div>
+          <div class="relative h-[360px] w-full md:h-[530px]">
+            <img
+              src={media.home.philosophy}
+              alt=""
+              class="h-full w-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    secondarySections.length > 0 && (
+      <section class="border-y border-bark-slate/10 bg-sand-surface section-pad">
+        <div class="container-editorial grid gap-10 md:grid-cols-2">
+          {secondarySections.map((section) => (
+            <article>
+              <h2 class="font-display text-headline-md text-deep-forest">{section.heading}</h2>
+              <p class="mt-3 text-on-surface-variant leading-relaxed">{section.body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section-pad bg-sand-surface">
+    <div class="container-editorial">
+      <div class="mb-[var(--spacing-stack-lg)] flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+        <SectionHeading
+          eyebrow={locale === 'es' ? 'Colección selecta' : 'Select collection'}
+          title={t('featuredExperiences', locale)}
+        />
+        <a
+          href={getPagePath('experiences', locale)}
+          class="font-label-caps hidden text-deep-forest transition-colors hover:text-earth-gold md:inline-flex"
+        >
+          {locale === 'es' ? 'Ver todas →' : 'View all →'}
+        </a>
+      </div>
+      <ExperienceGrid experiences={experiences} locale={locale} />
+    </div>
+  </section>
+
+  {
+    page.cta && (
+      <CtaBanner
+        cta={page.cta}
+        locale={locale}
+        primaryHref={getPagePath('quote', locale)}
+        secondaryHref={getPagePath('experiences', locale)}
+      />
+    )
+  }
+</BaseLayout>

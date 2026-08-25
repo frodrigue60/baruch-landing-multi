@@ -88,14 +88,14 @@ El diseño/maquetado debe cubrir **todas** estas rutas. Cada una existe en **esp
 
 | # | Español | Inglés | Rol |
 |---|---------|--------|-----|
-| 1 | `/es/` | `/en/` | Home — hero, marca, experiencias destacadas, CTA |
-| 2 | `/es/nosotros` | `/en/about` | Quiénes somos — historia, misión, valores |
-| 3 | `/es/experiencias` | `/en/experiences` | Listado de experiencias/paquetes |
-| 4 | `/es/experiencias/[slug]` | `/en/experiences/[slug]` | Detalle de experiencia (+ galería propia) |
-| 5 | `/es/galeria` | `/en/gallery` | Galería por categoría |
-| 6 | `/es/cotizar` | `/en/quote` | Paquetes + simulador de costos (front) |
-| 7 | `/es/contacto` | `/en/contact` | Datos, mapa, redes + formulario placeholder |
-| 8 | `/es/privacidad` | `/en/privacy` | Aviso de privacidad |
+| 1 | `/` | `/en/` | Home — hero, marca, experiencias destacadas, CTA |
+| 2 | `/nosotros` | `/en/about` | Quiénes somos — historia, misión, valores |
+| 3 | `/experiencias` | `/en/experiences` | Listado de experiencias/paquetes |
+| 4 | `/experiencias/[slug]` | `/en/experiences/[slug]` | Detalle de experiencia (+ galería propia) |
+| 5 | `/galeria` | `/en/gallery` | Galería por categoría |
+| 6 | `/cotizar` | `/en/quote` | Paquetes + simulador de costos (front) |
+| 7 | `/contacto` | `/en/contact` | Datos, mapa, redes + formulario placeholder |
+| 8 | `/privacidad` | `/en/privacy` | Aviso de privacidad |
 
 **Shell global (aplica a todas):** Header, Footer, LanguageSwitcher, menú mobile, WhatsApp flotante, `BaseLayout`.
 

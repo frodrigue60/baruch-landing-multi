@@ -13,15 +13,15 @@ interface Props {
 const { cta, primaryHref, secondaryHref } = Astro.props;
 ---
 
-<section class="bg-primary px-4 py-16 text-white md:py-20">
+<section class="bg-deep-forest px-[var(--spacing-gutter)] py-[var(--spacing-section)] text-sand-surface">
   <div class="mx-auto max-w-3xl text-center">
-    <h2 class="text-3xl font-bold md:text-4xl">{cta.heading}</h2>
-    <p class="mt-4 text-lg text-white/90">{cta.body}</p>
+    <h2 class="font-display text-headline-lg">{cta.heading}</h2>
+    <p class="mt-4 text-body-lg text-sand-surface/80">{cta.body}</p>
     <div class="mt-8 flex flex-wrap justify-center gap-4">
-      <Button href={primaryHref} variant="primary" size="lg">
+      <Button href={primaryHref} variant="gold" size="lg">
         {cta.primaryLabel}
       </Button>
-      <Button href={secondaryHref} variant="outline" size="lg">
+      <Button href={secondaryHref} variant="outline" size="lg" class="border-earth-gold text-earth-gold hover:bg-earth-gold hover:text-deep-forest">
         {cta.secondaryLabel}
       </Button>
     </div>

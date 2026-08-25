@@ -13,42 +13,90 @@ interface Props {
 const { config, locale, whatsapp } = Astro.props;
 const contactPath = Astro.props.contactPath ?? getPagePath('contact', locale);
 const labels = {
+  step1: locale === 'es' ? '1. Selecciona tu retiro' : '1. Select your retreat',
+  step2: locale === 'es' ? '2. Define tu estancia' : '2. Define your stay',
   package: locale === 'es' ? 'Paquete / plan' : 'Package / plan',
   personType: locale === 'es' ? 'Tipo de persona' : 'Person type',
   reservation: locale === 'es' ? 'Tipo de reservación' : 'Reservation type',
   location: locale === 'es' ? 'Ubicación' : 'Location',
   days: locale === 'es' ? 'Días' : 'Days',
   guests: locale === 'es' ? 'Personas' : 'Guests',
-  estimate: locale === 'es' ? 'Estimación total' : 'Total estimate',
+  estimate: locale === 'es' ? 'Resumen de cotización' : 'Quote summary',
+  total: locale === 'es' ? 'Estimación total' : 'Total estimate',
   perDay: locale === 'es' ? 'Por día (grupo)' : 'Per day (group)',
   perPersonDay: locale === 'es' ? 'Por persona / día' : 'Per person / day',
   breakdown: locale === 'es' ? 'Desglose' : 'Breakdown',
   contact: locale === 'es' ? 'Continuar en contacto' : 'Continue on contact',
-  whatsapp: locale === 'es' ? 'Enviar estimación por WhatsApp' : 'Send estimate via WhatsApp',
-  base: locale === 'es' ? 'Tarifa base' : 'Base rate',
+  whatsapp: locale === 'es' ? 'Enviar por WhatsApp' : 'Send via WhatsApp',
+  from: locale === 'es' ? 'Desde' : 'From',
 };
 
 const configJson = JSON.stringify(config);
+const fieldClass =
+  'mt-2 w-full border border-bark-slate/20 bg-surface px-4 py-3 text-deep-forest transition-colors focus:border-earth-gold focus:outline-none';
+const labelClass = 'font-label-caps text-on-surface-variant';
 ---
 
 <div
   id="cost-simulator"
-  class="rounded-(--radius-card) border border-border bg-surface-elevated p-6 shadow-(--shadow-soft) md:p-8"
+  class="grid items-start gap-[var(--spacing-gutter)] lg:grid-cols-12"
   data-locale={locale}
   data-whatsapp={whatsapp}
   data-contact={contactPath}
 >
   <script type="application/json" id="pricing-config" set:html={configJson} />
 
-  <form id="cost-simulator-form" class="grid gap-6 lg:grid-cols-2">
-    <div class="space-y-5">
+  <form id="cost-simulator-form" class="contents">
+    <div class="space-y-[var(--spacing-stack-lg)] lg:col-span-8">
       <div>
-        <label for="sim-package" class="block text-sm font-medium text-gray-800">{labels.package}</label>
-        <select
-          id="sim-package"
-          name="package"
-          class="mt-1.5 w-full rounded-lg border border-border bg-white px-4 py-2.5 text-gray-900"
-        >
+        <div class="mb-6 flex items-center gap-4 border-b border-bark-slate/10 pb-4">
+          <h2 class="font-display text-headline-md text-deep-forest">{labels.step1}</h2>
+        </div>
+
+        <fieldset>
+          <legend class="sr-only">{labels.package}</legend>
+          <div class="grid gap-4 md:grid-cols-2">
+            {
+              config.packages.map((pkg, index) => (
+                <label class="package-option group relative cursor-pointer border border-bark-slate/20 bg-surface p-6 transition-colors duration-300 hover:bg-sand-surface has-[:checked]:border-earth-gold has-[:checked]:bg-sand-surface">
+                  <input
+                    type="radio"
+                    name="package-visual"
+                    value={pkg.id}
+                    class="peer sr-only"
+                    checked={index === 0}
+                    data-sim-package
+                  />
+                  <span
+                    class="absolute top-6 right-6 z-10 font-label-caps text-earth-gold opacity-0 peer-checked:opacity-100"
+                    aria-hidden="true"
+                  >
+                    ✓
+                  </span>
+                  {
+                    pkg.image && (
+                      <div class="relative mb-4 h-32 overflow-hidden bg-bark-slate/5">
+                        <img
+                          src={pkg.image}
+                          alt=""
+                          class="h-full w-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0 peer-checked:grayscale-0"
+                          loading="lazy"
+                        />
+                      </div>
+                    )
+                  }
+                  <h3 class="font-display text-headline-md text-deep-forest">{pkg.name}</h3>
+                  <p class="mt-2 text-sm text-on-surface-variant">{pkg.summary}</p>
+                  <p class="font-label-caps mt-4 text-earth-gold">
+                    {labels.from} {config.currencySymbol}
+                    {pkg.basePricePerDay.toLocaleString(locale === 'en' ? 'en-US' : 'es-MX')}
+                  </p>
+                </label>
+              ))
+            }
+          </div>
+        </fieldset>
+        <select id="sim-package" name="package" class="sr-only" tabindex="-1" aria-hidden="true">
           {
             config.packages.map((pkg) => (
               <option value={pkg.id}>{pkg.name}</option>
@@ -58,125 +106,127 @@ const configJson = JSON.stringify(config);
       </div>
 
       <div>
-        <label for="sim-person" class="block text-sm font-medium text-gray-800">{labels.personType}</label>
-        <select
-          id="sim-person"
-          name="person"
-          class="mt-1.5 w-full rounded-lg border border-border bg-white px-4 py-2.5 text-gray-900"
-        >
-          {
-            config.personTypes.map((option) => (
-              <option value={option.id}>
-                {option.label} ({Math.round(option.multiplier * 100)}%)
-              </option>
-            ))
-          }
-        </select>
-        <p id="sim-person-desc" class="mt-1 text-xs text-muted"></p>
-      </div>
-
-      <div>
-        <label for="sim-reservation" class="block text-sm font-medium text-gray-800">{labels.reservation}</label>
-        <select
-          id="sim-reservation"
-          name="reservation"
-          class="mt-1.5 w-full rounded-lg border border-border bg-white px-4 py-2.5 text-gray-900"
-        >
-          {
-            config.reservationTypes.map((option) => (
-              <option value={option.id}>
-                {option.label} ({Math.round(option.multiplier * 100)}%)
-              </option>
-            ))
-          }
-        </select>
-        <p id="sim-reservation-desc" class="mt-1 text-xs text-muted"></p>
-      </div>
-
-      <div>
-        <label for="sim-location" class="block text-sm font-medium text-gray-800">{labels.location}</label>
-        <select
-          id="sim-location"
-          name="location"
-          class="mt-1.5 w-full rounded-lg border border-border bg-white px-4 py-2.5 text-gray-900"
-        >
-          {
-            config.locations.map((option) => (
-              <option value={option.id}>
-                {option.label} ({Math.round(option.multiplier * 100)}%)
-              </option>
-            ))
-          }
-        </select>
-        <p id="sim-location-desc" class="mt-1 text-xs text-muted"></p>
-      </div>
-
-      <div class="grid grid-cols-2 gap-4">
-        <div>
-          <label for="sim-days" class="block text-sm font-medium text-gray-800">{labels.days}</label>
-          <input
-            id="sim-days"
-            name="days"
-            type="number"
-            min={config.minDays}
-            max={config.maxDays}
-            value="2"
-            class="mt-1.5 w-full rounded-lg border border-border bg-white px-4 py-2.5 text-gray-900"
-          />
+        <div class="mb-6 flex items-center gap-4 border-b border-bark-slate/10 pb-4">
+          <h2 class="font-display text-headline-md text-deep-forest">{labels.step2}</h2>
         </div>
-        <div>
-          <label for="sim-guests" class="block text-sm font-medium text-gray-800">{labels.guests}</label>
-          <input
-            id="sim-guests"
-            name="guests"
-            type="number"
-            min={config.minGuests}
-            max={config.maxGuests}
-            value="2"
-            class="mt-1.5 w-full rounded-lg border border-border bg-white px-4 py-2.5 text-gray-900"
-          />
+
+        <div class="grid gap-5 md:grid-cols-2">
+          <div>
+            <label for="sim-person" class={labelClass}>{labels.personType}</label>
+            <select id="sim-person" name="person" class={fieldClass}>
+              {
+                config.personTypes.map((option) => (
+                  <option value={option.id}>
+                    {option.label} ({Math.round(option.multiplier * 100)}%)
+                  </option>
+                ))
+              }
+            </select>
+            <p id="sim-person-desc" class="mt-1 text-xs text-on-surface-variant"></p>
+          </div>
+
+          <div>
+            <label for="sim-reservation" class={labelClass}>{labels.reservation}</label>
+            <select id="sim-reservation" name="reservation" class={fieldClass}>
+              {
+                config.reservationTypes.map((option) => (
+                  <option value={option.id}>
+                    {option.label} ({Math.round(option.multiplier * 100)}%)
+                  </option>
+                ))
+              }
+            </select>
+            <p id="sim-reservation-desc" class="mt-1 text-xs text-on-surface-variant"></p>
+          </div>
+
+          <div>
+            <label for="sim-location" class={labelClass}>{labels.location}</label>
+            <select id="sim-location" name="location" class={fieldClass}>
+              {
+                config.locations.map((option) => (
+                  <option value={option.id}>
+                    {option.label} ({Math.round(option.multiplier * 100)}%)
+                  </option>
+                ))
+              }
+            </select>
+            <p id="sim-location-desc" class="mt-1 text-xs text-on-surface-variant"></p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label for="sim-days" class={labelClass}>{labels.days}</label>
+              <input
+                id="sim-days"
+                name="days"
+                type="number"
+                min={config.minDays}
+                max={config.maxDays}
+                value="2"
+                class={fieldClass}
+              />
+            </div>
+            <div>
+              <label for="sim-guests" class={labelClass}>{labels.guests}</label>
+              <input
+                id="sim-guests"
+                name="guests"
+                type="number"
+                min={config.minGuests}
+                max={config.maxGuests}
+                value="2"
+                class={fieldClass}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="flex flex-col rounded-xl bg-primary/5 p-6">
-      <p class="text-sm font-medium uppercase tracking-wide text-primary">{labels.estimate}</p>
-      <p id="sim-total" class="mt-2 text-4xl font-bold text-primary" aria-live="polite">—</p>
+    <div class="lg:col-span-4">
+      <div class="sticky top-24 border border-bark-slate/10 bg-sand-surface p-8">
+        <h3 class="font-display mb-6 border-b border-bark-slate/10 pb-4 text-headline-md text-deep-forest">
+          {labels.estimate}
+        </h3>
 
-      <dl class="mt-6 space-y-2 text-sm text-muted">
-        <div class="flex justify-between gap-4">
-          <dt>{labels.perPersonDay}</dt>
-          <dd id="sim-per-person-day" class="font-medium text-gray-800">—</dd>
+        <p class="font-label-caps text-on-surface-variant">{labels.total}</p>
+        <p id="sim-total" class="font-display mt-2 text-4xl text-deep-forest" aria-live="polite">—</p>
+
+        <dl class="mt-6 space-y-4 text-sm">
+          <div class="flex justify-between gap-4">
+            <dt class="font-label-caps text-on-surface-variant">{labels.perPersonDay}</dt>
+            <dd id="sim-per-person-day" class="text-deep-forest">—</dd>
+          </div>
+          <div class="flex justify-between gap-4">
+            <dt class="font-label-caps text-on-surface-variant">{labels.perDay}</dt>
+            <dd id="sim-per-day" class="text-deep-forest">—</dd>
+          </div>
+        </dl>
+
+        <div class="mt-6 border-t border-bark-slate/10 pt-4">
+          <p class="font-label-caps text-deep-forest">{labels.breakdown}</p>
+          <ul id="sim-breakdown" class="mt-2 space-y-1 text-xs text-on-surface-variant"></ul>
         </div>
-        <div class="flex justify-between gap-4">
-          <dt>{labels.perDay}</dt>
-          <dd id="sim-per-day" class="font-medium text-gray-800">—</dd>
+
+        <p class="mt-6 text-xs leading-relaxed text-on-surface-variant">{config.disclaimer}</p>
+
+        <div class="mt-8 flex flex-col gap-3">
+          <a
+            id="sim-whatsapp"
+            href={`https://wa.me/${whatsapp}`}
+            class="inline-flex items-center justify-center bg-earth-gold px-8 py-4 font-label-caps text-deep-forest transition-colors hover:bg-secondary-fixed-dim"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {labels.whatsapp}
+          </a>
+          <a
+            href={contactPath}
+            class="inline-flex items-center justify-center border border-deep-forest px-8 py-4 font-label-caps text-deep-forest transition-colors hover:bg-deep-forest hover:text-sand-surface"
+          >
+            {labels.contact}
+          </a>
         </div>
-      </dl>
-
-      <div class="mt-6 border-t border-border pt-4">
-        <p class="text-sm font-semibold text-primary">{labels.breakdown}</p>
-        <ul id="sim-breakdown" class="mt-2 space-y-1 text-xs text-muted"></ul>
-      </div>
-
-      <p class="mt-6 text-xs leading-relaxed text-muted">{config.disclaimer}</p>
-
-      <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-        <a
-          id="sim-whatsapp"
-          href={`https://wa.me/${whatsapp}`}
-          class="inline-flex items-center justify-center rounded-full bg-[#25D366] px-5 py-2.5 text-sm font-semibold text-white hover:opacity-90"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {labels.whatsapp}
-        </a>
-        <a
-          href={contactPath}
-          class="inline-flex items-center justify-center rounded-full border-2 border-primary px-5 py-2.5 text-sm font-semibold text-primary hover:bg-primary/5"
-        >
-          {labels.contact}
-        </a>
       </div>
     </div>
   </form>
@@ -252,6 +302,9 @@ const configJson = JSON.stringify(config);
     }
 
     function recalculate() {
+      const checked = document.querySelector<HTMLInputElement>('input[data-sim-package]:checked');
+      if (checked && packageSelect) packageSelect.value = checked.value;
+
       const selectedPackage = findById(config.packages, packageSelect?.value ?? '');
       const person = findById(config.personTypes, personSelect?.value ?? '');
       const reservation = findById(config.reservationTypes, reservationSelect?.value ?? '');
@@ -312,15 +365,12 @@ const configJson = JSON.stringify(config);
       updateDescriptions();
     }
 
-    const controls = [
-      packageSelect,
-      personSelect,
-      reservationSelect,
-      locationSelect,
-      daysInput,
-      guestsInput,
-    ];
+    const radios = document.querySelectorAll<HTMLInputElement>('input[data-sim-package]');
+    for (const radio of radios) {
+      radio.addEventListener('change', recalculate);
+    }
 
+    const controls = [personSelect, reservationSelect, locationSelect, daysInput, guestsInput];
     for (const control of controls) {
       control?.addEventListener('change', recalculate);
       control?.addEventListener('input', recalculate);

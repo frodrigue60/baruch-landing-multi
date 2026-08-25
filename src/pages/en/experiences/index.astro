@@ -1,21 +1,45 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import PageHeader from '@/components/ui/PageHeader.astro';
-import Section from '@/components/ui/Section.astro';
 import ExperienceGrid from '@/components/experiences/ExperienceGrid.astro';
+import CtaBanner from '@/components/ui/CtaBanner.astro';
 import { getExperiences } from '@/lib/content';
-import { getAlternateLocaleUrl } from '@/lib/i18n/utils';
+import { getAlternateLocaleUrl, getPagePath } from '@/lib/i18n/utils';
 
 const locale = 'en';
 const experiences = getExperiences(locale);
 const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
 const title = 'Experiences — Baruch';
-const description = 'Explore our ecotourism and wellness experiences.';
+const description =
+  'Explore a curated catalogue of retreats and adventures to reconnect with nature.';
+const cta = {
+  heading: 'Design your own refuge',
+  body: 'Let us help craft a tailored itinerary aligned with your travel intentions.',
+  primaryLabel: 'Get a quote',
+  secondaryLabel: 'Contact',
+};
 ---
 
 <BaseLayout {title} {description} locale={locale} {alternateLocaleUrl}>
-  <PageHeader title="Experiences" description={description} />
-  <Section>
-    <ExperienceGrid experiences={experiences} locale={locale} />
-  </Section>
+  <section class="container-editorial pt-[var(--spacing-section)] pb-[var(--spacing-stack-lg)]">
+    <span class="font-label-caps mb-4 block text-earth-gold">Experiences</span>
+    <h1 class="font-display text-display-hero text-deep-forest">
+      Immersive <span class="italic text-earth-gold">experiences</span>
+    </h1>
+    <p class="mt-[var(--spacing-stack-md)] max-w-2xl text-body-lg text-on-surface-variant">
+      {description}
+    </p>
+  </section>
+
+  <section class="section-pad bg-sand-surface">
+    <div class="container-editorial">
+      <ExperienceGrid experiences={experiences} locale={locale} highlightFirst />
+    </div>
+  </section>
+
+  <CtaBanner
+    cta={cta}
+    locale={locale}
+    primaryHref={getPagePath('quote', locale)}
+    secondaryHref={getPagePath('contact', locale)}
+  />
 </BaseLayout>

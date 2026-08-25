@@ -1,0 +1,13 @@
+# Dependencies and tooling (keep dist — needed by nginx image)
+node_modules
+.astro
+.git
+.github
+.cursor
+mockups
+.env
+.env.*
+terminals
+agent-transcripts
+.tsbuildinfo
+_scaffold

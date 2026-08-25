@@ -11,7 +11,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "docker:up": "bun run build && docker compose up --build -d",
+    "docker:down": "docker compose down"
   },
   "dependencies": {
     "astro": "^7.2.6"

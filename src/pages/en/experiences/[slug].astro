@@ -1,7 +1,5 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import PageHeader from '@/components/ui/PageHeader.astro';
-import Section from '@/components/ui/Section.astro';
 import Button from '@/components/ui/Button.astro';
 import ExperienceDetails from '@/components/experiences/ExperienceDetails.astro';
 import ExperienceGallery from '@/components/experiences/ExperienceGallery.astro';
@@ -30,32 +28,37 @@ const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
   description={experience.summary}
   locale={locale}
   alternateLocaleUrl={alternateLocaleUrl}
+  image={experience.coverImage}
+  ogType="article"
 >
-  <PageHeader title={experience.title} description={experience.summary} />
-  <Section narrow>
-    <div class="overflow-hidden rounded-(--radius-card) border border-border bg-surface-elevated shadow-(--shadow-soft)">
-      <img
-        src={experience.coverImage}
-        alt={experience.title}
-        class="aspect-[21/9] w-full object-cover"
-      />
-      <div class="p-8 md:p-10">
-        <p class="text-lg leading-relaxed text-muted">{experience.description}</p>
-        <ExperienceDetails experience={experience} locale={locale} />
-        <ExperienceGallery
-          images={experience.gallery ?? []}
-          title={experience.title}
-          locale={locale}
-        />
-        <div class="mt-10 flex flex-wrap gap-4 border-t border-border pt-8">
-          <Button href={getPagePath('quote', locale)} variant="primary">
-            {t('quote', locale)}
-          </Button>
-          <Button href={getPagePath('experiences', locale)} variant="ghost">
-            {t('backToExperiences', locale)}
-          </Button>
-        </div>
-      </div>
+  <section class="relative h-[50vh] min-h-[360px] w-full overflow-hidden bg-deep-forest md:h-[60vh]">
+    <img
+      src={experience.coverImage}
+      alt={experience.title}
+      class="h-full w-full object-cover"
+    />
+    <div class="absolute inset-0 bg-deep-forest/40" aria-hidden="true"></div>
+    <div class="absolute inset-x-0 bottom-0 container-editorial pb-10">
+      <h1 class="font-display text-display-hero text-sand-surface">{experience.title}</h1>
     </div>
-  </Section>
+  </section>
+
+  <section class="container-editorial max-w-3xl py-[var(--spacing-section)]">
+    <p class="text-body-lg text-on-surface-variant">{experience.summary}</p>
+    <p class="mt-6 leading-relaxed text-on-surface-variant">{experience.description}</p>
+    <ExperienceDetails experience={experience} locale={locale} />
+    <ExperienceGallery
+      images={experience.gallery ?? []}
+      title={experience.title}
+      locale={locale}
+    />
+    <div class="mt-10 flex flex-wrap gap-4 border-t border-bark-slate/10 pt-8">
+      <Button href={getPagePath('quote', locale)} variant="primary">
+        {t('quote', locale)}
+      </Button>
+      <Button href={getPagePath('experiences', locale)} variant="ghost">
+        {t('backToExperiences', locale)}
+      </Button>
+    </div>
+  </section>
 </BaseLayout>

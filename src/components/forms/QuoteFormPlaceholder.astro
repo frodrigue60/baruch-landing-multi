@@ -12,20 +12,22 @@ interface Props {
 const { locale, settings, page } = Astro.props;
 const whatsappUrl = `https://wa.me/${settings.contact.whatsapp}`;
 const requestSection = page.sections?.find((s) => s.id === 'request') ?? page.sections?.[0];
+const fieldClass =
+  'mt-2 w-full border border-bark-slate/20 bg-surface px-3 py-3 text-deep-forest transition-colors focus:border-earth-gold focus:outline-none disabled:cursor-not-allowed disabled:opacity-60';
 ---
 
-<section id="solicitud" class="scroll-mt-24">
-  <h2 class="text-2xl font-bold text-primary">
-    {requestSection?.heading ?? (locale === 'es' ? 'Solicitar información' : 'Request information')}
+<section id="solicitud" class="scroll-mt-24 border border-bark-slate/10 bg-sand-surface p-6 md:p-10">
+  <h2 class="font-display text-headline-md text-deep-forest">
+    {requestSection?.heading ?? (locale === 'es' ? 'Escríbanos' : 'Write to us')}
   </h2>
   {
     requestSection?.body && (
-      <p class="mt-2 text-muted">{requestSection.body}</p>
+      <p class="mt-3 text-on-surface-variant">{requestSection.body}</p>
     )
   }
 
   <div
-    class="mt-6 rounded-(--radius-card) border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900"
+    class="mt-6 border border-bark-slate/20 bg-surface px-4 py-3 text-sm text-on-surface-variant"
     role="status"
   >
     {
@@ -35,93 +37,70 @@ const requestSection = page.sections?.find((s) => s.id === 'request') ?? page.se
     }
   </div>
 
-  <form class="mt-8 space-y-5" aria-disabled="true" novalidate>
-    <div>
-      <label for="name" class="block text-sm font-medium text-gray-800">
-        {locale === 'es' ? 'Nombre' : 'Name'}
-      </label>
-      <input
-        id="name"
-        name="name"
-        type="text"
-        disabled
-        class="mt-1.5 w-full rounded-lg border border-border bg-gray-50 px-4 py-2.5 text-gray-500"
-      />
+  <form class="mt-8 flex flex-col gap-[var(--spacing-stack-md)]" aria-disabled="true" novalidate>
+    <div class="grid gap-[var(--spacing-stack-md)] md:grid-cols-2">
+      <div>
+        <label for="name" class="text-deep-forest">
+          {locale === 'es' ? 'Nombre completo' : 'Full name'}
+        </label>
+        <input id="name" name="name" type="text" disabled class={fieldClass} />
+      </div>
+      <div>
+        <label for="email" class="text-deep-forest">Email</label>
+        <input id="email" name="email" type="email" disabled class={fieldClass} />
+      </div>
     </div>
     <div>
-      <label for="email" class="block text-sm font-medium text-gray-800">Email</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        disabled
-        class="mt-1.5 w-full rounded-lg border border-border bg-gray-50 px-4 py-2.5 text-gray-500"
-      />
-    </div>
-    <div>
-      <label for="phone" class="block text-sm font-medium text-gray-800">
+      <label for="phone" class="text-deep-forest">
         {locale === 'es' ? 'Teléfono' : 'Phone'}
       </label>
-      <input
-        id="phone"
-        name="phone"
-        type="tel"
-        disabled
-        class="mt-1.5 w-full rounded-lg border border-border bg-gray-50 px-4 py-2.5 text-gray-500"
-      />
+      <input id="phone" name="phone" type="tel" disabled class={fieldClass} />
     </div>
     <div>
-      <label for="experience" class="block text-sm font-medium text-gray-800">
+      <label for="experience" class="text-deep-forest">
         {locale === 'es' ? 'Experiencia de interés' : 'Experience of interest'}
       </label>
-      <input
-        id="experience"
-        name="experience"
-        type="text"
-        disabled
-        class="mt-1.5 w-full rounded-lg border border-border bg-gray-50 px-4 py-2.5 text-gray-500"
-      />
+      <input id="experience" name="experience" type="text" disabled class={fieldClass} />
     </div>
     <div>
-      <label for="message" class="block text-sm font-medium text-gray-800">
+      <label for="message" class="text-deep-forest">
         {locale === 'es' ? 'Mensaje' : 'Message'}
       </label>
-      <textarea
-        id="message"
-        name="message"
-        rows="4"
-        disabled
-        class="mt-1.5 w-full rounded-lg border border-border bg-gray-50 px-4 py-2.5 text-gray-500"
+      <textarea id="message" name="message" rows="5" disabled class={`${fieldClass} resize-none`}
       ></textarea>
     </div>
-    <button
-      type="button"
-      disabled
-      aria-disabled="true"
-      class="cursor-not-allowed rounded-full bg-gray-400 px-6 py-3 font-semibold text-white"
-    >
-      {locale === 'es' ? 'Envío no disponible' : 'Submission unavailable'}
-    </button>
+    <div>
+      <button
+        type="button"
+        disabled
+        aria-disabled="true"
+        class="cursor-not-allowed bg-bark-slate/40 px-8 py-4 font-label-caps text-sand-surface"
+      >
+        {locale === 'es' ? 'Envío no disponible' : 'Submission unavailable'}
+      </button>
+    </div>
   </form>
 
-  <article class="mt-10 rounded-(--radius-card) border border-border bg-surface-elevated p-6 shadow-(--shadow-soft)">
-    <h3 class="font-semibold text-primary">{locale === 'es' ? 'Contacto directo' : 'Direct contact'}</h3>
-    <ul class="mt-4 space-y-2 text-sm text-muted">
+  <div class="mt-10 border-t border-bark-slate/10 pt-6">
+    <p class="font-label-caps text-on-surface-variant">
+      {locale === 'es' ? 'Contacto directo' : 'Direct contact'}
+    </p>
+    <ul class="mt-4 space-y-3 text-sm text-on-surface-variant">
       <li>
         <Button href={whatsappUrl} variant="ghost" size="sm" external class="!px-0">
           WhatsApp
         </Button>
       </li>
       <li>
-        <a href={`mailto:${settings.contact.email}`} class="text-primary underline">
+        <a href={`mailto:${settings.contact.email}`} class="text-deep-forest underline-offset-4 hover:text-earth-gold hover:underline">
           {settings.contact.email}
         </a>
       </li>
       <li>
-        <a href={`tel:${settings.contact.phone}`} class="text-primary underline">
+        <a href={`tel:${settings.contact.phone}`} class="text-deep-forest underline-offset-4 hover:text-earth-gold hover:underline">
           {settings.contact.phone}
         </a>
       </li>
     </ul>
-  </article>
+  </div>
 </section>

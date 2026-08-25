@@ -1,0 +1,129 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/ui/Button.astro';
+import ContactMap from '@/components/contact/ContactMap.astro';
+import QuoteFormPlaceholder from '@/components/forms/QuoteFormPlaceholder.astro';
+import { getPage, getSiteMedia, getSiteSettings } from '@/lib/content';
+import { getAlternateLocaleUrl } from '@/lib/i18n/utils';
+import { t } from '@/lib/i18n/labels';
+
+const locale = 'es';
+const page = getPage('contact', locale);
+const settings = getSiteSettings(locale);
+const media = getSiteMedia();
+const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
+const whatsappUrl = `https://wa.me/${settings.contact.whatsapp}`;
+const mapSection = page.sections?.find((s) => s.id === 'map-note');
+---
+
+<BaseLayout
+  title={page.title}
+  description={page.description}
+  locale={locale}
+  alternateLocaleUrl={alternateLocaleUrl}
+  image={media.contact.atmosphere}
+>
+  <section class="container-editorial pt-[var(--spacing-section)] pb-[var(--spacing-stack-lg)] text-center md:text-left">
+    <h1 class="font-display text-display-hero text-deep-forest">{page.heading}</h1>
+    <p class="mt-[var(--spacing-stack-md)] max-w-2xl text-body-lg text-on-surface-variant">
+      {page.sections?.[0]?.body ?? page.description}
+    </p>
+  </section>
+
+  <section class="container-editorial grid grid-cols-1 gap-[var(--spacing-gutter)] pb-[var(--spacing-section)] md:grid-cols-12 md:gap-[var(--spacing-stack-lg)]">
+    <div class="flex flex-col gap-[var(--spacing-stack-lg)] md:col-span-4">
+      <div>
+        <h2 class="font-display text-headline-md text-deep-forest">Nuestra morada</h2>
+        <p class="mt-3 text-on-surface-variant">{settings.contact.address}</p>
+        {
+          settings.contact.mapEmbedUrl && (
+            <a
+              href={settings.contact.mapEmbedUrl}
+              class="font-label-caps mt-4 inline-flex text-earth-gold transition-colors hover:text-moss-green"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ver mapa
+            </a>
+          )
+        }
+      </div>
+
+      <div class="h-px w-full bg-bark-slate/10"></div>
+
+      <div>
+        <h2 class="font-display text-headline-md text-deep-forest">Atención personalizada</h2>
+        <p class="mt-3 text-on-surface-variant">
+          <a href={`tel:${settings.contact.phone}`} class="hover:text-earth-gold">
+            {settings.contact.phone}
+          </a>
+        </p>
+        <p class="mt-2 text-on-surface-variant">
+          <a href={`mailto:${settings.contact.email}`} class="hover:text-earth-gold">
+            {settings.contact.email}
+          </a>
+        </p>
+        <div class="mt-4">
+          <Button href={whatsappUrl} variant="ghost" size="sm" external class="!px-0 text-earth-gold">
+            {t('whatsapp', locale)}
+          </Button>
+        </div>
+      </div>
+
+      {
+        settings.social.length > 0 && (
+          <>
+            <div class="h-px w-full bg-bark-slate/10"></div>
+            <div>
+              <h2 class="font-display text-headline-md text-deep-forest">Redes</h2>
+              <ul class="mt-3 space-y-2">
+                {settings.social.map((link) => (
+                  <li>
+                    <a
+                      href={link.url}
+                      class="font-label-caps text-on-surface-variant hover:text-earth-gold"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {link.label ?? link.platform}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </>
+        )
+      }
+
+      {
+        mapSection && settings.contact.mapEmbedUrl && (
+          <div>
+            <h2 class="font-display text-headline-md text-deep-forest">{mapSection.heading}</h2>
+            <p class="mt-2 text-sm text-on-surface-variant">{mapSection.body}</p>
+            <div class="mt-4">
+              <ContactMap
+                embedUrl={settings.contact.mapEmbedUrl}
+                title={settings.siteName}
+                locale={locale}
+              />
+            </div>
+          </div>
+        )
+      }
+    </div>
+
+    <div class="md:col-span-8">
+      <QuoteFormPlaceholder locale={locale} settings={settings} page={page} />
+    </div>
+  </section>
+
+  <section class="relative h-96 w-full">
+    <img
+      src={media.contact.atmosphere}
+      alt=""
+      class="absolute inset-0 h-full w-full object-cover"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-deep-forest/20" aria-hidden="true"></div>
+  </section>
+</BaseLayout>

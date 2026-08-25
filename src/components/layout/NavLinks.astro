@@ -7,21 +7,27 @@ interface Props {
   locale: Locale;
   currentPath: string;
   class?: string;
+  /** Hide home link when the brand wordmark already links home (desktop header). */
+  excludeHome?: boolean;
 }
 
-const { locale, currentPath, class: className = '' } = Astro.props;
+const { locale, currentPath, class: className = '', excludeHome = false } = Astro.props;
+
+const items = excludeHome ? navItems.filter((item) => item.key !== 'home') : navItems;
 
 function isActive(href: string): boolean {
-  if (href === getPagePath('home', locale)) {
-    return currentPath === href || currentPath === `${href}/`;
+  const normalized = currentPath.endsWith('/') ? currentPath : `${currentPath}/`;
+  const homeHref = getPagePath('home', locale);
+  if (href === homeHref) {
+    return normalized === '/' || normalized === homeHref;
   }
-  return currentPath.startsWith(href);
+  return normalized === href || normalized.startsWith(href);
 }
 ---
 
-<ul class:list={['flex flex-col gap-1 md:flex-row md:items-center md:gap-1', className]}>
+<ul class:list={['flex flex-col gap-1 lg:flex-row lg:items-center', className]}>
   {
-    navItems.map((item) => {
+    items.map((item) => {
       const href = getPagePath(item.key, locale);
       const active = isActive(href);
       return (
@@ -29,10 +35,8 @@ function isActive(href: string): boolean {
           <a
             href={href}
             class:list={[
-              'block rounded-lg px-3 py-2 text-sm font-medium transition-colors md:py-1.5',
-              active
-                ? 'bg-primary/10 text-primary'
-                : 'text-gray-700 hover:bg-primary/5 hover:text-primary',
+              'font-label-caps block py-2 transition-colors duration-300 lg:py-0',
+              active ? 'text-primary' : 'text-on-surface-variant hover:text-earth-gold',
             ]}
             aria-current={active ? 'page' : undefined}
           >

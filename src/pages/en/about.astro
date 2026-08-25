@@ -1,13 +1,14 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import PageHeader from '@/components/ui/PageHeader.astro';
-import Section from '@/components/ui/Section.astro';
-import { getPage } from '@/lib/content';
+import { getPage, getSiteMedia } from '@/lib/content';
 import { getAlternateLocaleUrl } from '@/lib/i18n/utils';
 
 const locale = 'en';
 const page = getPage('about', locale);
+const media = getSiteMedia();
 const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
+const sections = page.sections ?? [];
+const [a, b, c, d] = sections;
 ---
 
 <BaseLayout
@@ -15,18 +16,78 @@ const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
   description={page.description}
   locale={locale}
   alternateLocaleUrl={alternateLocaleUrl}
+  image={media.about.hero}
 >
-  <PageHeader title={page.heading} description={page.description} />
-  <Section narrow>
-    <div class="grid gap-6 md:grid-cols-2">
+  <section class="container-editorial pt-[var(--spacing-section)] pb-[var(--spacing-stack-lg)]">
+    <div class="mx-auto flex max-w-3xl flex-col items-center text-center">
+      <h1 class="font-display text-display-hero uppercase text-deep-forest">{page.heading}</h1>
+      <p class="mt-[var(--spacing-stack-md)] max-w-2xl text-body-lg text-on-surface-variant">
+        {page.description}
+      </p>
+    </div>
+  </section>
+
+  <section class="relative mb-[var(--spacing-section)] h-[530px] w-full md:h-[707px]">
+    <img
+      src={media.about.hero}
+      alt=""
+      class="absolute inset-0 h-full w-full object-cover"
+    />
+  </section>
+
+  <section class="container-editorial section-pad">
+    <div class="grid grid-cols-1 gap-px bg-bark-slate/20 md:grid-cols-2">
       {
-        page.sections?.map((section) => (
-          <article class="rounded-(--radius-card) border border-border bg-surface-elevated p-8 shadow-(--shadow-soft)">
-            <h2 class="text-xl font-bold text-primary">{section.heading}</h2>
-            <p class="mt-4 text-muted leading-relaxed">{section.body}</p>
-          </article>
-        ))
+        a && (
+          <div class="flex flex-col justify-center bg-sand-surface p-8 md:p-16">
+            <h2 class="font-display mb-4 text-headline-lg text-deep-forest">{a.heading}</h2>
+            <p class="text-on-surface-variant">{a.body}</p>
+          </div>
+        )
+      }
+      <div class="h-64 bg-surface md:h-auto">
+        <img
+          src={media.about.bentoA}
+          alt=""
+          class="h-full w-full object-cover"
+          loading="lazy"
+        />
+      </div>
+      <div class="h-64 bg-surface md:h-auto">
+        <img
+          src={media.about.bentoB}
+          alt=""
+          class="h-full w-full object-cover"
+          loading="lazy"
+        />
+      </div>
+      {
+        b && (
+          <div class="flex flex-col justify-center bg-deep-forest p-8 text-sand-surface md:p-16">
+            <h2 class="font-display mb-4 text-headline-lg text-sand-surface">{b.heading}</h2>
+            <p class="text-sand-surface/80">{b.body}</p>
+          </div>
+        )
       }
     </div>
-  </Section>
+
+    {
+      (c || d) && (
+        <div class="mt-[var(--spacing-stack-lg)] grid gap-10 md:grid-cols-2">
+          {c && (
+            <article>
+              <h2 class="font-display text-headline-md text-deep-forest">{c.heading}</h2>
+              <p class="mt-3 text-on-surface-variant">{c.body}</p>
+            </article>
+          )}
+          {d && (
+            <article>
+              <h2 class="font-display text-headline-md text-deep-forest">{d.heading}</h2>
+              <p class="mt-3 text-on-surface-variant">{d.body}</p>
+            </article>
+          )}
+        </div>
+      )
+    }
+  </section>
 </BaseLayout>

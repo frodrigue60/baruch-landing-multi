@@ -16,32 +16,43 @@ function formatBase(price: number): string {
 }
 ---
 
-<ul class="grid gap-6 md:grid-cols-3">
+<ul class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
   {
     packages.map((pkg) => (
       <li>
-        <article class="flex h-full flex-col rounded-(--radius-card) border border-border bg-surface-elevated p-6 shadow-(--shadow-soft)">
-          <h3 class="text-xl font-bold text-primary">{pkg.name}</h3>
-          <p class="mt-2 flex-1 text-sm text-muted">{pkg.summary}</p>
-          <p class="mt-4 text-2xl font-bold text-primary">
-            {formatBase(pkg.basePricePerDay)}
-            <span class="text-sm font-normal text-muted">
-              {locale === 'es' ? ' / persona / día' : ' / person / day'}
+        <article class="group flex h-full flex-col border border-bark-slate/20 bg-surface p-6 transition-colors duration-300 hover:bg-sand-surface">
+          {
+            pkg.image && (
+              <div class="mb-4 h-32 overflow-hidden bg-bark-slate/5">
+                <img
+                  src={pkg.image}
+                  alt=""
+                  class="h-full w-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0"
+                  loading="lazy"
+                />
+              </div>
+            )
+          }
+          <h3 class="font-display text-headline-md text-deep-forest">{pkg.name}</h3>
+          <p class="mt-2 flex-1 text-sm text-on-surface-variant">{pkg.summary}</p>
+          <p class="font-label-caps mt-4 text-earth-gold">
+            {locale === 'es' ? 'Desde' : 'From'} {formatBase(pkg.basePricePerDay)}
+            <span class="normal-case tracking-normal text-on-surface-variant">
+              {' '}
+              {locale === 'es' ? '/ persona / día' : '/ person / day'}
             </span>
           </p>
-          <ul class="mt-4 space-y-1.5 text-sm text-muted">
-            {
-              pkg.includes.map((item) => (
-                <li class="flex items-start gap-2">
-                  <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
-                  {item}
-                </li>
-              ))
-            }
+          <ul class="mt-4 space-y-2 border-t border-bark-slate/10 pt-4 text-sm text-on-surface-variant">
+            {pkg.includes.map((item) => (
+              <li class="flex items-start gap-2">
+                <span class="mt-2 h-1 w-1 shrink-0 bg-earth-gold" aria-hidden="true" />
+                {item}
+              </li>
+            ))}
           </ul>
           <a
             href={getPagePath('experiences', locale, pkg.experienceSlug)}
-            class="mt-5 text-sm font-semibold text-primary underline"
+            class="font-label-caps mt-5 text-deep-forest underline-offset-4 hover:text-earth-gold hover:underline"
           >
             {locale === 'es' ? 'Ver experiencia' : 'View experience'}
           </a>

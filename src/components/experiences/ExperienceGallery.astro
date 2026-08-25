@@ -14,11 +14,11 @@ const { images, title, locale } = Astro.props;
 {
   images.length > 0 && (
     <div class="mt-10">
-      <h2 class="text-xl font-bold text-primary">{t('gallery', locale)}</h2>
+      <h2 class="font-display text-headline-md text-deep-forest">{t('gallery', locale)}</h2>
       <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {
           images.map((src, index) => (
-            <li class="overflow-hidden rounded-(--radius-card) border border-border">
+            <li class="overflow-hidden bg-bark-slate/5">
               <img
                 src={src}
                 alt={`${title} — ${index + 1}`}

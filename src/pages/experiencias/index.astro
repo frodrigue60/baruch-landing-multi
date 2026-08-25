@@ -1,0 +1,45 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ExperienceGrid from '@/components/experiences/ExperienceGrid.astro';
+import CtaBanner from '@/components/ui/CtaBanner.astro';
+import { getExperiences } from '@/lib/content';
+import { getAlternateLocaleUrl, getPagePath } from '@/lib/i18n/utils';
+
+const locale = 'es';
+const experiences = getExperiences(locale);
+const alternateLocaleUrl = getAlternateLocaleUrl(Astro.url.pathname);
+const title = 'Experiencias — Baruch';
+const description =
+  'Explora un catálogo de retiros y aventuras para reconectar con la naturaleza.';
+const cta = {
+  heading: 'Diseña tu propio refugio',
+  body: 'Permite que te ayudemos a armar un itinerario a medida, alineado con tus intenciones de viaje.',
+  primaryLabel: 'Solicitar cotización',
+  secondaryLabel: 'Contacto',
+};
+---
+
+<BaseLayout {title} {description} locale={locale} {alternateLocaleUrl}>
+  <section class="container-editorial pt-[var(--spacing-section)] pb-[var(--spacing-stack-lg)]">
+    <span class="font-label-caps mb-4 block text-earth-gold">Experiencias</span>
+    <h1 class="font-display text-display-hero text-deep-forest">
+      Experiencias <span class="italic text-earth-gold">inmersivas</span>
+    </h1>
+    <p class="mt-[var(--spacing-stack-md)] max-w-2xl text-body-lg text-on-surface-variant">
+      {description}
+    </p>
+  </section>
+
+  <section class="section-pad bg-sand-surface">
+    <div class="container-editorial">
+      <ExperienceGrid experiences={experiences} locale={locale} highlightFirst />
+    </div>
+  </section>
+
+  <CtaBanner
+    cta={cta}
+    locale={locale}
+    primaryHref={getPagePath('quote', locale)}
+    secondaryHref={getPagePath('contact', locale)}
+  />
+</BaseLayout>

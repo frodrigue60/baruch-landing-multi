@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHeader from '@/components/ui/PageHeader.astro';
-import Section from '@/components/ui/Section.astro';
 import GalleryByCategory from '@/components/gallery/GalleryByCategory.astro';
 import { getGalleryGroupedByCategory } from '@/lib/content';
 import { getAlternateLocaleUrl } from '@/lib/i18n/utils';
@@ -15,7 +14,7 @@ const description = 'Fotos de naturaleza, experiencias e instalaciones en Baruch
 
 <BaseLayout {title} {description} locale={locale} {alternateLocaleUrl}>
   <PageHeader title="Galería" description={description} />
-  <Section>
+  <section class="container-editorial pb-[var(--spacing-section)]">
     <GalleryByCategory groups={groups} locale={locale} />
-  </Section>
+  </section>
 </BaseLayout>

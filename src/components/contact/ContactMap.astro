@@ -11,7 +11,7 @@ const { embedUrl, title, locale } = Astro.props;
 const iframeTitle = locale === 'es' ? `Mapa de ubicación — ${title}` : `Location map — ${title}`;
 ---
 
-<div class="overflow-hidden rounded-(--radius-card) border border-border bg-surface-elevated shadow-(--shadow-soft)">
+<div class="overflow-hidden border border-bark-slate/10">
   <iframe
     src={embedUrl}
     title={iframeTitle}

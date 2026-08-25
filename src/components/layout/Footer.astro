@@ -13,80 +13,46 @@ interface Props {
 
 const { locale, settings } = Astro.props;
 const whatsappUrl = `https://wa.me/${settings.contact.whatsapp}`;
-const labels = {
-  contact: locale === 'es' ? 'Contacto' : 'Contact',
-  privacy: locale === 'es' ? 'Privacidad' : 'Privacy',
-  navigate: locale === 'es' ? 'Navegación' : 'Navigation',
-  rights: locale === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.',
-};
+const year = new Date().getFullYear();
 const footerNav = navItems.filter((item) => item.key !== 'home');
 ---
 
-<footer class="mt-auto border-t border-primary/20 bg-primary-dark text-white">
-  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-12 md:grid-cols-2 lg:grid-cols-4">
-    <div class="lg:col-span-2">
-      <p class="font-display text-2xl font-bold">{settings.siteName}</p>
-      <p class="mt-3 max-w-md text-sm leading-relaxed text-white/80">{settings.tagline}</p>
+<footer class="mt-auto border-t border-bark-slate/20 bg-primary text-sand-surface">
+  <div
+    class="mx-auto flex max-w-[var(--container-max)] flex-col gap-[var(--spacing-stack-lg)] px-[var(--spacing-margin-mobile)] py-[var(--spacing-section)] md:flex-row md:items-start md:justify-between md:px-[var(--spacing-gutter)]"
+  >
+    <div class="max-w-md">
+      <p class="font-display text-headline-md uppercase tracking-widest text-white">
+        {settings.siteName}
+      </p>
+      <p class="mt-4 text-sm text-white/60">{settings.tagline}</p>
       <div class="mt-6">
-        <Button href={whatsappUrl} variant="primary" size="sm" external>
+        <Button href={whatsappUrl} variant="gold" size="sm" external>
           {t('whatsapp', locale)}
         </Button>
       </div>
     </div>
 
-    <div>
-      <p class="text-sm font-semibold uppercase tracking-wider text-accent">{labels.navigate}</p>
-      <ul class="mt-4 space-y-2 text-sm">
-        {
-          footerNav.map((item) => (
-            <li>
-              <a href={getPagePath(item.key, locale)} class="text-white/80 transition-colors hover:text-white">
-                {item.label[locale]}
-              </a>
-            </li>
-          ))
-        }
-        <li>
-          <a href={getPagePath('privacy', locale)} class="text-white/80 transition-colors hover:text-white">
-            {labels.privacy}
+    <nav class="flex flex-col gap-4 md:items-end">
+      {
+        footerNav.map((item) => (
+          <a
+            href={getPagePath(item.key, locale)}
+            class="font-label-caps text-white/60 underline-offset-4 transition-colors hover:text-earth-gold hover:underline"
+          >
+            {item.label[locale]}
           </a>
-        </li>
-      </ul>
-    </div>
-
-    <div>
-      <p class="text-sm font-semibold uppercase tracking-wider text-accent">{labels.contact}</p>
-      <ul class="mt-4 space-y-2 text-sm text-white/80">
-        <li>
-          <a href={`tel:${settings.contact.phone}`} class="hover:text-white">
-            {settings.contact.phone}
-          </a>
-        </li>
-        <li>
-          <a href={`mailto:${settings.contact.email}`} class="hover:text-white">
-            {settings.contact.email}
-          </a>
-        </li>
-        <li class="text-white/70">{settings.contact.address}</li>
-        {
-          settings.social.map((link) => (
-            <li>
-              <a
-                href={link.url}
-                class="hover:text-white"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {link.label ?? link.platform}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
+        ))
+      }
+      <a
+        href={getPagePath('privacy', locale)}
+        class="font-label-caps text-white/60 underline-offset-4 transition-colors hover:text-earth-gold hover:underline"
+      >
+        {locale === 'es' ? 'Privacidad' : 'Privacy'}
+      </a>
+    </nav>
   </div>
-
-  <div class="border-t border-white/10 py-5 text-center text-xs text-white/50">
-    © {new Date().getFullYear()} {settings.siteName}. {labels.rights}
+  <div class="border-t border-white/10 px-[var(--spacing-gutter)] py-5 text-center font-label-caps text-white/40">
+    © {year} {settings.siteName}. {locale === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.'}
   </div>
 </footer>

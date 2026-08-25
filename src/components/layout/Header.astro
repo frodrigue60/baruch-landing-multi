@@ -1,11 +1,9 @@
 ---
 import type { Locale } from '@/lib/i18n/config';
 import { getPagePath } from '@/lib/i18n/utils';
-import { t } from '@/lib/i18n/labels';
 import LanguageSwitcher from '@/components/layout/LanguageSwitcher.astro';
 import NavLinks from '@/components/layout/NavLinks.astro';
 import MobileNav from '@/components/layout/MobileNav.astro';
-import Button from '@/components/ui/Button.astro';
 
 interface Props {
   locale: Locale;
@@ -13,45 +11,41 @@ interface Props {
   whatsapp: string;
 }
 
-const { locale, siteName, whatsapp } = Astro.props;
+const { locale, siteName } = Astro.props;
 const currentPath = Astro.url.pathname;
-const whatsappUrl = `https://wa.me/${whatsapp}`;
+const navLabel = locale === 'es' ? 'Navegación principal' : 'Main navigation';
+const brandClass =
+  'font-display shrink-0 text-headline-md uppercase tracking-widest text-primary transition-opacity hover:opacity-80';
 ---
 
-<header class="sticky top-0 z-50 border-b border-border bg-surface-elevated/95 backdrop-blur-md">
-  <div class="mx-auto flex max-w-6xl items-center gap-4 px-4 py-3 md:py-4">
-    <a
-      href={getPagePath('home', locale)}
-      class="flex shrink-0 items-center gap-2 text-primary"
-    >
-      <span
-        class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white"
-        aria-hidden="true"
-      >
-        B
-      </span>
-      <span class="font-display text-xl font-bold tracking-tight">{siteName}</span>
-    </a>
-
-    <nav
-      class="hidden flex-1 justify-center md:flex"
-      aria-label={locale === 'es' ? 'Navegación principal' : 'Main navigation'}
-    >
-      <NavLinks locale={locale} currentPath={currentPath} class="md:gap-0.5" />
-    </nav>
-
-    <div class="ml-auto flex items-center gap-2 md:gap-3">
-      <LanguageSwitcher locale={locale} currentPath={currentPath} />
-      <Button
-        href={whatsappUrl}
-        variant="secondary"
-        size="sm"
-        external
-        class="hidden sm:inline-flex"
-      >
-        {t('whatsappShort', locale)}
-      </Button>
+<header class="sticky top-0 z-50 w-full border-b border-bark-slate/10 bg-surface">
+  <!-- Mobile / tablet: menu | brand | language -->
+  <div
+    class="mx-auto grid max-w-[var(--container-max)] grid-cols-[1fr_auto_1fr] items-center px-[var(--spacing-margin-mobile)] py-4 lg:hidden"
+  >
+    <div class="flex justify-start">
       <MobileNav locale={locale} currentPath={currentPath} />
+    </div>
+    <a href={getPagePath('home', locale)} class={brandClass}>
+      {siteName}
+    </a>
+    <div class="flex justify-end">
+      <LanguageSwitcher locale={locale} currentPath={currentPath} />
+    </div>
+  </div>
+
+  <!-- Desktop: brand left | nav + language right -->
+  <div
+    class="mx-auto hidden max-w-[var(--container-max)] items-center justify-between gap-8 px-[var(--spacing-gutter)] py-4 lg:flex"
+  >
+    <a href={getPagePath('home', locale)} class={brandClass}>
+      {siteName}
+    </a>
+    <div class="flex items-center gap-8">
+      <nav aria-label={navLabel}>
+        <NavLinks locale={locale} currentPath={currentPath} excludeHome class="gap-6" />
+      </nav>
+      <LanguageSwitcher locale={locale} currentPath={currentPath} />
     </div>
   </div>
 </header>

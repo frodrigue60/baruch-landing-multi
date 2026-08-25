@@ -28,7 +28,7 @@ JSON estático  fuente de contenido MVP (no CMS aún)
 
 1. **Contenido separado de presentación** — Textos e imágenes viven en `src/content/`. Los componentes solo renderizan datos vía `src/lib/content/`.
 2. **Capa de contenido abstracta (RF-27)** — Las páginas importan `getExperiences()`, `getPage()`, `getSiteSettings()`, nunca leen JSON directamente. Esto permite migrar a CMS sin reescribir páginas.
-3. **i18n por rutas** — `/es/...` y `/en/...`. No usar solo cookies/query para idioma. El switcher debe preservar la ruta equivalente (RF-05).
+3. **i18n por rutas** — Español sin prefijo (`/`, `/nosotros`, …); inglés en `/en/...`. No usar solo cookies/query para idioma. El switcher debe preservar la ruta equivalente (RF-05).
 4. **Formulario placeholder** — En `/contacto` (no en cotizar): `QuoteFormPlaceholder` muestra UI pero **no envía datos**. Botón deshabilitado + aviso + CTAs a WhatsApp/email/teléfono (RF-14, RF-15).
 5. **Cotizar = simulador** — `/cotizar` muestra paquetes y calculadora front-side desde `src/content/pricing/`. No es cotización formal ni pago.
 6. **Minimizar scope** — Cambios pequeños y focalizados. No implementar features de fases futuras.
@@ -61,9 +61,10 @@ src/
 │       ├── labels.ts        # uiLabels, t() — strings de UI compartidos
 │       └── utils.ts         # localizedPath, getLocaleFromUrl, switchLocale
 ├── pages/
-│   ├── index.astro          # redirect → /es/
-│   ├── es/                  # rutas en español
-│   └── en/                  # rutas en inglés (espejo)
+│   ├── index.astro          # home ES (default, sin prefijo)
+│   ├── nosotros.astro       # …y resto de rutas ES en raíz
+│   ├── experiencias/        # listado + [slug]
+│   └── en/                  # inglés (/en/...)
 └── styles/
     └── global.css           # Tailwind imports + tokens CSS
 ```
@@ -125,22 +126,22 @@ Para home, nosotros, etc.: `title`, `description` (SEO), secciones con contenido
 // Siempre usar utilidades, no concatenar strings a mano
 import { localizedPath, switchLocalePath } from '@/lib/i18n/utils';
 
-localizedPath('es', '/experiencias');        // → /es/experiencias
-switchLocalePath('/es/nosotros', 'en');      // → /en/nosotros
+localizedPath('es', 'experiencias');         // → /experiencias/
+switchLocalePath('/nosotros/', 'en');        // → /en/about/
 ```
 
 Mapa de rutas ES ↔ EN (mantener sincronizado):
 
-| ES | EN |
+| ES (default, sin prefijo) | EN |
 |----|-----|
-| `/es/` | `/en/` |
-| `/es/nosotros` | `/en/about` |
-| `/es/experiencias` | `/en/experiences` |
-| `/es/experiencias/[slug]` | `/en/experiences/[slug]` |
-| `/es/galeria` | `/en/gallery` |
-| `/es/cotizar` | `/en/quote` |
-| `/es/contacto` | `/en/contact` |
-| `/es/privacidad` | `/en/privacy` |
+| `/` | `/en/` |
+| `/nosotros` | `/en/about` |
+| `/experiencias` | `/en/experiences` |
+| `/experiencias/[slug]` | `/en/experiences/[slug]` |
+| `/galeria` | `/en/gallery` |
+| `/cotizar` | `/en/quote` |
+| `/contacto` | `/en/contact` |
+| `/privacidad` | `/en/privacy` |
 
 Al agregar páginas, actualizar este mapa en `src/lib/i18n/config.ts` y en este archivo.
 
@@ -173,7 +174,7 @@ bun run typecheck    # tsc --noEmit (TypeScript 7)
 
 ## Checklist al implementar una página nueva
 
-- [ ] Rutas en `/es/` y `/en/` (o entrada en mapa i18n)
+- [ ] Rutas ES en raíz (sin prefijo) y `/en/` (o entrada en mapa i18n)
 - [ ] Contenido en `src/content/`, no hardcoded en .astro
 - [ ] Meta title + description (RNF-11)
 - [ ] `hreflang` / URL alternativa en layout
@@ -196,7 +197,7 @@ bun run typecheck    # tsc --noEmit (TypeScript 7)
 | Formulario con `action` POST real | Placeholder deshabilitado + aviso |
 | Implementar Sanity/CMS en MVP | Archivos estáticos |
 | `client:load` en toda la página | SSG puro; islands solo si necesario |
-| Una sola URL sin prefijo de idioma | Siempre `/es/` o `/en/` |
+| Una sola URL EN sin `/en/` | EN siempre bajo `/en/`; ES sin prefijo |
 
 ## Documentos de referencia
 

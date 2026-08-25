@@ -1,0 +1,36 @@
+services:
+  web:
+    build: .
+    container_name: landing-baruch
+    ports:
+      - "${APP_PORT:-3003}:80"
+    restart: unless-stopped
+    networks:
+      default:
+        aliases:
+          - web
+      companion:
+        # Same DNS name the Cloudflare dashboard already uses (http://web:80)
+        # so BOTH tunnel connectors (landing + anime-companion) can reach this app.
+        aliases:
+          - web
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: landing-baruch-tunnel
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - web
+    networks:
+      - default
+      - companion
+
+networks:
+  companion:
+    external: true
+    name: anime-companion_web
