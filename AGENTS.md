@@ -204,6 +204,7 @@ bun run typecheck    # tsc --noEmit (TypeScript 7)
 |---------|-----------|
 | [baruch-requerimientos-mvp.md](./baruch-requerimientos-mvp.md) | RF/RNF, alcance MVP |
 | [baruch-plan-implementacion.md](./baruch-plan-implementacion.md) | Fases, tags, estructura objetivo |
+| [DESIGN_AGENT.md](./DESIGN_AGENT.md) | Brief para LLM de diseño visual |
 | [README.md](./README.md) | Setup humano |
 
 ## Fases de implementación (resumen)
