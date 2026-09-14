@@ -10,9 +10,13 @@ dist/
 .env.*
 !.env.example
 
-# Logs
+# Logs / local debug
 *.log
+logs.txt
 npm-debug.log*
+
+# Design source (not shipped)
+mockups/
 
 # Package managers (Bun is canonical)
 package-lock.json

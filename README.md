@@ -49,17 +49,50 @@ No modificar componentes para cambiar textos; solo los archivos en `src/content/
 - [Plan de implementación](./baruch-plan-implementacion.md)
 - [Guía para agentes IA](./AGENTS.md)
 
+## Variables de entorno
+
+Copia `.env.example` → `.env` (este último **nunca** se sube a git).
+
+| Variable | Tipo | Uso |
+|----------|------|-----|
+| `PUBLIC_SITE_URL` | pública | Origen canónico / OG. En CI de GitHub Actions se infiere de `GITHUB_REPOSITORY` si no se define. |
+| `PUBLIC_BASE_PATH` | pública | Prefijo de rutas (p. ej. `/repo/`). En Actions se infiere como `/<repo>/`. |
+| `PUBLIC_CONTACT_API_URL` | pública | URL del API de contacto cuando el sitio está en Pages (estático). |
+| `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` | secreto | Solo en el servidor del API (`api/contact.ts`). |
+| `CONTACT_CORS_ORIGIN` | secreto/config | Orígenes permitidos (CORS), p. ej. `https://<user>.github.io`. |
+
 ## Deploy
 
-Build estático compatible con **Cloudflare Pages** o **Vercel**:
+### GitHub Pages (estático)
 
-- Install command: `bun install`
-- Build command: `bun run build`
-- Output directory: `dist`
+El workflow [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml) construye con **Bun** (`withastro/action`) y publica con `actions/deploy-pages`.
+
+**Importante:** GitHub Pages solo sirve archivos estáticos. **No ejecuta APIs de servidor** ni endpoints de Astro. El formulario de contacto en Pages debe apuntar a un API externo vía `PUBLIC_CONTACT_API_URL` (ver `api/contact.ts` y `CONTACT_CORS_ORIGIN`).
+
+1. Push a `main` (o `workflow_dispatch`).
+2. En el repo: **Settings → Pages → Source → GitHub Actions**.
+3. URL típica: `https://<usuario>.github.io/<repo>/`.
+
+Overrides opcionales en el workflow / secrets de Actions: `PUBLIC_SITE_URL`, `PUBLIC_BASE_PATH`, `PUBLIC_CONTACT_API_URL`.
+
+### Cloudflare Pages / Vercel / Docker
+
+- Install: `bun install`
+- Build: `bun run build`
+- Output: `dist`
+
+Docker local: `bun run docker:up` (nginx sirve `dist`; tampoco ejecuta el API de contacto).
+
+### API de contacto (aparte del sitio estático)
+
+```bash
+# En el host del API (no en Pages):
+bun run api:contact
+```
 
 ## Git
 
-- `main` — producción
+- `main` — producción (Pages)
 - `develop` — integración
 - Ramas `feat/*` por feature
 

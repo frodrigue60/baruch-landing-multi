@@ -12,6 +12,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "typecheck": "tsc --noEmit",
+    "api:contact": "bun run api/contact.ts",
     "docker:up": "bun run build && docker compose up --build -d",
     "docker:down": "docker compose down"
   },

@@ -9,23 +9,50 @@ import {
 export { defaultLocale, localeLabels, locales, routeSegments };
 export type { Locale };
 
+/** Astro `base` (always trailing slash in practice). */
+function siteBase(): string {
+  const base = import.meta.env.BASE_URL || '/';
+  return base.endsWith('/') ? base : `${base}/`;
+}
+
+/** Prefix a root-relative path with BASE_URL so assets/links work under /<repo>/. */
+export function withBase(path: string): string {
+  const base = siteBase();
+  if (path === '/' || path === '') return base;
+  const normalized = path.startsWith('/') ? path.slice(1) : path;
+  return `${base}${normalized}`;
+}
+
+/** Strip Astro base from a pathname before locale routing. */
+function stripBase(pathname: string): string {
+  const base = siteBase();
+  if (base === '/') return pathname;
+  const prefix = base.slice(0, -1);
+  if (pathname === prefix || pathname.startsWith(`${prefix}/`)) {
+    const rest = pathname.slice(prefix.length) || '/';
+    return rest.startsWith('/') ? rest : `/${rest}`;
+  }
+  return pathname;
+}
+
 /**
  * Build a localized path. Default locale (`es`) has no prefix.
- * English uses `/en/...`. Always trailing slash.
+ * English uses `/en/...`. Always trailing slash. Prefixed with BASE_URL.
  */
 export function localizedPath(locale: Locale, segment = ''): string {
   const cleaned = segment.replace(/^\/+|\/+$/g, '');
   const path = cleaned ? `/${cleaned}` : '';
 
   if (locale === defaultLocale) {
-    return cleaned ? `${path}/` : '/';
+    return withBase(cleaned ? `${path}/` : '/');
   }
 
-  return cleaned ? `/${locale}${path}/` : `/${locale}/`;
+  return withBase(cleaned ? `/${locale}${path}/` : `/${locale}/`);
 }
 
 export function getLocaleFromUrl(pathname: string): Locale {
-  const segment = pathname.split('/').filter(Boolean)[0];
+  const withoutBase = stripBase(pathname);
+  const segment = withoutBase.split('/').filter(Boolean)[0];
   return segment === 'en' ? 'en' : defaultLocale;
 }
 
@@ -59,8 +86,9 @@ function translatePath(pathWithoutLocale: string, from: Locale, to: Locale): str
 }
 
 export function switchLocalePath(pathname: string, targetLocale: Locale): string {
+  const withoutBase = stripBase(pathname);
   const currentLocale = getLocaleFromUrl(pathname);
-  const withoutLocale = stripLocalePrefix(pathname);
+  const withoutLocale = stripLocalePrefix(withoutBase);
   const translated = translatePath(withoutLocale, currentLocale, targetLocale);
   return localizedPath(targetLocale, translated);
 }

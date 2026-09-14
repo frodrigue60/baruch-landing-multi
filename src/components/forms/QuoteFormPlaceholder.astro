@@ -14,6 +14,24 @@ const whatsappUrl = `https://wa.me/${settings.contact.whatsapp}`;
 const requestSection = page.sections?.find((s) => s.id === 'request') ?? page.sections?.[0];
 const fieldClass =
   'mt-2 w-full border border-bark-slate/20 bg-surface px-3 py-3 text-deep-forest transition-colors focus:border-earth-gold focus:outline-none disabled:cursor-not-allowed disabled:opacity-60';
+
+/** When set (e.g. on GitHub Pages), the form POSTs to this external API. */
+const contactApiUrl = (import.meta.env.PUBLIC_CONTACT_API_URL || '').trim();
+const canSubmit = Boolean(contactApiUrl);
+
+const labels = {
+  notice: locale === 'es'
+    ? canSubmit
+      ? 'Tu mensaje se enviará de forma segura. Te responderemos por correo o WhatsApp.'
+      : 'El envío en línea estará disponible próximamente. Mientras tanto, usa los canales de contacto directo.'
+    : canSubmit
+      ? 'Your message will be sent securely. We will reply by email or WhatsApp.'
+      : 'Online submission will be available soon. In the meantime, use the direct contact channels below.',
+  submit: locale === 'es' ? (canSubmit ? 'Enviar mensaje' : 'Envío no disponible') : (canSubmit ? 'Send message' : 'Submission unavailable'),
+  sending: locale === 'es' ? 'Enviando…' : 'Sending…',
+  success: locale === 'es' ? 'Mensaje enviado. Gracias por escribirnos.' : 'Message sent. Thank you for writing.',
+  error: locale === 'es' ? 'No se pudo enviar. Intenta de nuevo o usa WhatsApp.' : 'Could not send. Try again or use WhatsApp.',
+};
 ---
 
 <section id="solicitud" class="scroll-mt-24 border border-bark-slate/10 bg-sand-surface p-6 md:p-10">
@@ -29,54 +47,91 @@ const fieldClass =
   <div
     class="mt-6 border border-bark-slate/20 bg-surface px-4 py-3 text-sm text-on-surface-variant"
     role="status"
+    data-contact-status
   >
-    {
-      locale === 'es'
-        ? 'El envío en línea estará disponible próximamente. Mientras tanto, usa los canales de contacto directo.'
-        : 'Online submission will be available soon. In the meantime, use the direct contact channels below.'
-    }
+    {labels.notice}
   </div>
 
-  <form class="mt-8 flex flex-col gap-[var(--spacing-stack-md)]" aria-disabled="true" novalidate>
+  <form
+    class="mt-8 flex flex-col gap-[var(--spacing-stack-md)]"
+    data-contact-form
+    aria-disabled={canSubmit ? undefined : 'true'}
+    novalidate
+  >
     <div class="grid gap-[var(--spacing-stack-md)] md:grid-cols-2">
       <div>
         <label for="name" class="text-deep-forest">
           {locale === 'es' ? 'Nombre completo' : 'Full name'}
         </label>
-        <input id="name" name="name" type="text" disabled class={fieldClass} />
+        <input
+          id="name"
+          name="name"
+          type="text"
+          required={canSubmit}
+          disabled={!canSubmit}
+          autocomplete="name"
+          class={fieldClass}
+        />
       </div>
       <div>
         <label for="email" class="text-deep-forest">Email</label>
-        <input id="email" name="email" type="email" disabled class={fieldClass} />
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required={canSubmit}
+          disabled={!canSubmit}
+          autocomplete="email"
+          class={fieldClass}
+        />
       </div>
     </div>
     <div>
       <label for="phone" class="text-deep-forest">
         {locale === 'es' ? 'Teléfono' : 'Phone'}
       </label>
-      <input id="phone" name="phone" type="tel" disabled class={fieldClass} />
+      <input
+        id="phone"
+        name="phone"
+        type="tel"
+        disabled={!canSubmit}
+        autocomplete="tel"
+        class={fieldClass}
+      />
     </div>
     <div>
       <label for="experience" class="text-deep-forest">
         {locale === 'es' ? 'Experiencia de interés' : 'Experience of interest'}
       </label>
-      <input id="experience" name="experience" type="text" disabled class={fieldClass} />
+      <input id="experience" name="experience" type="text" disabled={!canSubmit} class={fieldClass} />
     </div>
     <div>
       <label for="message" class="text-deep-forest">
         {locale === 'es' ? 'Mensaje' : 'Message'}
       </label>
-      <textarea id="message" name="message" rows="5" disabled class={`${fieldClass} resize-none`}
+      <textarea
+        id="message"
+        name="message"
+        rows="5"
+        required={canSubmit}
+        disabled={!canSubmit}
+        class={`${fieldClass} resize-none`}
       ></textarea>
     </div>
     <div>
       <button
-        type="button"
-        disabled
-        aria-disabled="true"
-        class="cursor-not-allowed bg-bark-slate/40 px-8 py-4 font-label-caps text-sand-surface"
+        type={canSubmit ? 'submit' : 'button'}
+        disabled={!canSubmit}
+        aria-disabled={canSubmit ? undefined : 'true'}
+        data-contact-submit
+        class:list={[
+          'px-8 py-4 font-label-caps',
+          canSubmit
+            ? 'bg-deep-forest text-sand-surface transition-colors hover:bg-earth-gold hover:text-deep-forest'
+            : 'cursor-not-allowed bg-bark-slate/40 text-sand-surface',
+        ]}
       >
-        {locale === 'es' ? 'Envío no disponible' : 'Submission unavailable'}
+        {labels.submit}
       </button>
     </div>
   </form>
@@ -104,3 +159,48 @@ const fieldClass =
     </ul>
   </div>
 </section>
+
+{
+  canSubmit && (
+    <script is:inline define:vars={{ contactApiUrl, labels }}>
+      (() => {
+        const form = document.querySelector('[data-contact-form]');
+        const statusEl = document.querySelector('[data-contact-status]');
+        const submitBtn = document.querySelector('[data-contact-submit]');
+        if (!form || !statusEl || !submitBtn) return;
+
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          const fd = new FormData(form);
+          const payload = {
+            name: String(fd.get('name') || '').trim(),
+            email: String(fd.get('email') || '').trim(),
+            phone: String(fd.get('phone') || '').trim(),
+            experience: String(fd.get('experience') || '').trim(),
+            message: String(fd.get('message') || '').trim(),
+          };
+
+          submitBtn.disabled = true;
+          submitBtn.textContent = labels.sending;
+          statusEl.textContent = labels.sending;
+
+          try {
+            const res = await fetch(contactApiUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+            });
+            if (!res.ok) throw new Error('bad status');
+            statusEl.textContent = labels.success;
+            form.reset();
+          } catch {
+            statusEl.textContent = labels.error;
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = labels.submit;
+          }
+        });
+      })();
+    </script>
+  )
+}

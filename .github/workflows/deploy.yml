@@ -1,0 +1,47 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Uses Bun from bun.lock / packageManager (withastro/action detects the lockfile).
+      - name: Install, build with Astro
+        uses: withastro/action@v4
+        with:
+          path: .
+          package-manager: bun
+        env:
+          # site/base inferred in astro.config.mjs from GITHUB_REPOSITORY when these are unset.
+          # Optional overrides:
+          # PUBLIC_SITE_URL: https://<user>.github.io
+          # PUBLIC_BASE_PATH: /<repo>/
+          # Contact form (Pages is static — API must be hosted elsewhere):
+          # PUBLIC_CONTACT_API_URL: https://api.example.com/contact
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
