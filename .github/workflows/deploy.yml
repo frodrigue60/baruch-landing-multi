@@ -5,6 +5,11 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Optional build env (set in repo Variables/Secrets if needed):
+#   PUBLIC_SITE_URL, PUBLIC_BASE_PATH, PUBLIC_CONTACT_API_URL
+# Without them, astro.config.mjs infers site/base from GITHUB_REPOSITORY in Actions.
+# Pages is static and does not run server APIs.
+
 permissions:
   contents: read
   pages: write
@@ -21,19 +26,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Bun is selected via package-manager; withastro/action also detects bun.lock.
       - name: Install, build with Astro
         uses: withastro/action@v6
         with:
           path: .
           package-manager: bun
-        env:
-          # site/base inferred in astro.config.mjs from GITHUB_REPOSITORY when unset.
-          # Optional overrides:
-          # PUBLIC_SITE_URL: https://<user>.github.io
-          # PUBLIC_BASE_PATH: /<repo>/
-          # Contact form (Pages is static — API must be hosted elsewhere):
-          # PUBLIC_CONTACT_API_URL: https://api.example.com/contact
 
   deploy:
     needs: build
