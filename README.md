@@ -69,11 +69,30 @@ El workflow [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml) con
 
 **Importante:** GitHub Pages solo sirve archivos estáticos. **No ejecuta APIs de servidor** ni endpoints de Astro. El formulario de contacto en Pages debe apuntar a un API externo vía `PUBLIC_CONTACT_API_URL` (ver `api/contact.ts` y `CONTACT_CORS_ORIGIN`).
 
-1. Push a `main` (o `workflow_dispatch`).
-2. En el repo: **Settings → Pages → Source → GitHub Actions**.
-3. URL típica: `https://<usuario>.github.io/<repo>/`.
+#### Subdominio Cloudflare (recomendado)
 
-Overrides opcionales en el workflow / secrets de Actions: `PUBLIC_SITE_URL`, `PUBLIC_BASE_PATH`, `PUBLIC_CONTACT_API_URL`.
+Objetivo: `https://baruch-landing-multi-demo.luisrodz.dev/` (sitio en la **raíz** del host, no bajo `/baruch-landing-multi/`).
+
+1. En Cloudflare DNS (zona `luisrodz.dev`):
+
+   | Tipo | Nombre | Contenido | Proxy |
+   |------|--------|-----------|-------|
+   | CNAME | `baruch-landing-multi-demo` | `frodrigue60.github.io` | DNS only (gris) al principio; luego puedes probar Proxied |
+
+2. En el repo GitHub: **Settings → Pages → Custom domain** → `baruch-landing-multi-demo.luisrodz.dev` → Enforce HTTPS cuando GitHub lo permita.
+
+3. Variables de Actions (`Settings → Secrets and variables → Actions → Variables`):
+
+   - `PUBLIC_SITE_URL` = `https://baruch-landing-multi-demo.luisrodz.dev`
+   - `PUBLIC_BASE_PATH` = `/`
+
+4. Push a `main` (o `workflow_dispatch`) para rebuild con `base: /`.
+
+Nota: el user site `frodrigue60.github.io` usa `www.luisrodz.dev`, por eso `*.github.io/<repo>/` redirige a `www.luisrodz.dev/<repo>/`. El subdominio propio evita esa ruta.
+
+#### Sin dominio custom
+
+URL path: `https://<usuario>.github.io/<repo>/` (con `base` = `/<repo>/`). Source: **GitHub Actions**.
 
 ### Cloudflare Pages / Vercel / Docker
 

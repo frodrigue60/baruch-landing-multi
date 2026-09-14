@@ -7,11 +7,14 @@ const env = /** @type {any} */ (globalThis).process?.env ?? {};
 
 /**
  * Infer GitHub Pages `site` + `base` in CI from GITHUB_REPOSITORY.
- * Override locally or in CI with PUBLIC_SITE_URL / PUBLIC_BASE_PATH.
+ * Override with PUBLIC_SITE_URL / PUBLIC_BASE_PATH (recommended for custom domains).
  *
- * Example: owner/baruch-landing-multi
+ * Project site on github.io path:
  *   site → https://owner.github.io
- *   base → /baruch-landing-multi/
+ *   base → /repo/
+ *
+ * Custom subdomain (e.g. https://baruch-landing-multi-demo.luisrodz.dev):
+ *   set PUBLIC_SITE_URL to that origin → base defaults to `/`
  */
 function githubPagesFromEnv() {
   const isActions = env.GITHUB_ACTIONS === 'true';
@@ -22,7 +25,6 @@ function githubPagesFromEnv() {
     return { site: undefined, base: undefined };
   }
 
-  // User/org site repo (owner.github.io) is served at the domain root.
   const isUserSite = repo.toLowerCase() === `${owner.toLowerCase()}.github.io`;
 
   return {
@@ -31,14 +33,28 @@ function githubPagesFromEnv() {
   };
 }
 
+/** Custom hostnames (Cloudflare subdomain, etc.) are served at domain root. */
+function isCustomHostname(siteUrl) {
+  try {
+    const host = new URL(siteUrl).hostname;
+    return Boolean(host) && !host.endsWith('.github.io') && host !== 'github.io';
+  } catch {
+    return false;
+  }
+}
+
 const gh = githubPagesFromEnv();
 
 const site =
   env.PUBLIC_SITE_URL ||
   gh.site ||
-  'https://baruch-landing-demo.luisrodz.dev';
+  'https://baruch-landing-multi-demo.luisrodz.dev';
 
-const base = env.PUBLIC_BASE_PATH || gh.base || '/';
+const base =
+  env.PUBLIC_BASE_PATH ||
+  (env.PUBLIC_SITE_URL && isCustomHostname(env.PUBLIC_SITE_URL) ? '/' : undefined) ||
+  gh.base ||
+  '/';
 
 // https://astro.build/config
 export default defineConfig({

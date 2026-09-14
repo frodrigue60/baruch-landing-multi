@@ -5,10 +5,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
-# Optional build env (set in repo Variables/Secrets if needed):
-#   PUBLIC_SITE_URL, PUBLIC_BASE_PATH, PUBLIC_CONTACT_API_URL
-# Without them, astro.config.mjs infers site/base from GITHUB_REPOSITORY in Actions.
-# Pages is static and does not run server APIs.
+# Repo Variables (Settings → Secrets and variables → Actions → Variables):
+#   PUBLIC_SITE_URL   e.g. https://baruch-landing-multi-demo.luisrodz.dev
+#   PUBLIC_BASE_PATH  /   (root — required for custom subdomain)
+#   PUBLIC_CONTACT_API_URL  (optional; Pages is static and does not run server APIs)
 
 permissions:
   contents: read
@@ -31,6 +31,10 @@ jobs:
         with:
           path: .
           package-manager: bun
+        env:
+          PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
+          PUBLIC_BASE_PATH: ${{ vars.PUBLIC_BASE_PATH }}
+          PUBLIC_CONTACT_API_URL: ${{ vars.PUBLIC_CONTACT_API_URL }}
 
   deploy:
     needs: build
